@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil | Radar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js?v=5" defer></script>
+    <style>
+        .foto-hover:hover .foto-overlay { opacity: 1; }
+        .foto-overlay { opacity: 0; transition: opacity 0.2s; }
+        .galeria-item:hover .galeria-overlay { opacity: 1; }
+        .galeria-overlay { opacity: 0; transition: opacity 0.2s; }
+    </style>
+</head>
+<body data-standalone="true">
+<div class="flex min-h-screen">
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+    <div class="flex-1 flex flex-col md:ml-64 main-content-overlay">
+
+        <!-- Header -->
+        <header class="bg-black/80 backdrop-blur-md text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
+            <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+                <a href="/pages/produtos.html" class="flex items-center gap-3 font-black text-lg md:hidden">
+                    <i class="fa-solid fa-satellite-dish text-sky-400"></i> RADAR
+                </a>
+                <div id="user-info" class="flex items-center gap-3 text-sm font-semibold ml-auto"></div>
+            </div>
+        </header>
+
+        <main class="mx-auto max-w-4xl px-4 py-8 w-full flex-1">
+
+            <!-- Título da página -->
+            <div class="mb-6">
+                <p class="text-xs font-black uppercase tracking-[0.2em] text-sky-700">Conta</p>
+                <h1 class="mt-1 text-3xl font-black text-slate-900 tracking-tight">Meu Perfil</h1>
+                <p class="mt-1 text-slate-500 text-sm">Gerencie como sua empresa ou conta aparece no Radar.</p>
+            </div>
+
+            <!-- Estado de carregamento -->
+            <div id="loading" class="py-20 text-center">
+                <i class="fa-solid fa-spinner fa-spin text-3xl text-sky-500 mb-3"></i>
+                <p class="text-slate-500">Carregando perfil...</p>
+            </div>
+
+            <!-- Sem perfil vinculado -->
+            <div id="sem-perfil" class="hidden py-20 text-center">
+                <i class="fa-solid fa-user-slash text-5xl text-slate-300 mb-4"></i>
+                <p class="text-lg font-bold text-slate-600">Nenhum cadastro vinculado a este usuário.</p>
+                <p class="text-sm text-slate-400 mt-2">Seu usuário precisa estar vinculado a um Fornecedor ou Cliente.</p>
+            </div>
+
+            <!-- Card principal do perfil -->
+            <div id="card-perfil" class="hidden space-y-6">
+
+                <!-- Foto + Info básica -->
+                <div class="rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                    <!-- Banner de cor -->
+                    <div class="h-28 bg-gradient-to-r from-slate-900 via-sky-900 to-slate-900"></div>
+
+                    <div class="px-6 pb-6">
+                        <!-- Foto principal -->
+                        <div class="flex items-end gap-5 -mt-12 mb-4">
+                            <div class="relative foto-hover flex-shrink-0">
+                                <div id="foto-container"
+                                     class="w-24 h-24 rounded-2xl border-4 border-white bg-slate-100 overflow-hidden shadow-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-building text-3xl text-slate-400" id="foto-placeholder"></i>
+                                    <img id="foto-principal" src="" alt="Foto do perfil"
+                                         class="hidden w-full h-full object-cover">
+                                </div>
+                                <!-- Overlay de edição da foto -->
+                                <div class="foto-overlay absolute inset-0 rounded-2xl bg-black/60 flex flex-col items-center justify-center gap-1 cursor-pointer"
+                                     onclick="document.getElementById('input-foto-principal').click()">
+                                    <i class="fa-solid fa-camera text-white text-lg"></i>
+                                    <span class="text-white text-[10px] font-bold">Alterar</span>
+                                </div>
+                                <input type="file" id="input-foto-principal" accept="image/*" class="hidden"
+                                       onchange="uploadFotoPrincipal(this)">
+                            </div>
+
+                            <div class="flex-1 min-w-0 pt-12">
+                                <h2 id="nome-perfil" class="text-xl font-black text-slate-900 truncate"></h2>
+                                <p id="tipo-perfil" class="text-sm text-slate-500 font-semibold"></p>
+                            </div>
+
+                            <div class="flex gap-2 pt-12">
+                                <button onclick="abrirEdicao()"
+                                    class="flex items-center gap-2 rounded-xl bg-sky-600 px-4 py-2 text-sm font-black text-white hover:bg-sky-700 transition">
+                                    <i class="fa-solid fa-pen-to-square"></i> Editar perfil
+                                </button>
+                                <button id="btn-ver-publico" onclick="verPerfilPublico()"
+                                    class="flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-50 transition">
+                                    <i class="fa-solid fa-eye"></i> Ver público
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Bio -->
+                        <div id="bio-section" class="mb-4">
+                            <p id="bio-texto" class="text-slate-700 text-sm leading-relaxed whitespace-pre-line"></p>
+                            <p id="bio-vazia" class="hidden text-slate-400 text-sm italic">
+                                Nenhuma bio cadastrada. Clique em "Editar perfil" para adicionar.
+                            </p>
+                        </div>
+
+                        <!-- Info rápida -->
+                        <div id="info-rapida" class="flex flex-wrap gap-4 text-sm text-slate-600">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Galeria de fotos -->
+                <div class="rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+                    <div class="mb-4 flex items-center justify-between">
+                        <h3 class="text-base font-black text-slate-800">
+                            <i class="fa-solid fa-images mr-2 text-sky-600"></i>Galeria de fotos
+                        </h3>
+                        <button onclick="document.getElementById('input-galeria').click()"
+                            class="flex items-center gap-2 rounded-lg bg-sky-50 px-3 py-1.5 text-xs font-bold text-sky-700 hover:bg-sky-100 transition border border-sky-200">
+                            <i class="fa-solid fa-plus"></i> Adicionar foto
+                        </button>
+                        <input type="file" id="input-galeria" accept="image/*" class="hidden"
+                               onchange="uploadFotoGaleria(this)">
+                    </div>
+
+                    <div id="galeria-grid" class="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5">
+                    </div>
+                    <p id="galeria-vazia" class="hidden text-center text-slate-400 text-sm py-8">
+                        <i class="fa-solid fa-photo-film text-3xl text-slate-300 mb-2 block"></i>
+                        Nenhuma foto na galeria ainda.
+                    </p>
+                    <p class="mt-3 text-xs text-slate-400 text-right">Máximo de 20 fotos · até 5 MB por foto</p>
+                </div>
+
+                <!-- Produtos (somente Fornecedor) -->
+                <div id="secao-produtos" class="hidden rounded-2xl border border-slate-200 bg-white shadow-sm p-6">
+                    <h3 class="text-base font-black text-slate-800 mb-4">
+                        <i class="fa-solid fa-boxes-stacked mr-2 text-sky-600"></i>Meus produtos
+                    </h3>
+                    <div id="lista-produtos-perfil" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+                    <p id="produtos-vazios" class="hidden text-center text-slate-400 text-sm py-6">
+                        Nenhum produto cadastrado.
+                        <a href="/pages/produtos.html" class="text-sky-600 font-bold ml-1">Cadastrar agora</a>
+                    </p>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     MODAL DE EDIÇÃO DO PERFIL
+═══════════════════════════════════════════════════════════════════════ -->
+<div id="modal-edicao" class="fixed inset-0 z-[60] hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="mx-auto my-8 max-w-2xl rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b px-7 py-5">
+            <div>
+                <p class="text-xs font-black uppercase tracking-widest text-sky-700">Perfil</p>
+                <h2 class="mt-1 text-xl font-black text-slate-800">Editar informações</h2>
+            </div>
+            <button onclick="fecharEdicao()" class="text-2xl text-slate-400 hover:text-slate-700">&times;</button>
+        </div>
+
+        <div class="p-7 space-y-5" id="form-edicao-container">
+
+            <!-- Nome fantasia (Fornecedor) -->
+            <div id="campo-nome-fantasia" class="hidden">
+                <label class="block text-sm font-bold text-slate-700 mb-1">Nome fantasia</label>
+                <input id="edit-nome-fantasia" type="text" maxlength="150"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                    placeholder="Nome pelo qual a empresa é conhecida">
+            </div>
+
+            <!-- Site (Fornecedor) -->
+            <div id="campo-site" class="hidden">
+                <label class="block text-sm font-bold text-slate-700 mb-1">Site</label>
+                <input id="edit-site" type="url" maxlength="255"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                    placeholder="https://www.suaempresa.com.br">
+            </div>
+
+            <!-- Segmento (Cliente) -->
+            <div id="campo-segmento" class="hidden">
+                <label class="block text-sm font-bold text-slate-700 mb-1">Segmento / Tipo de negócio</label>
+                <input id="edit-segmento" type="text" maxlength="150"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                    placeholder="Ex: Varejo de moda, distribuição, e-commerce...">
+            </div>
+
+            <!-- Bio -->
+            <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1">
+                    Bio / Descrição
+                    <span id="contador-bio" class="ml-2 text-xs font-normal text-slate-400">0/1000</span>
+                </label>
+                <textarea id="edit-bio" rows="5" maxlength="1000"
+                    class="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none resize-none"
+                    placeholder="Conte sobre você ou sua empresa..."
+                    oninput="document.getElementById('contador-bio').textContent = this.value.length + '/1000'">
+                </textarea>
+            </div>
+
+            <!-- Resultado -->
+            <p id="resultado-edicao" class="hidden rounded-lg px-4 py-3 text-sm font-semibold"></p>
+
+            <div class="flex gap-3 justify-end pt-2">
+                <button onclick="fecharEdicao()"
+                    class="rounded-xl border border-slate-200 px-6 py-3 text-sm font-bold text-slate-600 hover:bg-slate-50 transition">
+                    Cancelar
+                </button>
+                <button onclick="salvarEdicao()"
+                    class="rounded-xl bg-sky-600 px-6 py-3 text-sm font-black text-white hover:bg-sky-700 transition">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i>Salvar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+'use strict';
+
+// ── Estado global ────────────────────────────────────────────────────────────
+let perfilAtual  = null;   // dados do perfil carregado
+let tipoPerfil   = null;   // "FORNECEDOR" | "CLIENTE"
+let idPerfil     = null;   // ID do Fornecedor ou Cliente
+let galeriaFotos = [];     // lista de metadados das fotos da galeria
+
+// ── Inicialização ────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof carregarMenuLateral === 'function') carregarMenuLateral();
+    if (typeof exibirInfoUsuario   === 'function') exibirInfoUsuario();
+    if (typeof aplicarControlesDeAcesso === 'function') aplicarControlesDeAcesso();
+
+    const usuarioJson = localStorage.getItem('usuario');
+    if (!usuarioJson) {
+        window.location.href = '/login.html';
+        return;
+    }
+    const usuario = JSON.parse(usuarioJson);
+    await carregarPerfil(usuario);
+});
+
+// ── Detecta tipo de perfil e carrega dados ───────────────────────────────────
+async function carregarPerfil(usuario) {
+    mostrar('loading');
+
+    // Determina tipo com base nas flags do usuário
+    if (usuario.fornecedor) {
+        tipoPerfil = 'FORNECEDOR';
+    } else if (usuario.cliente) {
+        tipoPerfil = 'CLIENTE';
+    } else {
+        // ADMIN/MANUTENCAO/EDICAO sem perfil vinculado
+        mostrar('sem-perfil');
+        return;
+    }
+
+    // Descobre o ID consultando via cnpjOuCpf
+    try {
+        const endpointLista = tipoPerfil === 'FORNECEDOR' ? '/api/fornecedores' : '/api/clientes';
+        const resp = await fetch(endpointLista, { credentials: 'include' });
+        if (!resp.ok) throw new Error('Erro ao buscar cadastro');
+
+        const lista = await resp.json();
+        if (!lista || lista.length === 0) {
+            mostrar('sem-perfil');
+            return;
+        }
+
+        // Para FORNECEDOR e CLIENTE o service retorna apenas o próprio registro
+        const registro = lista[0];
+        idPerfil = registro.id;
+
+        await renderizarPerfil(registro);
+        await carregarGaleria();
+
+    } catch (err) {
+        console.error(err);
+        mostrar('sem-perfil');
+    }
+}
+
+// ── Renderiza o card de perfil ───────────────────────────────────────────────
+async function renderizarPerfil(dados) {
+    perfilAtual = dados;
+
+    // Nome principal
+    document.getElementById('nome-perfil').textContent = dados.nome || dados.nomeFantasia || '';
+
+    // Tipo
+    document.getElementById('tipo-perfil').textContent =
+        tipoPerfil === 'FORNECEDOR' ? '🏢 Fornecedor / Empresa' : '👤 Cliente';
+
+    // Foto principal
+    if (dados.foto) {
+        document.getElementById('foto-placeholder').classList.add('hidden');
+        const img = document.getElementById('foto-principal');
+        img.src = 'data:image/jpeg;base64,' + dados.foto;
+        img.classList.remove('hidden');
+    }
+
+    // Bio
+    const bio = dados.bio || '';
+    if (bio.trim()) {
+        document.getElementById('bio-texto').textContent = bio;
+        document.getElementById('bio-vazia').classList.add('hidden');
+    } else {
+        document.getElementById('bio-texto').textContent = '';
+        document.getElementById('bio-vazia').classList.remove('hidden');
+    }
+
+    // Info rápida
+    const infoEl = document.getElementById('info-rapida');
+    const infos = [];
+    if (dados.cidade || dados.estado) {
+        infos.push(`<span><i class="fa-solid fa-location-dot mr-1 text-sky-500"></i>${[dados.cidade, dados.estado].filter(Boolean).join(', ')}</span>`);
+    }
+    if (dados.email) {
+        infos.push(`<span><i class="fa-solid fa-envelope mr-1 text-sky-500"></i>${esc(dados.email)}</span>`);
+    }
+    if (dados.telefone) {
+        infos.push(`<span><i class="fa-solid fa-phone mr-1 text-sky-500"></i>${esc(dados.telefone)}</span>`);
+    }
+    if (tipoPerfil === 'FORNECEDOR' && dados.site) {
+        infos.push(`<a href="${esc(dados.site)}" target="_blank" class="text-sky-600 hover:underline"><i class="fa-solid fa-globe mr-1"></i>${esc(dados.site)}</a>`);
+    }
+    if (tipoPerfil === 'CLIENTE' && dados.segmento) {
+        infos.push(`<span><i class="fa-solid fa-briefcase mr-1 text-sky-500"></i>${esc(dados.segmento)}</span>`);
+    }
+    infoEl.innerHTML = infos.join('');
+
+    // Produtos (somente Fornecedor)
+    if (tipoPerfil === 'FORNECEDOR') {
+        await carregarProdutos();
+    }
+
+    mostrar('card-perfil');
+}
+
+// ── Galeria ──────────────────────────────────────────────────────────────────
+async function carregarGaleria() {
+    try {
+        const resp = await fetch(`/api/perfil/fotos/${tipoPerfil}/${idPerfil}`, { credentials: 'include' });
+        if (!resp.ok) return;
+        galeriaFotos = await resp.json();
+        renderizarGaleria();
+    } catch (err) {
+        console.error('Erro ao carregar galeria:', err);
+    }
+}
+
+function renderizarGaleria() {
+    const grid  = document.getElementById('galeria-grid');
+    const vazia = document.getElementById('galeria-vazia');
+
+    if (!galeriaFotos || galeriaFotos.length === 0) {
+        grid.innerHTML = '';
+        vazia.classList.remove('hidden');
+        return;
+    }
+    vazia.classList.add('hidden');
+
+    grid.innerHTML = galeriaFotos.map(foto => `
+        <div class="relative galeria-item aspect-square rounded-xl overflow-hidden bg-slate-100 cursor-pointer"
+             onclick="verFotoGaleria(${foto.id})">
+            <img src="/api/perfil/fotos/${tipoPerfil}/${idPerfil}/${foto.id}/imagem-thumb"
+                 onerror="carregarFotoGaleriaBase64(this, ${foto.id})"
+                 alt="${esc(foto.fotoNome || '')}"
+                 loading="lazy"
+                 class="w-full h-full object-cover">
+            <div class="galeria-overlay absolute inset-0 bg-black/50 flex flex-col items-center justify-center gap-2">
+                ${foto.legenda ? `<p class="text-white text-xs font-semibold px-2 text-center line-clamp-2">${esc(foto.legenda)}</p>` : ''}
+                <button onclick="event.stopPropagation(); excluirFotoGaleria(${foto.id})"
+                    class="mt-1 rounded-lg bg-rose-600 px-3 py-1 text-xs font-black text-white hover:bg-rose-700">
+                    <i class="fa-solid fa-trash mr-1"></i>Excluir
+                </button>
+            </div>
+        </div>`).join('');
+}
+
+async function carregarFotoGaleriaBase64(imgEl, fotoId) {
+    try {
+        const resp = await fetch(`/api/perfil/fotos/${tipoPerfil}/${idPerfil}/${fotoId}/imagem`, { credentials: 'include' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        if (data.foto) {
+            imgEl.src = 'data:image/jpeg;base64,' + data.foto;
+        }
+    } catch (e) { /* silencioso */ }
+}
+
+async function uploadFotoGaleria(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Foto maior que 5 MB não é permitida.');
+        input.value = '';
+        return;
+    }
+    const fd = new FormData();
+    fd.append('foto', file);
+
+    try {
+        const resp = await fetch(`/api/perfil/fotos/${tipoPerfil}/${idPerfil}`, {
+            method: 'POST',
+            credentials: 'include',
+            body: fd
+        });
+        const data = await resp.json();
+        if (!resp.ok) { alert(data.erro || 'Erro ao adicionar foto.'); return; }
+        await carregarGaleria();
+    } catch (err) {
+        alert('Erro ao enviar foto: ' + err.message);
+    } finally {
+        input.value = '';
+    }
+}
+
+async function excluirFotoGaleria(fotoId) {
+    if (!confirm('Excluir esta foto da galeria?')) return;
+    try {
+        const resp = await fetch(`/api/perfil/fotos/${tipoPerfil}/${idPerfil}/${fotoId}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+        if (!resp.ok) { const d = await resp.json(); alert(d.erro || 'Erro ao excluir.'); return; }
+        await carregarGaleria();
+    } catch (err) {
+        alert('Erro: ' + err.message);
+    }
+}
+
+function verFotoGaleria(fotoId) {
+    // Abre a imagem em nova aba via endpoint de imagem
+    window.open(`/api/perfil/fotos/${tipoPerfil}/${idPerfil}/${fotoId}/imagem`, '_blank');
+}
+
+// ── Foto principal ───────────────────────────────────────────────────────────
+async function uploadFotoPrincipal(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    if (file.size > 5 * 1024 * 1024) {
+        alert('Foto maior que 5 MB não é permitida.');
+        input.value = '';
+        return;
+    }
+    const fd = new FormData();
+    fd.append('foto', file);
+
+    const endpoint = tipoPerfil === 'FORNECEDOR'
+        ? `/api/fornecedores/${idPerfil}/perfil`
+        : `/api/clientes/${idPerfil}/perfil`;
+
+    try {
+        const resp = await fetch(endpoint, {
+            method: 'PUT',
+            credentials: 'include',
+            body: fd
+        });
+        if (!resp.ok) { const d = await resp.json(); alert(d.erro || 'Erro ao salvar foto.'); return; }
+
+        // Atualiza foto na tela imediatamente com FileReader
+        const reader = new FileReader();
+        reader.onload = e => {
+            document.getElementById('foto-placeholder').classList.add('hidden');
+            const img = document.getElementById('foto-principal');
+            img.src = e.target.result;
+            img.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+    } catch (err) {
+        alert('Erro: ' + err.message);
+    } finally {
+        input.value = '';
+    }
+}
+
+// ── Produtos ─────────────────────────────────────────────────────────────────
+async function carregarProdutos() {
+    try {
+        const resp = await fetch(`/api/fornecedores/${idPerfil}/perfil`, { credentials: 'include' });
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const produtos = data.produtos || [];
+
+        const secao  = document.getElementById('secao-produtos');
+        const lista  = document.getElementById('lista-produtos-perfil');
+        const vazio  = document.getElementById('produtos-vazios');
+        secao.classList.remove('hidden');
+
+        if (produtos.length === 0) {
+            lista.innerHTML = '';
+            vazio.classList.remove('hidden');
+            return;
+        }
+        vazio.classList.add('hidden');
+        lista.innerHTML = produtos.map(p => `
+            <article class="rounded-xl border border-slate-200 p-4">
+                <h4 class="font-black text-slate-800 text-sm">${esc(p.nome)}</h4>
+                ${p.descricao ? `<p class="mt-1 text-xs text-slate-500 line-clamp-2">${esc(p.descricao)}</p>` : ''}
+                <div class="mt-2 flex items-center justify-between">
+                    ${p.preco ? `<span class="text-sm font-black text-sky-700">R$ ${Number(p.preco).toLocaleString('pt-BR',{minimumFractionDigits:2})}</span>` : ''}
+                    <span class="text-xs text-slate-400">${esc(p.categoria)}</span>
+                </div>
+            </article>`).join('');
+    } catch (err) { /* silencioso */ }
+}
+
+// ── Modal de edição ───────────────────────────────────────────────────────────
+function abrirEdicao() {
+    if (!perfilAtual) return;
+
+    // Preenche campos com valores atuais
+    document.getElementById('edit-bio').value = perfilAtual.bio || '';
+    document.getElementById('contador-bio').textContent = (perfilAtual.bio || '').length + '/1000';
+
+    if (tipoPerfil === 'FORNECEDOR') {
+        document.getElementById('campo-nome-fantasia').classList.remove('hidden');
+        document.getElementById('campo-site').classList.remove('hidden');
+        document.getElementById('campo-segmento').classList.add('hidden');
+        document.getElementById('edit-nome-fantasia').value = perfilAtual.nomeFantasia || '';
+        document.getElementById('edit-site').value          = perfilAtual.site         || '';
+    } else {
+        document.getElementById('campo-nome-fantasia').classList.add('hidden');
+        document.getElementById('campo-site').classList.add('hidden');
+        document.getElementById('campo-segmento').classList.remove('hidden');
+        document.getElementById('edit-segmento').value = perfilAtual.segmento || '';
+    }
+
+    document.getElementById('resultado-edicao').classList.add('hidden');
+    document.getElementById('modal-edicao').classList.remove('hidden');
+}
+
+function fecharEdicao() {
+    document.getElementById('modal-edicao').classList.add('hidden');
+}
+
+async function salvarEdicao() {
+    const bio = document.getElementById('edit-bio').value.trim();
+    const payload = { bio };
+
+    if (tipoPerfil === 'FORNECEDOR') {
+        payload.nomeFantasia = document.getElementById('edit-nome-fantasia').value.trim();
+        payload.site         = document.getElementById('edit-site').value.trim();
+    } else {
+        payload.segmento = document.getElementById('edit-segmento').value.trim();
+    }
+
+    const endpoint = tipoPerfil === 'FORNECEDOR'
+        ? `/api/fornecedores/${idPerfil}/perfil/json`
+        : `/api/clientes/${idPerfil}/perfil/json`;
+
+    const resEl = document.getElementById('resultado-edicao');
+    resEl.classList.remove('hidden', 'bg-green-50', 'text-green-700', 'bg-red-50', 'text-red-700');
+
+    try {
+        const resp = await fetch(endpoint, {
+            method: 'PUT',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const data = await resp.json();
+
+        if (!resp.ok) {
+            resEl.classList.add('bg-red-50', 'text-red-700');
+            resEl.textContent = data.erro || 'Erro ao salvar.';
+            return;
+        }
+
+        resEl.classList.add('bg-green-50', 'text-green-700');
+        resEl.textContent = 'Perfil atualizado com sucesso!';
+
+        // Atualiza dados locais
+        perfilAtual.bio = bio;
+        if (tipoPerfil === 'FORNECEDOR') {
+            perfilAtual.nomeFantasia = payload.nomeFantasia;
+            perfilAtual.site         = payload.site;
+        } else {
+            perfilAtual.segmento = payload.segmento;
+        }
+
+        // Atualiza a tela
+        document.getElementById('bio-texto').textContent = bio;
+        if (bio.trim()) {
+            document.getElementById('bio-texto').classList.remove('hidden');
+            document.getElementById('bio-vazia').classList.add('hidden');
+        } else {
+            document.getElementById('bio-vazia').classList.remove('hidden');
+        }
+
+        setTimeout(fecharEdicao, 1500);
+
+    } catch (err) {
+        resEl.classList.add('bg-red-50', 'text-red-700');
+        resEl.textContent = 'Erro de conexão: ' + err.message;
+    }
+}
+
+// ── Navegar para perfil público ───────────────────────────────────────────────
+function verPerfilPublico() {
+    if (!tipoPerfil || !idPerfil) return;
+    window.location.href = `/pages/perfil-publico.html?tipo=${tipoPerfil}&id=${idPerfil}`;
+}
+
+// ── Utilitários ───────────────────────────────────────────────────────────────
+function mostrar(elementId) {
+    ['loading', 'sem-perfil', 'card-perfil'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+    });
+    document.getElementById(elementId).classList.remove('hidden');
+}
+
+const esc = v => {
+    const el = document.createElement('span');
+    el.textContent = String(v || '');
+    return el.innerHTML;
+};
+</script>
+</body>
+</html>

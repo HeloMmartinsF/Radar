@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subcategorias | Radar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js?v=5" defer></script>
+</head>
+<body data-standalone="true">
+<div class="flex min-h-screen">
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+    <div class="flex-1 flex flex-col md:ml-64 main-content-overlay">
+        <header class="bg-black/80 backdrop-blur-md text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
+            <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+                <a href="/pages/produtos.html" class="flex items-center gap-3 font-black text-lg md:hidden">
+                    <i class="fa-solid fa-satellite-dish text-sky-400"></i> RADAR
+                </a>
+                <div id="user-info" class="flex items-center gap-3 text-sm font-semibold ml-auto"></div>
+            </div>
+        </header>
+        
+        <main class="mx-auto max-w-7xl px-6 py-8 w-full flex-1">
+            <!-- Breadcrumb -->
+            <nav class="mb-6">
+                <ol class="flex items-center gap-2 text-sm">
+                    <li><a href="/pages/produtos.html" class="text-sky-700 hover:text-sky-900 font-semibold">Produtos</a></li>
+                    <li><i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i></li>
+                    <li id="breadcrumb-categoria" class="text-slate-600 font-semibold">Carregando...</li>
+                </ol>
+            </nav>
+
+            <!-- Cabeçalho da Categoria -->
+            <div class="mb-8">
+                <div class="flex items-center gap-4 mb-2">
+                    <i id="icone-categoria" class="fa-solid fa-tag text-4xl text-sky-600"></i>
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-sky-700">Categoria</p>
+                        <h1 id="titulo-categoria" class="mt-1 text-4xl font-black text-slate-900 tracking-tight">Carregando...</h1>
+                    </div>
+                </div>
+                <p id="descricao-categoria" class="mt-2 text-slate-600 font-medium"></p>
+            </div>
+
+            <!-- Busca de subcategorias -->
+            <div class="relative mb-8 max-w-3xl">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input id="busca-subcategoria" class="w-full rounded-xl border border-slate-200 bg-white pl-12 pr-4 py-4 text-sm shadow-sm outline-none focus:ring-2 focus:ring-sky-500" placeholder="Buscar subcategoria...">
+            </div>
+
+            <!-- Lista de Subcategorias -->
+            <section>
+                <div class="mb-4 flex items-center justify-between gap-4">
+                    <h2 class="text-xl font-black text-slate-800">Subcategorias Disponíveis</h2>
+                    <span id="contador-subcategorias" class="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700">0 subcategorias</span>
+                </div>
+                <div id="lista-subcategorias" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Carregando... -->
+                    <div class="col-span-full py-12 text-center">
+                        <i class="fa-solid fa-spinner fa-spin text-3xl text-sky-600 mb-3"></i>
+                        <p class="text-slate-500">Carregando subcategorias...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Voltar -->
+            <div class="mt-12">
+                <a href="/pages/produtos.html" class="inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar para todas as categorias
+                </a>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script>
+    const metaCategorias = {
+        AUTOMOTIVO: { descricao: 'Automotivo', icone: 'fa-car' },
+        MOTOCICLETAS: { descricao: 'Motocicletas', icone: 'fa-motorcycle' },
+        MODA_TEXTIL: { descricao: 'Moda e Têxtil', icone: 'fa-shirt' },
+        EMBALAGENS: { descricao: 'Embalagens', icone: 'fa-box' },
+        TECNOLOGIA: { descricao: 'Tecnologia', icone: 'fa-laptop' },
+        CONSTRUCAO: { descricao: 'Construção', icone: 'fa-helmet-safety' },
+        MOVEIS: { descricao: 'Móveis', icone: 'fa-chair' },
+        ELETRICA: { descricao: 'Elétrica', icone: 'fa-plug' },
+        FERRAMENTAS: { descricao: 'Ferramentas', icone: 'fa-screwdriver-wrench' },
+        BELEZA: { descricao: 'Beleza', icone: 'fa-pump-soap' },
+        SAUDE: { descricao: 'Saúde', icone: 'fa-kit-medical' },
+        ALIMENTOS: { descricao: 'Alimentos', icone: 'fa-utensils' },
+        AGRONEGOCIO: { descricao: 'Agronegócio', icone: 'fa-seedling' },
+        LIMPEZA: { descricao: 'Limpeza', icone: 'fa-broom' },
+        PET: { descricao: 'Pet', icone: 'fa-paw' },
+        ESPORTES: { descricao: 'Esportes', icone: 'fa-dumbbell' },
+        BRINQUEDOS: { descricao: 'Brinquedos', icone: 'fa-puzzle-piece' },
+        CASA: { descricao: 'Casa', icone: 'fa-house' },
+        INDUSTRIAL: { descricao: 'Industrial', icone: 'fa-industry' },
+        SEGURANCA: { descricao: 'Segurança', icone: 'fa-shield-halved' },
+        ENERGIA: { descricao: 'Energia', icone: 'fa-solar-panel' },
+        GRAFICA: { descricao: 'Gráfica', icone: 'fa-print' },
+        ARTESANATO: { descricao: 'Artesanato', icone: 'fa-palette' },
+        OUTROS: { descricao: 'Outros', icone: 'fa-boxes-stacked' }
+    };
+
+    let subcategorias = [];
+    let categoriaAtual = '';
+
+    const escapar = valor => {
+        const el = document.createElement('span');
+        el.textContent = valor || '';
+        return el.innerHTML;
+    };
+
+    function obterParametroURL(nome) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(nome);
+    }
+
+    function renderizarSubcategorias() {
+        const busca = document.getElementById('busca-subcategoria').value.trim().toLowerCase();
+        const filtradas = subcategorias.filter(sub => 
+            sub.nome.toLowerCase().includes(busca) || 
+            (sub.descricao && sub.descricao.toLowerCase().includes(busca))
+        );
+
+        document.getElementById('contador-subcategorias').textContent = 
+            `${filtradas.length} ${filtradas.length === 1 ? 'subcategoria' : 'subcategorias'}`;
+
+        const lista = document.getElementById('lista-subcategorias');
+
+        if (filtradas.length === 0) {
+            lista.innerHTML = `
+                <div class="col-span-full py-12 text-center">
+                    <i class="fa-solid fa-inbox text-5xl text-slate-300 mb-4"></i>
+                    <p class="text-slate-500 font-medium">Nenhuma subcategoria encontrada</p>
+                    <p class="text-sm text-slate-400 mt-2">Tente buscar com outros termos ou volte para ver todas</p>
+                </div>
+            `;
+            return;
+        }
+
+        lista.innerHTML = filtradas.map(sub => `
+            <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md hover:-translate-y-0.5">
+                <div class="flex items-start justify-between gap-3 mb-3">
+                    <h3 class="text-lg font-black text-slate-800">${escapar(sub.nome)}</h3>
+                    ${sub.ativa ? '<span class="rounded-full bg-green-100 px-2 py-1 text-xs font-bold text-green-700">Ativa</span>' : '<span class="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500">Inativa</span>'}
+                </div>
+                <p class="text-sm text-slate-600 mb-4">${escapar(sub.descricao || 'Sem descrição disponível')}</p>
+                <a href="/pages/produtos.html?subcategoria=${sub.id}" class="inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
+                    Ver produtos <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </article>
+        `).join('');
+    }
+
+    async function carregarDados() {
+        categoriaAtual = obterParametroURL('categoria');
+
+        if (!categoriaAtual) {
+            alert('Categoria não especificada');
+            window.location.href = '/pages/produtos.html';
+            return;
+        }
+
+        // Atualizar informações da categoria
+        const meta = metaCategorias[categoriaAtual] || { descricao: categoriaAtual, icone: 'fa-tag' };
+        document.getElementById('titulo-categoria').textContent = meta.descricao;
+        document.getElementById('breadcrumb-categoria').textContent = meta.descricao;
+        document.getElementById('icone-categoria').className = `fa-solid ${meta.icone} text-4xl text-sky-600`;
+        document.title = `${meta.descricao} - Subcategorias | Radar`;
+
+        // Carregar subcategorias via API
+        try {
+            const response = await fetch(`/api/subcategorias/categoria/${categoriaAtual}`);
+            
+            if (!response.ok) {
+                throw new Error('Erro ao carregar subcategorias');
+            }
+
+            subcategorias = await response.json();
+            
+            // Ordenar por nome
+            subcategorias.sort((a, b) => a.nome.localeCompare(b.nome));
+            
+            renderizarSubcategorias();
+
+        } catch (error) {
+            console.error('Erro:', error);
+            document.getElementById('lista-subcategorias').innerHTML = `
+                <div class="col-span-full py-12 text-center">
+                    <i class="fa-solid fa-exclamation-triangle text-5xl text-rose-400 mb-4"></i>
+                    <p class="text-slate-700 font-semibold mb-2">Erro ao carregar subcategorias</p>
+                    <p class="text-sm text-slate-500">${error.message}</p>
+                    <button onclick="window.location.reload()" class="mt-4 rounded-lg bg-sky-600 px-6 py-2 text-sm font-bold text-white hover:bg-sky-700">
+                        Tentar novamente
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await carregarMenuLateral();
+        exibirInfoUsuario();
+        aplicarControlesDeAcesso();
+
+        await carregarDados();
+
+        // Evento de busca
+        document.getElementById('busca-subcategoria').addEventListener('input', renderizarSubcategorias);
+    });
+</script>
+</body>
+</html>

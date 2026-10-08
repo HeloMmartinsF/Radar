@@ -18,383 +18,327 @@ public class AtualizaBancoSQLite implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // Migrações já foram executadas no banco restaurado
-        // Apenas log de confirmação
-        System.out.println("[MIGRATIONS] Banco já tem todas as migrations aplicadas (v30-32)");
+        System.out.println("[MIGRATIONS] Verificando subcategorias...");
+        inserirSubcategoriasSeNecessario();
     }
 
-    // BACKUP DO CÓDIGO ANTIGO - mantido para referência histórica
-    public void run_BACKUP(ApplicationArguments args) {
-        criarTabelaDeHistorico();
-        executarAtualizacoes();
-    }
+    private void inserirSubcategoriasSeNecessario() {
+        // Mapa: código do enum -> array de [nome, descrição]
+        Object[][][] categorias = {
 
-    private void criarTabelaDeHistorico() {
-        String sql = "CREATE TABLE IF NOT EXISTS schema_migrations " +
-                     "(versao INTEGER PRIMARY KEY, " +
-                     "descricao TEXT NOT NULL, " +
-                     "executada_em TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)";
-        jdbcTemplate.execute(sql);
-    }
+            // ── AUTOMOTIVO ──────────────────────────────────────────────
+            { {"AUTOMOTIVO"}, {"Peças e Acessórios","Peças originais e acessórios para veículos"},
+              {"AUTOMOTIVO"}, {"Pneus e Rodas","Pneus, rodas e câmaras para veículos"},
+              {"AUTOMOTIVO"}, {"Suspensão e Direção","Amortecedores, molas e componentes de direção"},
+              {"AUTOMOTIVO"}, {"Freios","Pastilhas, discos, tambores e fluido de freio"},
+              {"AUTOMOTIVO"}, {"Motor e Transmissão","Motores, câmbios, embreagens e componentes"},
+              {"AUTOMOTIVO"}, {"Elétrica Automotiva","Baterias, alternadores, velas e sistemas elétricos"},
+              {"AUTOMOTIVO"}, {"Iluminação Automotiva","Faróis, lanternas e LEDs automotivos"},
+              {"AUTOMOTIVO"}, {"Carroceria e Lataria","Para-choques, capôs, portas e lataria"},
+              {"AUTOMOTIVO"}, {"Vidros e Borrachas","Para-brisas, vidros laterais e vedações"},
+              {"AUTOMOTIVO"}, {"Tintas e Pintura","Tintas automotivas, primers e produtos de pintura"},
+              {"AUTOMOTIVO"}, {"Ar-condicionado Auto","Compressores, filtros e componentes de A/C"},
+              {"AUTOMOTIVO"}, {"Lubrificantes e Fluidos","Óleos, graxas e fluidos automotivos"},
+              {"AUTOMOTIVO"}, {"Som e Multimídia","Rádios, alto-falantes e centrais multimídia"},
+              {"AUTOMOTIVO"}, {"Escapamento","Silenciosos, catalisadores e tubulações"},
+              {"AUTOMOTIVO"}, {"Ferramentas Automotivas","Ferramentas e equipamentos para manutenção veicular"} }
+        };
 
-    private void executarAtualizacoes() {
-        // CLEANUP: Remover versões antigas não completadas para re-executar
-        try {
-            jdbcTemplate.update("DELETE FROM schema_migrations WHERE versao IN (30, 31)");
-        } catch (Exception e) {
-            // Tabela pode não existir ainda
+        // Insere subcategoria a subcategoria usando JDBC direto
+        String[][] subs = {
+            // AUTOMOTIVO
+            {"AUTOMOTIVO","Peças e Acessórios","Peças originais e acessórios para veículos"},
+            {"AUTOMOTIVO","Pneus e Rodas","Pneus, rodas e câmaras para veículos"},
+            {"AUTOMOTIVO","Suspensão e Direção","Amortecedores, molas e componentes de direção"},
+            {"AUTOMOTIVO","Freios","Pastilhas, discos, tambores e fluido de freio"},
+            {"AUTOMOTIVO","Motor e Transmissão","Motores, câmbios, embreagens e componentes internos"},
+            {"AUTOMOTIVO","Elétrica Automotiva","Baterias, alternadores, velas e sistemas elétricos"},
+            {"AUTOMOTIVO","Iluminação Automotiva","Faróis, lanternas e LEDs automotivos"},
+            {"AUTOMOTIVO","Carroceria e Lataria","Para-choques, capôs, portas e peças de lataria"},
+            {"AUTOMOTIVO","Vidros e Borrachas","Para-brisas, vidros laterais e vedações"},
+            {"AUTOMOTIVO","Tintas e Pintura","Tintas automotivas, primers e produtos de pintura"},
+            {"AUTOMOTIVO","Ar-condicionado Auto","Compressores, filtros e componentes de A/C"},
+            {"AUTOMOTIVO","Lubrificantes e Fluidos","Óleos, graxas e fluidos automotivos"},
+            {"AUTOMOTIVO","Som e Multimídia","Rádios, alto-falantes e centrais multimídia"},
+            {"AUTOMOTIVO","Escapamento","Silenciosos, catalisadores e tubulações"},
+            {"AUTOMOTIVO","Ferramentas Automotivas","Ferramentas para manutenção veicular"},
+
+            // MOTOCICLETAS
+            {"MOTOCICLETAS","Peças para Moto","Peças originais e compatíveis para motos"},
+            {"MOTOCICLETAS","Pneus de Moto","Pneus e câmaras para motocicletas"},
+            {"MOTOCICLETAS","Capacetes","Capacetes integrais, abertos e off-road"},
+            {"MOTOCICLETAS","Equipamentos de Proteção","Jaquetas, luvas, joelheiras e proteções"},
+            {"MOTOCICLETAS","Escapamentos de Moto","Escapamentos esportivos e originais"},
+            {"MOTOCICLETAS","Elétrica de Moto","Baterias, faróis e componentes elétricos"},
+            {"MOTOCICLETAS","Freios de Moto","Pastilhas, discos e cabos de freio"},
+            {"MOTOCICLETAS","Acessórios para Moto","Alforjes, suportes, retrovisor e personalização"},
+            {"MOTOCICLETAS","Lubrificantes Moto","Óleos e fluidos para motocicletas"},
+            {"MOTOCICLETAS","Suspensão de Moto","Amortecedores e molas para motos"},
+
+            // MODA_E_TEXTIL
+            {"MODA_E_TEXTIL","Camisetas e Blusas","Camisetas femininas, masculinas e infantis"},
+            {"MODA_E_TEXTIL","Calças e Bermudas","Jeans, sociais, esportivos e shorts"},
+            {"MODA_E_TEXTIL","Vestidos e Saias","Vestidos para todas as ocasiões"},
+            {"MODA_E_TEXTIL","Casacos e Jaquetas","Casacos, blazers e jaquetas"},
+            {"MODA_E_TEXTIL","Calçados","Sapatos, tênis, sandálias e botas"},
+            {"MODA_E_TEXTIL","Acessórios Moda","Bolsas, cintos, chapéus e bijuterias"},
+            {"MODA_E_TEXTIL","Tecidos e Aviamentos","Tecidos, linhas, botões e zíperes"},
+            {"MODA_E_TEXTIL","Moda Praia","Biquínis, sungas, saídas de praia"},
+            {"MODA_E_TEXTIL","Moda Fitness","Legging, tops, camisetas esportivas"},
+            {"MODA_E_TEXTIL","Uniformes","Uniformes profissionais e escolares"},
+            {"MODA_E_TEXTIL","Roupas Infantis","Roupas e acessórios para crianças"},
+            {"MODA_E_TEXTIL","Lingerie","Roupas íntimas femininas e masculinas"},
+
+            // EMBALAGENS
+            {"EMBALAGENS","Caixas de Papelão","Caixas para transporte e presente"},
+            {"EMBALAGENS","Sacolas e Sacos","Sacolas plásticas, papel e ecobags"},
+            {"EMBALAGENS","Embalagens Plásticas","Potes, bandejas, filmes e blisters"},
+            {"EMBALAGENS","Embalagens de Vidro","Frascos, potes e garrafas de vidro"},
+            {"EMBALAGENS","Embalagens Metálicas","Latas, tampas e embalagens de alumínio"},
+            {"EMBALAGENS","Fitas e Lacres","Fitas adesivas, lacres e seladores"},
+            {"EMBALAGENS","Embalagens Térmicas","Caixas térmicas e embalagens para frios"},
+            {"EMBALAGENS","Etiquetas e Rótulos","Etiquetas adesivas e rótulos personalizados"},
+            {"EMBALAGENS","Embalagens para Alimentos","Embalagens food-grade e marmitex"},
+            {"EMBALAGENS","Espumas e Proteção","Espumas, bolhas e materiais de proteção"},
+
+            // TECNOLOGIA
+            {"TECNOLOGIA","Notebooks e PCs","Computadores portáteis e desktops"},
+            {"TECNOLOGIA","Smartphones e Tablets","Celulares e tablets"},
+            {"TECNOLOGIA","Periféricos","Teclados, mouses, monitores e webcams"},
+            {"TECNOLOGIA","Componentes de Hardware","Placas, memórias, SSDs e processadores"},
+            {"TECNOLOGIA","Áudio e Vídeo","Fones, caixas de som, câmeras e projetores"},
+            {"TECNOLOGIA","Redes e Conectividade","Roteadores, switches, cabos e Wi-Fi"},
+            {"TECNOLOGIA","Impressoras e Suprimentos","Impressoras, cartuchos e papel"},
+            {"TECNOLOGIA","Softwares e Licenças","Licenças de software e aplicativos"},
+            {"TECNOLOGIA","Gadgets e Wearables","Smartwatches, rastreadores e acessórios tech"},
+            {"TECNOLOGIA","Segurança Eletrônica","Câmeras, alarmes e controle de acesso"},
+            {"TECNOLOGIA","Baterias e Carregadores","Power banks, carregadores e adaptadores"},
+
+            // CONSTRUCAO
+            {"CONSTRUCAO","Materiais de Construção","Cimento, areia, tijolos e blocos"},
+            {"CONSTRUCAO","Pisos e Revestimentos","Cerâmica, porcelanato, laminado e vinílico"},
+            {"CONSTRUCAO","Tintas e Vernizes","Tintas imobiliárias, vernizes e seladores"},
+            {"CONSTRUCAO","Hidráulica","Tubos, conexões, torneiras e caixas d'água"},
+            {"CONSTRUCAO","Esquadrias","Portas, janelas, portões e grades"},
+            {"CONSTRUCAO","Telhados e Coberturas","Telhas, calhas e estruturas metálicas"},
+            {"CONSTRUCAO","Iluminação Construção","Lâmpadas, luminárias e fios elétricos"},
+            {"CONSTRUCAO","Ferragens e Fixação","Parafusos, buchas, dobradiças e fechaduras"},
+            {"CONSTRUCAO","Impermeabilização","Mantas, resinas e produtos impermeabilizantes"},
+            {"CONSTRUCAO","Gesso e Drywall","Placas, perfis e acessórios para drywall"},
+            {"CONSTRUCAO","Paisagismo","Pedras decorativas, grama e jardins"},
+
+            // MOVEIS_E_ESCRITORIO
+            {"MOVEIS_E_ESCRITORIO","Sofás e Poltronas","Sofás de sala, poltronas e chaises"},
+            {"MOVEIS_E_ESCRITORIO","Mesas e Cadeiras","Mesas de jantar, centro e cadeiras"},
+            {"MOVEIS_E_ESCRITORIO","Móveis para Quarto","Camas, guarda-roupas e cômodas"},
+            {"MOVEIS_E_ESCRITORIO","Móveis para Escritório","Mesas de escritório, cadeiras ergonômicas"},
+            {"MOVEIS_E_ESCRITORIO","Armários e Estantes","Armários de cozinha, banheiro e estantes"},
+            {"MOVEIS_E_ESCRITORIO","Colchões e Travesseiros","Colchões, travesseiros e protetores"},
+            {"MOVEIS_E_ESCRITORIO","Móveis Infantis","Berços, camas e mesas infantis"},
+            {"MOVEIS_E_ESCRITORIO","Papelaria e Escritório","Canetas, cadernos, grampeadores e clips"},
+            {"MOVEIS_E_ESCRITORIO","Organização","Caixas organizadoras, prateleiras e racks"},
+
+            // ELETRICA_E_ELETRONICA
+            {"ELETRICA_E_ELETRONICA","Fios e Cabos Elétricos","Fios, cabos e mangueiras elétricas"},
+            {"ELETRICA_E_ELETRONICA","Disjuntores e Quadros","Disjuntores, quadros de distribuição e DPS"},
+            {"ELETRICA_E_ELETRONICA","Tomadas e Interruptores","Tomadas, interruptores e espelhos"},
+            {"ELETRICA_E_ELETRONICA","Iluminação Elétrica","Lâmpadas LED, luminárias e spots"},
+            {"ELETRICA_E_ELETRONICA","Motores e Bombas","Motores elétricos e bombas d'água"},
+            {"ELETRICA_E_ELETRONICA","Transformadores e Estabilizadores","Transformadores e nobreaks"},
+            {"ELETRICA_E_ELETRONICA","Componentes Eletrônicos","Resistores, capacitores, transistores"},
+            {"ELETRICA_E_ELETRONICA","Automação Residencial","Módulos smart home e controladores"},
+            {"ELETRICA_E_ELETRONICA","Placas e Circuitos","Arduino, Raspberry Pi e protoboards"},
+
+            // FERRAMENTAS_E_EQUIPAMENTOS
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Ferramentas Manuais","Chaves, martelos, alicates e serras"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Ferramentas Elétricas","Furadeiras, serras, lixadeiras e parafusadeiras"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Equipamentos de Medição","Paquímetros, nível, trenas e multímetros"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Soldagem","Máquinas de solda, eletrodos e acessórios"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","EPI – Proteção Individual","Capacetes, óculos, luvas e botas de segurança"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Equipamentos para Jardim","Roçadeiras, podadeiras e regadores"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Compressores e Pneumática","Compressores de ar e ferramentas pneumáticas"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Elevação e Movimentação","Paleteiras, guinchos e macaquinhos"},
+            {"FERRAMENTAS_E_EQUIPAMENTOS","Equipamentos de Limpeza","Lavadoras de pressão e aspiradores industriais"},
+
+            // BELEZA_E_COSMETICOS
+            {"BELEZA_E_COSMETICOS","Skin Care","Cremes, séruns, hidratantes e protetores solares"},
+            {"BELEZA_E_COSMETICOS","Maquiagem","Bases, batons, paletas e pincéis"},
+            {"BELEZA_E_COSMETICOS","Cabelos","Shampoos, condicionadores, coloração e finalizadores"},
+            {"BELEZA_E_COSMETICOS","Perfumes","Perfumes femininos, masculinos e unissex"},
+            {"BELEZA_E_COSMETICOS","Higiene Pessoal","Sabonetes, desodorantes e produtos de banho"},
+            {"BELEZA_E_COSMETICOS","Depilação","Ceras, lâminas e cremes depilatórios"},
+            {"BELEZA_E_COSMETICOS","Manicure e Pedicure","Esmaltes, removedores e kits de unhas"},
+            {"BELEZA_E_COSMETICOS","Equipamentos Estéticos","Dermaroller, luz LED e aparelhos de beleza"},
+            {"BELEZA_E_COSMETICOS","Suplementos Beleza","Colágeno, vitaminas e suplementos para pele"},
+
+            // SAUDE_E_HOSPITALAR
+            {"SAUDE_E_HOSPITALAR","Medicamentos OTC","Vitaminas, analgésicos e suplementos sem receita"},
+            {"SAUDE_E_HOSPITALAR","Equipamentos Médicos","Esfigmomanômetros, oxímetros e termômetros"},
+            {"SAUDE_E_HOSPITALAR","Descartáveis Hospitalares","Seringas, luvas, máscaras e curativos"},
+            {"SAUDE_E_HOSPITALAR","Ortopedia e Reabilitação","Órteses, muletas, bengalas e cadeiras de rodas"},
+            {"SAUDE_E_HOSPITALAR","Diagnóstico","Glicosímetros, tiras reagentes e testes rápidos"},
+            {"SAUDE_E_HOSPITALAR","Saúde Bucal","Escovas, fios dentais e enxaguantes"},
+            {"SAUDE_E_HOSPITALAR","Nutrição Clínica","Fórmulas nutricionais e suplementos clínicos"},
+            {"SAUDE_E_HOSPITALAR","Mobiliário Hospitalar","Camas hospitalares, macas e cadeiras de exame"},
+
+            // ALIMENTOS_E_BEBIDAS
+            {"ALIMENTOS_E_BEBIDAS","Grãos e Cereais","Arroz, feijão, milho, quinoa e aveia"},
+            {"ALIMENTOS_E_BEBIDAS","Massas e Farinhas","Macarrão, farinha de trigo e fubá"},
+            {"ALIMENTOS_E_BEBIDAS","Laticínios","Leite, queijos, iogurtes e manteiga"},
+            {"ALIMENTOS_E_BEBIDAS","Carnes e Proteínas","Bovinos, suínos, aves, peixes e ovos"},
+            {"ALIMENTOS_E_BEBIDAS","Frutas e Verduras","Frutas frescas, legumes e verduras"},
+            {"ALIMENTOS_E_BEBIDAS","Bebidas","Sucos, refrigerantes, águas e energéticos"},
+            {"ALIMENTOS_E_BEBIDAS","Bebidas Alcoólicas","Cervejas, vinhos, destilados e licores"},
+            {"ALIMENTOS_E_BEBIDAS","Doces e Chocolates","Chocolates, balas, gomas e sobremesas"},
+            {"ALIMENTOS_E_BEBIDAS","Condimentos e Temperos","Sal, pimenta, molhos e temperos prontos"},
+            {"ALIMENTOS_E_BEBIDAS","Congelados e Resfriados","Pizzas, pratos prontos e sorvetes"},
+            {"ALIMENTOS_E_BEBIDAS","Orgânicos e Naturais","Produtos orgânicos, naturais e sem aditivos"},
+            {"ALIMENTOS_E_BEBIDAS","Panificação","Pães, bolos, biscoitos e confeitaria"},
+
+            // AGRONEGOCIO
+            {"AGRONEGOCIO","Sementes e Mudas","Sementes para plantio e mudas diversas"},
+            {"AGRONEGOCIO","Fertilizantes e Corretivos","Adubos, calcário e fertilizantes foliar"},
+            {"AGRONEGOCIO","Defensivos Agrícolas","Herbicidas, fungicidas e inseticidas"},
+            {"AGRONEGOCIO","Irrigação","Sistemas de irrigação, mangueiras e gotejadores"},
+            {"AGRONEGOCIO","Máquinas Agrícolas","Tratores, colhedoras e implementos"},
+            {"AGRONEGOCIO","Nutrição Animal","Rações, suplementos e minerais para animais"},
+            {"AGRONEGOCIO","Veterinária","Vacinas, medicamentos e equipamentos veterinários"},
+            {"AGRONEGOCIO","Silos e Armazenagem","Silos, bags e sistemas de armazenagem"},
+            {"AGRONEGOCIO","Aquicultura e Pesca","Redes, equipamentos e insumos para aquicultura"},
+
+            // LIMPEZA_E_HIGIENE
+            {"LIMPEZA_E_HIGIENE","Produtos de Limpeza","Detergentes, desinfetantes e multiuso"},
+            {"LIMPEZA_E_HIGIENE","Limpeza Industrial","Produtos para limpeza industrial e desincrustação"},
+            {"LIMPEZA_E_HIGIENE","Higiene para Banheiro","Papel higiênico, sabonete e álcool gel"},
+            {"LIMPEZA_E_HIGIENE","Limpeza de Piso","Ceras, seladores e limpadores de piso"},
+            {"LIMPEZA_E_HIGIENE","Lavanderia","Sabão em pó, amaciante e tira-manchas"},
+            {"LIMPEZA_E_HIGIENE","Equipamentos de Limpeza","Vassouras, rodos, mops e aspiradores"},
+            {"LIMPEZA_E_HIGIENE","Descartáveis de Higiene","Luvas, mascaras, toucas e protetores"},
+            {"LIMPEZA_E_HIGIENE","Aromatizantes","Sprays, difusores e sachês aromáticos"},
+
+            // PET
+            {"PET","Ração e Petiscos","Rações e petiscos para cães, gatos e outros"},
+            {"PET","Acessórios Pet","Coleiras, guias, roupinhas e camas"},
+            {"PET","Higiene e Banho Pet","Shampoos, escovas e produtos de higiene"},
+            {"PET","Brinquedos Pet","Bolas, mordedores e brinquedos interativos"},
+            {"PET","Saúde Animal","Antipulgas, vermífugos e suplementos"},
+            {"PET","Aquários e Peixes","Aquários, filtros, rações e acessórios"},
+            {"PET","Pássaros","Gaiolas, rações e acessórios para aves"},
+            {"PET","Transporte Pet","Caixas de transporte e bolsas para pets"},
+
+            // ESPORTES_E_FITNESS
+            {"ESPORTES_E_FITNESS","Academia e Musculação","Halteres, barras, anilhas e suportes"},
+            {"ESPORTES_E_FITNESS","Ciclismo","Bikes, capacetes, luvas e acessórios"},
+            {"ESPORTES_E_FITNESS","Corrida e Caminhada","Tênis, meias e acessórios para corrida"},
+            {"ESPORTES_E_FITNESS","Natação","Óculos, maiôs, pranchas e nadadeiras"},
+            {"ESPORTES_E_FITNESS","Esportes Coletivos","Bolas, redes e equipamentos para futebol/vôlei"},
+            {"ESPORTES_E_FITNESS","Artes Marciais","Quimonos, luvas de boxe e proteções"},
+            {"ESPORTES_E_FITNESS","Yoga e Pilates","Tapetes, blocos, alças e acessórios"},
+            {"ESPORTES_E_FITNESS","Suplementos Esportivos","Whey, creatina, BCAA e pré-treinos"},
+            {"ESPORTES_E_FITNESS","Esportes Radicais","Equipamentos para skate, surf e escalada"},
+            {"ESPORTES_E_FITNESS","Camping e Trilha","Barracas, mochilas, lanternas e utensílios"},
+
+            // BRINQUEDOS_E_INFANTIL
+            {"BRINQUEDOS_E_INFANTIL","Brinquedos Educativos","Quebra-cabeças, blocos e jogos pedagógicos"},
+            {"BRINQUEDOS_E_INFANTIL","Bonecos e Bonecas","Action figures, bonecas e acessórios"},
+            {"BRINQUEDOS_E_INFANTIL","Carrinhos e Veículos","Carrinhos, pistas e miniaturas"},
+            {"BRINQUEDOS_E_INFANTIL","Games e Eletrônicos Infantis","Videogames, tablets e games educativos"},
+            {"BRINQUEDOS_E_INFANTIL","Parque e Lazer","Escorregadores, balanços e piscinas de bolinha"},
+            {"BRINQUEDOS_E_INFANTIL","Pelúcias e Fantasias","Pelúcias, fantasias e roupas de festa"},
+            {"BRINQUEDOS_E_INFANTIL","Arte e Pintura Infantil","Tinta, massinha, giz e canetinhas"},
+            {"BRINQUEDOS_E_INFANTIL","Bebê","Fraldas, chupetas, mamadeiras e itens para bebê"},
+            {"BRINQUEDOS_E_INFANTIL","Mochilas e Material Escolar","Mochilas, lancheiras e material escolar"},
+
+            // CASA_E_DECORACAO
+            {"CASA_E_DECORACAO","Decoração de Sala","Quadros, almofadas, tapetes e vasos"},
+            {"CASA_E_DECORACAO","Cama, Mesa e Banho","Lençóis, toalhas, jogos de cama e mesa"},
+            {"CASA_E_DECORACAO","Utensílios de Cozinha","Panelas, talheres, utensílios e acessórios"},
+            {"CASA_E_DECORACAO","Eletrodomésticos","Geladeiras, fogões, micro-ondas e lavadoras"},
+            {"CASA_E_DECORACAO","Jardim e Varanda","Vasos, plantas, ferramentas e mobiliário externo"},
+            {"CASA_E_DECORACAO","Iluminação Decorativa","Luminárias, pendentes e abajures"},
+            {"CASA_E_DECORACAO","Artes e Quadros","Quadros, esculturas e objetos decorativos"},
+            {"CASA_E_DECORACAO","Cortinas e Persianas","Cortinas, persianas, barras e trilhos"},
+            {"CASA_E_DECORACAO","Organizadores e Armazenamento","Cestos, caixas e prateleiras organizadoras"},
+
+            // INDUSTRIAL
+            {"INDUSTRIAL","Máquinas Industriais","Tornos, fresadoras, prensas e injetoras"},
+            {"INDUSTRIAL","Manutenção Industrial","Rolamentos, correias, retentores e polias"},
+            {"INDUSTRIAL","Embalagens Industriais","Bombonas, IBC, tambores e sacarias"},
+            {"INDUSTRIAL","Pneumática e Hidráulica","Cilindros, válvulas, mangueiras e conexões"},
+            {"INDUSTRIAL","Instrumentação","Sensores, transdutores e controladores PID"},
+            {"INDUSTRIAL","EPIs Industriais","Capacetes, botinas, protetores e macacões"},
+            {"INDUSTRIAL","Movimentação de Cargas","Empilhadeiras, talhas, paletes e esteiras"},
+            {"INDUSTRIAL","Química Industrial","Ácidos, solventes, tintas industriais e graxas"},
+            {"INDUSTRIAL","Soldagem Industrial","Máquinas MIG, TIG, eletrodos e consumíveis"},
+
+            // SEGURANCA
+            {"SEGURANCA","Câmeras de Segurança","DVRs, câmeras IP, CFTV e acessórios"},
+            {"SEGURANCA","Alarmes e Sensores","Centrais de alarme, sensores e sirenes"},
+            {"SEGURANCA","Controle de Acesso","Catracas, leitores biométricos e fechaduras eletrônicas"},
+            {"SEGURANCA","Rastreamento Veicular","Rastreadores GPS e sistemas de monitoramento"},
+            {"SEGURANCA","Segurança Patrimonial","Cercas elétricas, concertinas e portões"},
+            {"SEGURANCA","Extintores e Combate a Incêndio","Extintores, sprinklers e detectores de fumaça"},
+            {"SEGURANCA","EPIs de Segurança","Coletes, capacetes, luvas e óculos de proteção"},
+            {"SEGURANCA","Cofres e Arquivos","Cofres eletrônicos, gavetas de segurança"},
+
+            // ENERGIA
+            {"ENERGIA","Energia Solar","Painéis fotovoltaicos, inversores e kits solares"},
+            {"ENERGIA","Baterias e Armazenamento","Baterias estacionárias, lítio e UPS"},
+            {"ENERGIA","Geradores","Geradores a diesel, gasolina e gás"},
+            {"ENERGIA","Elétrica Industrial","Transformadores, motores e quadros elétricos"},
+            {"ENERGIA","Energia Eólica","Aerogeradores e acessórios para energia eólica"},
+            {"ENERGIA","Iluminação Eficiente","Luminárias LED, sensores e automação de luz"},
+            {"ENERGIA","Medição de Energia","Medidores, analisadores de energia e telemetria"},
+
+            // GRAFICA_E_PERSONALIZADOS
+            {"GRAFICA_E_PERSONALIZADOS","Impressão Gráfica","Flyers, banners, cartazes e folders"},
+            {"GRAFICA_E_PERSONALIZADOS","Brindes Personalizados","Canetas, canecas, camisetas e chaveiros"},
+            {"GRAFICA_E_PERSONALIZADOS","Embalagens Personalizadas","Caixas, sacolas e tags com logomarca"},
+            {"GRAFICA_E_PERSONALIZADOS","Sinalização","Placas, totens, letreiros e banners"},
+            {"GRAFICA_E_PERSONALIZADOS","Sublimação","Produtos para sublimação e transfer"},
+            {"GRAFICA_E_PERSONALIZADOS","Insumos Gráficos","Papéis especiais, tintas e filmes"},
+            {"GRAFICA_E_PERSONALIZADOS","Bordado e Silk","Bordados, silk screen e estamparia"},
+
+            // ARTESANATO_E_HOBBIES
+            {"ARTESANATO_E_HOBBIES","Tecidos e Costura","Tecidos, linhas, agulhas e aviamentos"},
+            {"ARTESANATO_E_HOBBIES","Pintura Artística","Tintas, pincéis, telas e cavaletes"},
+            {"ARTESANATO_E_HOBBIES","Papelaria Criativa","Papéis especiais, carimbos e scrapbook"},
+            {"ARTESANATO_E_HOBBIES","Modelagem","Argila, biscuit, resina e moldes"},
+            {"ARTESANATO_E_HOBBIES","Bijuteria e Joalheria","Fios, pedras, peças e ferramentas de joalheria"},
+            {"ARTESANATO_E_HOBBIES","Crochê e Tricô","Fios, agulhas e moldes para crochê/tricô"},
+            {"ARTESANATO_E_HOBBIES","Marcenaria e Madeira","Madeiras, ferramentas e acabamentos"},
+            {"ARTESANATO_E_HOBBIES","Colecionismo","Miniaturas, cards, selos e itens colecionáveis"},
+
+            // OUTROS
+            {"OUTROS","Produtos Gerais","Produtos que não se encaixam nas demais categorias"},
+            {"OUTROS","Serviços","Prestação de serviços diversos"},
+            {"OUTROS","Importados","Produtos importados variados"},
+            {"OUTROS","Promoções","Produtos em oferta e liquidação"}
+        };
+
+        int inseridos = 0;
+        int pulados = 0;
+        for (String[] sub : subs) {
+            String categoria = sub[0];
+            String nome      = sub[1];
+            String descricao = sub[2];
+            try {
+                Integer existe = jdbcTemplate.queryForObject(
+                    "SELECT COUNT(*) FROM Subcategorias WHERE nome = ? AND categoria = ?",
+                    Integer.class, nome, categoria);
+                if (existe == null || existe == 0) {
+                    jdbcTemplate.update(
+                        "INSERT INTO Subcategorias (nome, descricao, categoria, ativa) VALUES (?, ?, ?, TRUE)",
+                        nome, descricao, categoria);
+                    inseridos++;
+                } else {
+                    pulados++;
+                }
+            } catch (Exception e) {
+                System.err.println("[SUBCATS] Erro ao inserir '" + nome + "' [" + categoria + "]: " + e.getMessage());
+            }
         }
-        
-        // Versao 10
-        aplicarAtualizacao(10, "Cria tabelas Paises e Cidades", () -> {
-            String sql1 = "CREATE TABLE IF NOT EXISTS Paises " +
-                         "(CodPais INTEGER PRIMARY KEY, Pais TEXT NOT NULL)";
-            String sql2 = "CREATE TABLE IF NOT EXISTS Cidades " +
-                         "(CodCidade INTEGER PRIMARY KEY, Cidade TEXT NOT NULL, " +
-                         "UF TEXT NOT NULL, CodRegiao INTEGER, Alterado INTEGER DEFAULT 0, " +
-                         "CodCidadeIBGE INTEGER NOT NULL UNIQUE, CodPais INTEGER NOT NULL)";
-            executarSql(sql1);
-            executarSql(sql2);
-        });
-
-        // Versao 11
-        aplicarAtualizacao(11, "Adiciona CodCidade a fornecedores e compradores", () -> {
-            adicionarColunaSeNaoExistir("Fornecedores", "CodCidade", "INTEGER");
-            adicionarColunaSeNaoExistir("Compradores", "CodCidade", "INTEGER");
-        });
-
-        // Versao 12
-        aplicarAtualizacao(12, "Carga inicial de paises", this::importarPaises);
-
-        // Versao 20
-        aplicarAtualizacao(20, "Cria tabelas de Usuarios, Representantes e Clientes", () -> {
-            String sql1 = "CREATE TABLE IF NOT EXISTS Usuarios " +
-                         "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT NOT NULL UNIQUE, " +
-                         "Senha TEXT NOT NULL, Tipo TEXT NOT NULL)";
-            String sql2 = "CREATE TABLE IF NOT EXISTS Representantes " +
-                         "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Nome TEXT NOT NULL, status TEXT)";
-            String sql3 = "CREATE TABLE IF NOT EXISTS Clientes " +
-                         "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Nome TEXT NOT NULL, status TEXT)";
-            executarSql(sql1);
-            executarSql(sql2);
-            executarSql(sql3);
-        });
-
-        // Versao 30 - Adiciona Categorias e Atividades (SEM DELETAR DADOS EXISTENTES)
-        aplicarAtualizacao(30, "Cria tabelas de Categorias e Atividades com dados iniciais", () -> {
-            // Criar tabelas se não existirem (usar nomes com capital como nas entities)
-            String sqlCategorias = "CREATE TABLE IF NOT EXISTS Categorias " +
-                                  "(id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT NOT NULL UNIQUE, descricao TEXT, icone TEXT, ativa INTEGER DEFAULT 1, criadaEm TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, atualizadaEm TEXT DEFAULT CURRENT_TIMESTAMP)";
-            String sqlAtividades = "CREATE TABLE IF NOT EXISTS Atividades " +
-                                  "(id INTEGER PRIMARY KEY AUTOINCREMENT, cnae TEXT UNIQUE, descricao TEXT NOT NULL UNIQUE, secao TEXT, divisao TEXT, ativa INTEGER DEFAULT 1, criadaEm TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, atualizadaEm TEXT DEFAULT CURRENT_TIMESTAMP)";
-            executarSql(sqlCategorias);
-            executarSql(sqlAtividades);
-            
-            // Inserir dados iniciais em Categorias (INSERT OR IGNORE evita conflito se já existem)
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (1, 'Eletrônicos', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (2, 'Alimentos', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (3, 'Vestuário', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (4, 'Automóvel', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (5, 'Motocicletas', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (6, 'Moda e Têxtil', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (7, 'Embalagens', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (8, 'Tecnologia', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (9, 'Construção', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (10, 'Móvel e Escritório', 1)");
-            
-            // Inserir dados iniciais em Atividades
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (1, 'Comércio Varejista', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (2, 'Comércio Atacadista', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (3, 'Fabricação', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (4, 'Distribuição', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (5, 'Importação', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (6, 'Exportação', 1)");
-        });
-
-        // Versao 31 - Reconstrói tabelas Categorias e Atividades com schema completo
-        aplicarAtualizacao(31, "Reconstrói tabelas com todas as colunas necessárias", () -> {
-            try {
-                // Backup de dados existentes (se houver)
-                executarSql("CREATE TEMPORARY TABLE cat_backup AS SELECT * FROM Categorias");
-                executarSql("CREATE TEMPORARY TABLE ati_backup AS SELECT * FROM Atividades");
-            } catch (Exception e) {
-                // Tabelas podem não existir ainda
-            }
-            
-            // Dropar tabelas antigas se existem
-            try {
-                executarSql("DROP TABLE IF EXISTS Categorias");
-                executarSql("DROP TABLE IF EXISTS Atividades");
-            } catch (Exception e) {
-                // Ignorar se tabelas não existem
-            }
-            
-            // Recriar tabelas com schema completo
-            String sqlCategorias = "CREATE TABLE Categorias (" +
-                                  "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                  "nome TEXT NOT NULL UNIQUE, " +
-                                  "descricao TEXT, " +
-                                  "icone TEXT, " +
-                                  "ativa INTEGER DEFAULT 1, " +
-                                  "criadaEm TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
-                                  "atualizadaEm TEXT DEFAULT CURRENT_TIMESTAMP" +
-                                  ")";
-            String sqlAtividades = "CREATE TABLE Atividades (" +
-                                  "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                  "cnae TEXT UNIQUE, " +
-                                  "descricao TEXT NOT NULL UNIQUE, " +
-                                  "secao TEXT, " +
-                                  "divisao TEXT, " +
-                                  "ativa INTEGER DEFAULT 1, " +
-                                  "criadaEm TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, " +
-                                  "atualizadaEm TEXT DEFAULT CURRENT_TIMESTAMP" +
-                                  ")";
-            
-            executarSql(sqlCategorias);
-            executarSql(sqlAtividades);
-            
-            // Restaurar dados de backup se existirem
-            try {
-                executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) SELECT id, nome, ativa FROM cat_backup");
-                executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) SELECT id, nome, ativa FROM ati_backup");
-            } catch (Exception e) {
-                // Backup pode não ter dados
-            }
-            
-            // Inserir dados iniciais
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (1, 'Eletrônicos', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (2, 'Alimentos', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (3, 'Vestuário', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (4, 'Automóvel', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (5, 'Motocicletas', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (6, 'Moda e Têxtil', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (7, 'Embalagens', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (8, 'Tecnologia', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (9, 'Construção', 1)");
-            executarSql("INSERT OR IGNORE INTO Categorias (id, nome, ativa) VALUES (10, 'Móvel e Escritório', 1)");
-            
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (1, 'Comércio Varejista', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (2, 'Comércio Atacadista', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (3, 'Fabricação', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (4, 'Distribuição', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (5, 'Importação', 1)");
-            executarSql("INSERT OR IGNORE INTO Atividades (id, descricao, ativa) VALUES (6, 'Exportação', 1)");
-        });
-
-        // Versao 32 - Consolida colunas duplicadas (CodCidade, CpfCnpj, etc) e adiciona campos faltantes
-        aplicarAtualizacao(32, "Consolida colunas duplicadas e adiciona email/telefone/foto em Compradores", () -> {
-            // PRIMEIRO: Adicionar colunas faltantes em Categorias e Atividades ANTES de consolidar
-            adicionarColunaSeNaoExistir("Categorias", "criadaEm", "TEXT");
-            adicionarColunaSeNaoExistir("Categorias", "atualizadaEm", "TEXT");
-            adicionarColunaSeNaoExistir("Atividades", "criadaEm", "TEXT");
-            adicionarColunaSeNaoExistir("Atividades", "atualizadaEm", "TEXT");
-            
-            // SEGUNDO: Consolidar tabelas (como antes)
-            // 1. CONSOLIDAR FORNECEDORES (remover CodCidade duplicado)
-            try {
-                executarSql("BEGIN TRANSACTION");
-                
-                executarSql("CREATE TABLE fornecedores_new (" +
-                           "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                           "empresa VARCHAR(100) NOT NULL, " +
-                           "cnpj VARCHAR(255) NOT NULL UNIQUE, " +
-                           "status VARCHAR(255), " +
-                           "pontuacao_risco FLOAT, " +
-                           "logradouro VARCHAR(255), " +
-                           "numero VARCHAR(255), " +
-                           "complemento VARCHAR(255), " +
-                           "bairro VARCHAR(255), " +
-                           "cidade VARCHAR(255), " +
-                           "estado VARCHAR(255), " +
-                           "cep VARCHAR(255), " +
-                           "latitude DOUBLE, " +
-                           "longitude DOUBLE, " +
-                           "cod_cidade BIGINT, " +
-                           "aceitacpf BOOLEAN, " +
-                           "prazo_entrega_dias INTEGER, " +
-                           "email VARCHAR(255), " +
-                           "telefone VARCHAR(255), " +
-                           "foto TEXT, " +
-                           "foto_nome VARCHAR(255), " +
-                           "atividade_id BIGINT, " +
-                           "categoria_id BIGINT)");
-                
-                executarSql("INSERT INTO fornecedores_new " +
-                           "SELECT id, empresa, cnpj, status, pontuacao_risco, " +
-                           "logradouro, numero, complemento, bairro, cidade, estado, cep, " +
-                           "latitude, longitude, COALESCE(cod_cidade, CodCidade), " +
-                           "aceitacpf, prazo_entrega_dias, email, telefone, foto, foto_nome, " +
-                           "atividade_id, categoria_id FROM fornecedores");
-                
-                executarSql("DROP TABLE fornecedores");
-                executarSql("ALTER TABLE fornecedores_new RENAME TO fornecedores");
-                executarSql("COMMIT");
-            } catch (Exception e) {
-                try { executarSql("ROLLBACK"); } catch (Exception e2) { }
-            }
-
-            // 2. CONSOLIDAR COMPRADORES (remover CodCidade + adicionar email, telefone, foto, fotoNome)
-            try {
-                executarSql("BEGIN TRANSACTION");
-                
-                executarSql("CREATE TABLE compradores_new (" +
-                           "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                           "empresa VARCHAR(100) NOT NULL, " +
-                           "cnpj VARCHAR(255) NOT NULL UNIQUE, " +
-                           "status VARCHAR(255), " +
-                           "pontuacao_risco FLOAT, " +
-                           "logradouro VARCHAR(255), " +
-                           "numero VARCHAR(255), " +
-                           "complemento VARCHAR(255), " +
-                           "bairro VARCHAR(255), " +
-                           "cidade VARCHAR(255), " +
-                           "estado VARCHAR(255), " +
-                           "cep VARCHAR(255), " +
-                           "latitude DOUBLE, " +
-                           "longitude DOUBLE, " +
-                           "cod_cidade BIGINT, " +
-                           "atividade_id BIGINT, " +
-                           "categoria_id BIGINT, " +
-                           "email VARCHAR(255), " +
-                           "telefone VARCHAR(255), " +
-                           "foto TEXT, " +
-                           "foto_nome VARCHAR(255))");
-                
-                executarSql("INSERT INTO compradores_new " +
-                           "SELECT id, empresa, cnpj, status, pontuacao_risco, " +
-                           "logradouro, numero, complemento, bairro, cidade, estado, cep, " +
-                           "latitude, longitude, COALESCE(cod_cidade, CodCidade), " +
-                           "atividade_id, categoria_id, NULL, NULL, NULL, NULL FROM compradores");
-                
-                executarSql("DROP TABLE compradores");
-                executarSql("ALTER TABLE compradores_new RENAME TO compradores");
-                executarSql("COMMIT");
-            } catch (Exception e) {
-                try { executarSql("ROLLBACK"); } catch (Exception e2) { }
-            }
-
-            // 3. CONSOLIDAR CLIENTES (remover CpfCnpj, TipoPessoa duplicados)
-            try {
-                executarSql("BEGIN TRANSACTION");
-                
-                executarSql("CREATE TABLE clientes_new (" +
-                           "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                           "nome VARCHAR(100) NOT NULL, " +
-                           "status VARCHAR(255), " +
-                           "cpf_cnpj VARCHAR(255), " +
-                           "tipo_pessoa VARCHAR(255), " +
-                           "logradouro VARCHAR(255), " +
-                           "numero VARCHAR(255), " +
-                           "complemento VARCHAR(255), " +
-                           "bairro VARCHAR(255), " +
-                           "cidade VARCHAR(255), " +
-                           "estado VARCHAR(255), " +
-                           "cep VARCHAR(255), " +
-                           "latitude DOUBLE, " +
-                           "longitude DOUBLE, " +
-                           "email VARCHAR(255), " +
-                           "telefone VARCHAR(255), " +
-                           "endereco VARCHAR(255), " +
-                           "foto TEXT, " +
-                           "foto_nome VARCHAR(255))");
-                
-                executarSql("INSERT INTO clientes_new " +
-                           "SELECT id, nome, status, " +
-                           "COALESCE(cpf_cnpj, CpfCnpj), COALESCE(tipo_pessoa, TipoPessoa), " +
-                           "logradouro, numero, complemento, bairro, cidade, estado, cep, " +
-                           "latitude, longitude, email, telefone, endereco, foto, foto_nome FROM clientes");
-                
-                executarSql("DROP TABLE clientes");
-                executarSql("ALTER TABLE clientes_new RENAME TO clientes");
-                executarSql("COMMIT");
-            } catch (Exception e) {
-                try { executarSql("ROLLBACK"); } catch (Exception e2) { }
-            }
-
-            // 4. CONSOLIDAR REPRESENTANTES (remover CnpjFornecedor, CodEmpresa duplicados)
-            try {
-                executarSql("BEGIN TRANSACTION");
-                
-                executarSql("CREATE TABLE representantes_new (" +
-                           "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                           "nome VARCHAR(100) NOT NULL, " +
-                           "status VARCHAR(255), " +
-                           "cnpj VARCHAR(255), " +
-                           "cnpj_fornecedor VARCHAR(255), " +
-                           "cod_empresa BIGINT, " +
-                           "contato VARCHAR(30), " +
-                           "email VARCHAR(120), " +
-                           "logradouro VARCHAR(255), " +
-                           "numero VARCHAR(255), " +
-                           "complemento VARCHAR(255), " +
-                           "bairro VARCHAR(255), " +
-                           "cidade VARCHAR(255), " +
-                           "estado VARCHAR(255), " +
-                           "cep VARCHAR(255), " +
-                           "latitude DOUBLE, " +
-                           "longitude DOUBLE, " +
-                           "atividade_id BIGINT, " +
-                           "categoria_id BIGINT)");
-                
-                executarSql("INSERT INTO representantes_new " +
-                           "SELECT id, nome, status, cnpj, " +
-                           "COALESCE(cnpj_fornecedor, CnpjFornecedor), COALESCE(cod_empresa, CodEmpresa), " +
-                           "contato, email, " +
-                           "logradouro, numero, complemento, bairro, cidade, estado, cep, " +
-                           "latitude, longitude, atividade_id, categoria_id FROM representantes");
-                
-                executarSql("DROP TABLE representantes");
-                executarSql("ALTER TABLE representantes_new RENAME TO representantes");
-                executarSql("COMMIT");
-            } catch (Exception e) {
-                try { executarSql("ROLLBACK"); } catch (Exception e2) { }
-            }
-        });
-    }
-
-    private void aplicarAtualizacao(int versao, String descricao, Runnable atualizacao) {
-        try {
-            Integer encontrada = jdbcTemplate.queryForObject(
-                    "SELECT COUNT(*) FROM schema_migrations WHERE versao = ?", Integer.class, versao);
-            if (encontrada != null && encontrada > 0) {
-                return;
-            }
-        } catch (Exception e) {
-            // Tabela pode nao existir ainda
-        }
-
-        try {
-            atualizacao.run();
-            jdbcTemplate.update("INSERT INTO schema_migrations (versao, descricao) VALUES (?, ?)", versao, descricao);
-        } catch (Exception e) {
-            System.err.println("Erro ao aplicar atualizacao " + versao + ": " + e.getMessage());
-        }
-    }
-
-    private void executarSql(String sql) {
-        jdbcTemplate.execute(sql);
-    }
-
-    private void importarPaises() {
-        jdbcTemplate.update("INSERT OR IGNORE INTO Paises (CodPais, Pais) VALUES (?, ?)", 1058, "BRASIL");
-        jdbcTemplate.update("INSERT OR IGNORE INTO Paises (CodPais, Pais) VALUES (?, ?)", 9999999, "EXTERIOR");
-    }
-
-    private void adicionarColunaSeNaoExistir(String tabela, String coluna, String definicao) {
-        validarIdentificador(tabela);
-        validarIdentificador(coluna);
-
-        try {
-            boolean colunaExiste = jdbcTemplate.query("PRAGMA table_info(" + tabela + ")",
-                    (rs, rowNum) -> rs.getString("name")).stream().anyMatch(coluna::equalsIgnoreCase);
-
-            if (!colunaExiste) {
-                String sql = "ALTER TABLE " + tabela + " ADD COLUMN " + coluna + " " + definicao;
-                jdbcTemplate.execute(sql);
-            }
-        } catch (Exception e) {
-            System.err.println("Erro ao adicionar coluna " + coluna + " em " + tabela + ": " + e.getMessage());
-        }
+        System.out.println("[SUBCATS] " + inseridos + " subcategorias inseridas, " + pulados + " já existiam.");
     }
 
     private void validarIdentificador(String identificador) {
