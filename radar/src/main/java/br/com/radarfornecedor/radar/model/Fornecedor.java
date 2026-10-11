@@ -78,6 +78,16 @@ public class Fornecedor {
     @Column(name = "FotoNome")
     private String fotoNome;
 
+    // Campos de verificação (selo de empresa verificada)
+    @Column(name = "verificado")
+    private Boolean verificado = false;
+
+    @Column(name = "verificado_em")
+    private java.time.LocalDateTime verificadoEm;
+
+    @Column(name = "verificado_por")
+    private Long verificadoPor;
+
     // Relacionamento com Categoria e Atividade
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id")
@@ -166,4 +176,13 @@ public class Fornecedor {
 
     public Atividade getAtividade() { return atividade; }
     public void setAtividade(Atividade atividade) { this.atividade = atividade; }
+
+    public Boolean getVerificado() { return verificado; }
+    public void setVerificado(Boolean verificado) { this.verificado = verificado; }
+
+    public java.time.LocalDateTime getVerificadoEm() { return verificadoEm; }
+    public void setVerificadoEm(java.time.LocalDateTime verificadoEm) { this.verificadoEm = verificadoEm; }
+
+    public Long getVerificadoPor() { return verificadoPor; }
+    public void setVerificadoPor(Long verificadoPor) { this.verificadoPor = verificadoPor; }
 }

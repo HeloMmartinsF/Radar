@@ -250,3 +250,40 @@
     </div>
 
 </aside>
+
+<script>
+/**
+ * Ajusta dinamicamente o link "Meu Perfil" baseado no tipo de usuário
+ * Fornecedores → /pages/perfil-comercial.html (perfil comercial)
+ * Clientes/Representantes → /pages/perfil.html (perfil social)
+ */
+(function() {
+    // Buscar usuário logado
+    fetch('/api/login/session')
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            return null;
+        })
+        .then(usuario => {
+            if (usuario) {
+                const linkPerfil = document.getElementById('menu-perfil');
+                
+                // Se usuário é fornecedor, redirecionar para perfil comercial
+                if (usuario.fornecedor === true) {
+                    linkPerfil.href = '/pages/perfil-comercial.html';
+                    console.log('[Menu] Usuário é fornecedor → perfil comercial');
+                } else {
+                    // Cliente, Representante ou outros → perfil social
+                    linkPerfil.href = '/pages/perfil.html';
+                    console.log('[Menu] Usuário não é fornecedor → perfil social');
+                }
+            }
+        })
+        .catch(error => {
+            console.error('[Menu] Erro ao verificar tipo de usuário:', error);
+            // Em caso de erro, manter padrão (perfil social)
+        });
+})();
+</script>

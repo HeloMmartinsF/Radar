@@ -111,4 +111,105 @@ public class FornecedorController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * PUT /api/fornecedores/{id}/verificar
+     * Marca/desmarca um fornecedor como verificado (selo de empresa verificada)
+     * Apenas ADMIN pode executar esta operação
+     * 
+     * Body: { "verificado": true/false }
+     * 
+     * @param id ID do fornecedor
+     * @param request Dados da verificação
+     * @param session Sessão HTTP
+     * @return Fornecedor atualizado
+     */
+    @PutMapping("/{id}/verificar")
+    public ResponseEntity<?> verificarFornecedor(
+            @PathVariable Long id,
+            @RequestBody Map<String, Boolean> request,
+            javax.servlet.http.HttpSession session) {
+        try {
+            // Validação 1: Usuário autenticado?
+            br.com.radarfornecedor.radar.model.Usuario usuario = 
+                (br.com.radarfornecedor.radar.model.Usuario) session.getAttribute("usuario");
+            
+            if (usuario == null) {
+                return ResponseEntity.status(401)
+                        .body(Map.of("erro", "Usuário não autenticado"));
+            }
+
+            // Validação 2: Usuário é ADMIN?
+            if (usuario.getTipo() != br.com.radarfornecedor.radar.model.TipoUsuario.ADMIN) {
+                return ResponseEntity.status(403)
+                        .body(Map.of("erro", "Apenas administradores podem verificar fornecedores"));
+            }
+
+            // Validação 3: Fornecedor existe?
+            java.util.Optional<Fornecedor> fornecedorOpt = fornecedorService.buscarPorId(id);
+            if (fornecedorOpt.isEmpty()) {
+                return ResponseEntity.status(404)
+                        .body(Map.of("erro", "Fornecedor não encontrado"));
+            }
+
+            Fornecedor fornecedor = fornecedorOpt.get();
+            Boolean verificado = request.getOrDefault("verificado", true);
+
+            // Atualizar status de verificação
+            fornecedor.setVerificado(verificado);
+            
+            if (verificado) {
+                fornecedor.setVerificadoEm(java.time.LocalDateTime.now());
+                fornecedor.setVerificadoPor(usuario.getId());
+            } else {
+                // Se desmarcar verificação, limpar dados
+                fornecedor.setVerificadoEm(null);
+                fornecedor.setVerificadoPor(null);
+            }
+
+            // Salvar (usar o service para manter consistência)
+            Fornecedor atualizado = fornecedorService.atualizar(id, fornecedor, session);
+
+            return ResponseEntity.ok(Map.of(
+                    "sucesso", true,
+                    "mensagem", verificado ? "Fornecedor verificado com sucesso!" : "Verificação removida",
+                    "fornecedor", atualizado
+            ));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500)
+                    .body(Map.of("erro", "Erro ao verificar fornecedor: " + e.getMessage()));
+        }
+    }
+
+    /**
+     * GET /api/fornecedores/{id}/status-verificacao
+     * Retorna o status de verificação de um fornecedor
+     * 
+     * @param id ID do fornecedor
+     * @return Status de verificação
+     */
+    @GetMapping("/{id}/status-verificacao")
+    public ResponseEntity<?> obterStatusVerificacao(@PathVariable Long id) {
+        try {
+            java.util.Optional<Fornecedor> fornecedorOpt = fornecedorService.buscarPorId(id);
+            if (fornecedorOpt.isEmpty()) {
+                return ResponseEntity.status(404)
+                        .body(Map.of("erro", "Fornecedor não encontrado"));
+            }
+
+            Fornecedor fornecedor = fornecedorOpt.get();
+            
+            Map<String, Object> status = new java.util.HashMap<>();
+            status.put("verificado", fornecedor.getVerificado() != null && fornecedor.getVerificado());
+            status.put("verificadoEm", fornecedor.getVerificadoEm());
+            status.put("verificadoPor", fornecedor.getVerificadoPor());
+
+            return ResponseEntity.ok(status);
+        } catch (Exception e) {
+            return ResponseEntity.status(500)
+                    .body(Map.of("erro", "Erro ao obter status: " + e.getMessage()));
+        }
+    }
 }
