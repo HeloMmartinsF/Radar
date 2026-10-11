@@ -1,0 +1,362 @@
+[
+  {
+    "categoria": "AUTOMOTIVO",
+    "subcategorias": [
+      {"nome": "Peças de Motor", "descricao": "Motores, pistões, virabrequins e componentes internos"},
+      {"nome": "Freios e Suspensão", "descricao": "Sistemas de freio, amortecedores e suspensão"},
+      {"nome": "Pneus e Rodas", "descricao": "Pneus, rodas, aros e acessórios"},
+      {"nome": "Sistema Elétrico", "descricao": "Baterias, alternadores, cabos e chicotes elétricos"},
+      {"nome": "Filtros e Lubrificantes", "descricao": "Filtros de óleo, ar, combustível e lubrificantes"},
+      {"nome": "Transmissão", "descricao": "Embreagem, câmbio e sistema de transmissão"},
+      {"nome": "Ar Condicionado", "descricao": "Compressores, evaporadores e componentes de climatização"},
+      {"nome": "Carroceria e Lataria", "descricao": "Peças de lataria, para-choques e acabamentos"},
+      {"nome": "Iluminação", "descricao": "Faróis, lanternas, lâmpadas e LEDs automotivos"},
+      {"nome": "Escapamento", "descricao": "Silenciosos, catalisadores e sistemas de escape"}
+    ]
+  },
+  {
+    "categoria": "MOTOCICLETAS",
+    "subcategorias": [
+      {"nome": "Peças de Motor Moto", "descricao": "Motores, pistões e componentes para motos"},
+      {"nome": "Transmissão Moto", "descricao": "Corrente, coroa, pinhão e embreagem"},
+      {"nome": "Sistema Elétrico Moto", "descricao": "Baterias, CDI, bobinas e chicotes"},
+      {"nome": "Freios Moto", "descricao": "Discos, pastilhas, manetes e sistemas de freio"},
+      {"nome": "Suspensão Moto", "descricao": "Amortecedores dianteiros e traseiros"},
+      {"nome": "Pneus e Câmaras Moto", "descricao": "Pneus, câmaras e acessórios para motos"},
+      {"nome": "Carenagem e Plásticos", "descricao": "Carenagens, paralamas e acabamentos plásticos"},
+      {"nome": "Escapamento Moto", "descricao": "Escapamentos esportivos e ponteiras"},
+      {"nome": "Acessórios Moto", "descricao": "Capacetes, luvas, jaquetas e proteções"},
+      {"nome": "Guidão e Manetes", "descricao": "Guidões, manoplas, manetes e retrovisores"}
+    ]
+  },
+  {
+    "categoria": "MODA_E_TEXTIL",
+    "subcategorias": [
+      {"nome": "Tecidos", "descricao": "Tecidos planos, malhas e tecidos especiais"},
+      {"nome": "Aviamentos", "descricao": "Botões, zíperes, fitas e elásticos"},
+      {"nome": "Linhas e Fios", "descricao": "Linhas de costura, fios para bordado e tricô"},
+      {"nome": "Rendas e Bordados", "descricao": "Rendas, galões, passamanarias e bordados"},
+      {"nome": "Etiquetas e Tags", "descricao": "Etiquetas de composição, tags e identificação"},
+      {"nome": "Entretelas", "descricao": "Entretelas termocolantes e costuráveis"},
+      {"nome": "Manequins e Displays", "descricao": "Manequins, bustos e expositores"},
+      {"nome": "Máquinas de Costura", "descricao": "Máquinas industriais e domésticas"},
+      {"nome": "Tintas e Corantes", "descricao": "Tintas para tecido e corantes têxteis"},
+      {"nome": "Embalagens Moda", "descricao": "Sacolas, caixas e embalagens para roupas"}
+    ]
+  },
+  {
+    "categoria": "EMBALAGENS",
+    "subcategorias": [
+      {"nome": "Caixas de Papelão", "descricao": "Caixas onduladas e papelão liso"},
+      {"nome": "Embalagens Plásticas", "descricao": "Sacos plásticos, filmes stretch e bolhas"},
+      {"nome": "Embalagens para Alimentos", "descricao": "Potes, marmitas e embalagens alimentícias"},
+      {"nome": "Sacolas e Sacos", "descricao": "Sacolas de papel, plástico e TNT"},
+      {"nome": "Fitas Adesivas", "descricao": "Fitas de empacotamento, crepe e dupla face"},
+      {"nome": "Etiquetas e Rótulos", "descricao": "Etiquetas adesivas, BOPP e térmicas"},
+      {"nome": "Embalagens de Vidro", "descricao": "Potes, frascos e garrafas de vidro"},
+      {"nome": "Papel de Presente", "descricao": "Papéis decorativos, fitilhos e laços"},
+      {"nome": "Isopor e EPS", "descricao": "Caixas térmicas e proteção em isopor"},
+      {"nome": "Lacres e Selos", "descricao": "Lacres de segurança e selos adesivos"}
+    ]
+  },
+  {
+    "categoria": "TECNOLOGIA",
+    "subcategorias": [
+      {"nome": "Computadores e Notebooks", "descricao": "PCs, notebooks e workstations"},
+      {"nome": "Componentes de Informática", "descricao": "Processadores, memórias, HDs e SSDs"},
+      {"nome": "Periféricos", "descricao": "Teclados, mouses, monitores e impressoras"},
+      {"nome": "Redes e Conectividade", "descricao": "Roteadores, switches, cabos e fibra óptica"},
+      {"nome": "Smartphones e Tablets", "descricao": "Celulares, tablets e acessórios"},
+      {"nome": "Câmeras e Vigilância", "descricao": "Câmeras IP, CFTV e sistemas de segurança"},
+      {"nome": "Servidores e Storage", "descricao": "Servidores, storages e soluções de backup"},
+      {"nome": "Software e Licenças", "descricao": "Licenças de software e sistemas operacionais"},
+      {"nome": "Áudio e Vídeo", "descricao": "Caixas de som, projetores e equipamentos AV"},
+      {"nome": "Automação e IoT", "descricao": "Sensores, controladores e dispositivos IoT"}
+    ]
+  },
+  {
+    "categoria": "CONSTRUCAO",
+    "subcategorias": [
+      {"nome": "Cimento e Argamassa", "descricao": "Cimentos, argamassas e rejuntes"},
+      {"nome": "Tijolos e Blocos", "descricao": "Tijolos cerâmicos, blocos de concreto"},
+      {"nome": "Telhas e Coberturas", "descricao": "Telhas cerâmicas, metálicas e fibrocimento"},
+      {"nome": "Tintas e Vernizes", "descricao": "Tintas látex, esmaltes e vernizes"},
+      {"nome": "Ferragens", "descricao": "Pregos, parafusos, dobradiças e fechaduras"},
+      {"nome": "Pisos e Revestimentos", "descricao": "Cerâmicas, porcelanatos e laminados"},
+      {"nome": "Metais Sanitários", "descricao": "Torneiras, registros e válvulas"},
+      {"nome": "Tubos e Conexões", "descricao": "Tubos PVC, conexões hidráulicas"},
+      {"nome": "Madeiras e Compensados", "descricao": "Madeiras, MDF, compensados e chapas"},
+      {"nome": "Impermeabilizantes", "descricao": "Mantas, membranas e produtos impermeabilizantes"}
+    ]
+  },
+  {
+    "categoria": "MOVEIS_E_ESCRITORIO",
+    "subcategorias": [
+      {"nome": "Móveis para Escritório", "descricao": "Mesas, cadeiras e armários corporativos"},
+      {"nome": "Cadeiras Ergonômicas", "descricao": "Cadeiras de escritório e gamer"},
+      {"nome": "Estantes e Arquivos", "descricao": "Estantes de aço, arquivos e gaveteiros"},
+      {"nome": "Mesas e Bancadas", "descricao": "Mesas de reunião, bancadas e mesas de trabalho"},
+      {"nome": "Divisórias", "descricao": "Divisórias eucatex, drywall e vidro"},
+      {"nome": "Móveis para Recepção", "descricao": "Balcões, sofás e poltronas para recepção"},
+      {"nome": "Armários e Estantes", "descricao": "Armários altos, baixos e estantes modulares"},
+      {"nome": "Acessórios para Móveis", "descricao": "Puxadores, dobradiças, corrediças e rodízios"},
+      {"nome": "Quadros e Lousas", "descricao": "Quadros brancos, de cortiça e lousas"},
+      {"nome": "Iluminação Escritório", "descricao": "Luminárias de mesa, LED e spots"}
+    ]
+  },
+  {
+    "categoria": "ELETRICA_E_ELETRONICA",
+    "subcategorias": [
+      {"nome": "Fios e Cabos", "descricao": "Cabos elétricos, fios flexíveis e rígidos"},
+      {"nome": "Tomadas e Interruptores", "descricao": "Interruptores, tomadas e espelhos"},
+      {"nome": "Disjuntores e Proteção", "descricao": "Disjuntores, DPS e dispositivos de proteção"},
+      {"nome": "Quadros Elétricos", "descricao": "Quadros de distribuição e painéis elétricos"},
+      {"nome": "Eletrodutos e Conduítes", "descricao": "Eletrodutos PVC, flexíveis e metálicos"},
+      {"nome": "Iluminação LED", "descricao": "Lâmpadas, fitas e painéis LED"},
+      {"nome": "Componentes Eletrônicos", "descricao": "Resistores, capacitores, transistores e CIs"},
+      {"nome": "Automação Elétrica", "descricao": "Relés, contatores, temporizadores"},
+      {"nome": "Transformadores", "descricao": "Transformadores de potência e isoladores"},
+      {"nome": "Baterias e Nobreaks", "descricao": "Baterias estacionárias, nobreaks e inversores"}
+    ]
+  },
+  {
+    "categoria": "FERRAMENTAS_E_EQUIPAMENTOS",
+    "subcategorias": [
+      {"nome": "Ferramentas Manuais", "descricao": "Martelos, chaves, alicates e serras"},
+      {"nome": "Ferramentas Elétricas", "descricao": "Furadeiras, esmerilhadeiras e serras elétricas"},
+      {"nome": "Ferramentas Pneumáticas", "descricao": "Parafusadeiras, lixadeiras e pistolas pneumáticas"},
+      {"nome": "Equipamentos de Solda", "descricao": "Máquinas de solda MIG, TIG e eletrodo"},
+      {"nome": "Compressores", "descricao": "Compressores de ar e acessórios"},
+      {"nome": "Medição e Teste", "descricao": "Trenas, níveis, multímetros e paquímetros"},
+      {"nome": "Ferramentas de Corte", "descricao": "Serras, discos, brocas e fresas"},
+      {"nome": "EPIs", "descricao": "Capacetes, luvas, óculos e proteções"},
+      {"nome": "Escadas e Andaimes", "descricao": "Escadas de alumínio, fibra e andaimes"},
+      {"nome": "Organizadores", "descricao": "Caixas organizadoras, malas e carrinhos"}
+    ]
+  },
+  {
+    "categoria": "BELEZA_E_COSMETICOS",
+    "subcategorias": [
+      {"nome": "Cosméticos Profissionais", "descricao": "Produtos para salões de beleza"},
+      {"nome": "Maquiagem", "descricao": "Bases, batons, sombras e pincéis"},
+      {"nome": "Cuidados com Cabelo", "descricao": "Shampoos, condicionadores e tratamentos capilares"},
+      {"nome": "Cuidados com Pele", "descricao": "Cremes faciais, séruns e hidratantes"},
+      {"nome": "Perfumaria", "descricao": "Perfumes, colônias e essências"},
+      {"nome": "Unhas e Manicure", "descricao": "Esmaltes, alicates e acessórios para unhas"},
+      {"nome": "Depilação", "descricao": "Ceras, aparelhos e produtos depilatórios"},
+      {"nome": "Equipamentos Salão", "descricao": "Secadores, chapinhas e babyliss"},
+      {"nome": "Embalagens Cosméticas", "descricao": "Frascos, potes e embalagens para cosméticos"},
+      {"nome": "Acessórios Beleza", "descricao": "Escovas, pentes, toalhas e capas"}
+    ]
+  },
+  {
+    "categoria": "SAUDE_E_HOSPITALAR",
+    "subcategorias": [
+      {"nome": "Equipamentos Hospitalares", "descricao": "Macas, camas hospitalares e monitores"},
+      {"nome": "Instrumentos Cirúrgicos", "descricao": "Bisturis, pinças e tesouras cirúrgicas"},
+      {"nome": "Descartáveis Médicos", "descricao": "Luvas, máscaras, seringas e agulhas"},
+      {"nome": "Diagnóstico", "descricao": "Estetoscópios, termômetros e oxímetros"},
+      {"nome": "Mobiliário Hospitalar", "descricao": "Cadeiras de rodas, andadores e muletas"},
+      {"nome": "Esterilização", "descricao": "Autoclaves, estufas e produtos de limpeza"},
+      {"nome": "Medicamentos", "descricao": "Medicamentos controlados e de venda livre"},
+      {"nome": "Suplementos", "descricao": "Vitaminas, proteínas e suplementos alimentares"},
+      {"nome": "Fisioterapia", "descricao": "Equipamentos e acessórios para fisioterapia"},
+      {"nome": "Primeiros Socorros", "descricao": "Kits de primeiros socorros e curativos"}
+    ]
+  },
+  {
+    "categoria": "ALIMENTOS_E_BEBIDAS",
+    "subcategorias": [
+      {"nome": "Ingredientes Culinários", "descricao": "Farinhas, açúcares, temperos e condimentos"},
+      {"nome": "Laticínios", "descricao": "Leite, queijos, manteiga e derivados"},
+      {"nome": "Carnes e Frios", "descricao": "Carnes, embutidos e defumados"},
+      {"nome": "Frutas e Vegetais", "descricao": "Frutas frescas, legumes e verduras"},
+      {"nome": "Bebidas", "descricao": "Refrigerantes, sucos, águas e energéticos"},
+      {"nome": "Congelados", "descricao": "Alimentos congelados e pré-prontos"},
+      {"nome": "Panificação", "descricao": "Pães, bolos, tortas e produtos de padaria"},
+      {"nome": "Doces e Sobremesas", "descricao": "Chocolates, balas, sorvetes e sobremesas"},
+      {"nome": "Alimentos Orgânicos", "descricao": "Produtos orgânicos certificados"},
+      {"nome": "Embalagens Alimentícias", "descricao": "Potes, filmes e embalagens para alimentos"}
+    ]
+  },
+  {
+    "categoria": "AGRONEGOCIO",
+    "subcategorias": [
+      {"nome": "Sementes e Mudas", "descricao": "Sementes certificadas e mudas"},
+      {"nome": "Fertilizantes", "descricao": "Adubos químicos, orgânicos e foliares"},
+      {"nome": "Defensivos Agrícolas", "descricao": "Herbicidas, fungicidas e inseticidas"},
+      {"nome": "Máquinas Agrícolas", "descricao": "Tratores, colheitadeiras e implementos"},
+      {"nome": "Irrigação", "descricao": "Sistemas de irrigação e gotejamento"},
+      {"nome": "Pecuária", "descricao": "Rações, suplementos e medicamentos veterinários"},
+      {"nome": "Ferramentas Agrícolas", "descricao": "Enxadas, foices, pulverizadores"},
+      {"nome": "Cercas e Arames", "descricao": "Arames farpados, mourões e cercas elétricas"},
+      {"nome": "Equipamentos de Ordenha", "descricao": "Ordenhadeiras e tanques de resfriamento"},
+      {"nome": "Armazenamento", "descricao": "Silos, secadores e armazéns"}
+    ]
+  },
+  {
+    "categoria": "LIMPEZA_E_HIGIENE",
+    "subcategorias": [
+      {"nome": "Produtos de Limpeza", "descricao": "Detergentes, desinfetantes e multiuso"},
+      {"nome": "Papel Higiênico e Toalhas", "descricao": "Papel higiênico, toalhas de papel"},
+      {"nome": "Sacos de Lixo", "descricao": "Sacos plásticos para lixo de todos os tamanhos"},
+      {"nome": "Dispensers", "descricao": "Dispensers de papel, sabonete e álcool gel"},
+      {"nome": "Equipamentos de Limpeza", "descricao": "Vassouras, rodos, baldes e espanadores"},
+      {"nome": "Produtos Químicos", "descricao": "Cloro, ácido muriático e removedores"},
+      {"nome": "Aromatizantes", "descricao": "Desodorizadores e aromatizantes de ambiente"},
+      {"nome": "Luvas e Proteção", "descricao": "Luvas de limpeza e proteção"},
+      {"nome": "Limpeza Profissional", "descricao": "Máquinas lavadoras e enceradeiras"},
+      {"nome": "Descartáveis Higiene", "descricao": "Copos, pratos e talheres descartáveis"}
+    ]
+  },
+  {
+    "categoria": "PET",
+    "subcategorias": [
+      {"nome": "Rações", "descricao": "Rações secas e úmidas para cães e gatos"},
+      {"nome": "Petiscos", "descricao": "Snacks, ossinhos e biscoitos para pets"},
+      {"nome": "Higiene Pet", "descricao": "Shampoos, condicionadores e produtos de banho"},
+      {"nome": "Acessórios", "descricao": "Coleiras, guias, peitorais e focinheiras"},
+      {"nome": "Camas e Casinhas", "descricao": "Camas, almofadas e casinhas para pets"},
+      {"nome": "Brinquedos Pet", "descricao": "Bolinhas, mordedores e brinquedos interativos"},
+      {"nome": "Medicamentos Veterinários", "descricao": "Antipulgas, vermífugos e suplementos"},
+      {"nome": "Aquarismo", "descricao": "Aquários, filtros e acessórios"},
+      {"nome": "Aves e Pássaros", "descricao": "Gaiolas, comedouros e bebedouros"},
+      {"nome": "Transporte Pet", "descricao": "Caixas de transporte e bolsas"}
+    ]
+  },
+  {
+    "categoria": "ESPORTES_E_FITNESS",
+    "subcategorias": [
+      {"nome": "Musculação", "descricao": "Halteres, barras, anilhas e estações de musculação"},
+      {"nome": "Aeróbicos", "descricao": "Esteiras, bicicletas ergométricas e elípticos"},
+      {"nome": "Futebol", "descricao": "Bolas, chuteiras, uniformes e acessórios"},
+      {"nome": "Natação", "descricao": "Maiôs, sungas, toucas e óculos"},
+      {"nome": "Ciclismo", "descricao": "Bicicletas, capacetes, luvas e acessórios"},
+      {"nome": "Artes Marciais", "descricao": "Kimonos, luvas de boxe e proteções"},
+      {"nome": "Yoga e Pilates", "descricao": "Colchonetes, bolas e acessórios"},
+      {"nome": "Tênis de Mesa", "descricao": "Mesas, raquetes e bolinhas"},
+      {"nome": "Suplementos Esportivos", "descricao": "Whey protein, creatina e aminoácidos"},
+      {"nome": "Vestuário Esportivo", "descricao": "Camisetas, shorts, tops e tênis"}
+    ]
+  },
+  {
+    "categoria": "BRINQUEDOS_E_INFANTIL",
+    "subcategorias": [
+      {"nome": "Brinquedos Educativos", "descricao": "Jogos pedagógicos e de raciocínio"},
+      {"nome": "Bonecas e Pelúcias", "descricao": "Bonecas, bonecos e pelúcias"},
+      {"nome": "Carrinhos e Veículos", "descricao": "Carrinhos, caminhões e veículos de brinquedo"},
+      {"nome": "Jogos de Tabuleiro", "descricao": "Jogos de tabuleiro e cartas"},
+      {"nome": "Brinquedos de Montar", "descricao": "Blocos de montar e LEGO"},
+      {"nome": "Bebês e Primeira Infância", "descricao": "Chocalhos, mordedores e móbiles"},
+      {"nome": "Brinquedos Eletrônicos", "descricao": "Brinquedos com som e luz"},
+      {"nome": "Parquinhos", "descricao": "Escorregadores, gangorras e balanços"},
+      {"nome": "Artigos para Festa", "descricao": "Decorações e artigos para festas infantis"},
+      {"nome": "Segurança Infantil", "descricao": "Protetores de tomada, portões e travas"}
+    ]
+  },
+  {
+    "categoria": "CASA_E_DECORACAO",
+    "subcategorias": [
+      {"nome": "Móveis Residenciais", "descricao": "Sofás, camas, guarda-roupas e mesas"},
+      {"nome": "Decoração", "descricao": "Quadros, espelhos, vasos e objetos decorativos"},
+      {"nome": "Iluminação Residencial", "descricao": "Lustres, luminárias e abajures"},
+      {"nome": "Cama, Mesa e Banho", "descricao": "Lençóis, toalhas, edredons e travesseiros"},
+      {"nome": "Cortinas e Persianas", "descricao": "Cortinas, persianas e varões"},
+      {"nome": "Tapetes e Capachos", "descricao": "Tapetes decorativos e capachos"},
+      {"nome": "Utensílios de Cozinha", "descricao": "Panelas, talheres, copos e pratos"},
+      {"nome": "Eletrodomésticos", "descricao": "Geladeiras, fogões, micro-ondas e lavadoras"},
+      {"nome": "Jardinagem", "descricao": "Vasos, ferramentas e acessórios para jardim"},
+      {"nome": "Organização", "descricao": "Cestos, caixas organizadoras e prateleiras"}
+    ]
+  },
+  {
+    "categoria": "INDUSTRIAL",
+    "subcategorias": [
+      {"nome": "Rolamentos e Buchas", "descricao": "Rolamentos, buchas e mancais"},
+      {"nome": "Correntes e Correias", "descricao": "Correntes industriais, correias e polias"},
+      {"nome": "Redutores e Motores", "descricao": "Motores elétricos, redutores e variadores"},
+      {"nome": "Válvulas Industriais", "descricao": "Válvulas de controle, gaveta e esfera"},
+      {"nome": "Bombas", "descricao": "Bombas centrífugas, de vácuo e dosadoras"},
+      {"nome": "Mangueiras Industriais", "descricao": "Mangueiras hidráulicas e pneumáticas"},
+      {"nome": "Lubrificantes Industriais", "descricao": "Óleos, graxas e lubrificantes especiais"},
+      {"nome": "Parafusos e Fixadores", "descricao": "Parafusos, porcas, arruelas e fixadores"},
+      {"nome": "Juntas e Vedações", "descricao": "Juntas, vedações e retentores"},
+      {"nome": "Instrumentação", "descricao": "Sensores, transmissores e controladores"}
+    ]
+  },
+  {
+    "categoria": "SEGURANCA",
+    "subcategorias": [
+      {"nome": "Câmeras de Segurança", "descricao": "Câmeras IP, analógicas e DVRs"},
+      {"nome": "Alarmes", "descricao": "Centrais de alarme, sensores e sirenes"},
+      {"nome": "Controle de Acesso", "descricao": "Fechaduras eletrônicas, biometria e catracas"},
+      {"nome": "Cercas Elétricas", "descricao": "Eletrificadores, hastes e isoladores"},
+      {"nome": "Portões Automáticos", "descricao": "Motores para portão e acessórios"},
+      {"nome": "Interfones e Vídeo Porteiros", "descricao": "Interfones, vídeo porteiros e centrais"},
+      {"nome": "Iluminação de Emergência", "descricao": "Luminárias de emergência e sinalização"},
+      {"nome": "Extintores", "descricao": "Extintores de incêndio e acessórios"},
+      {"nome": "Cofres", "descricao": "Cofres residenciais e comerciais"},
+      {"nome": "EPIs de Segurança", "descricao": "Capacetes, botinas e equipamentos de proteção"}
+    ]
+  },
+  {
+    "categoria": "ENERGIA",
+    "subcategorias": [
+      {"nome": "Painéis Solares", "descricao": "Módulos fotovoltaicos e kits solares"},
+      {"nome": "Inversores", "descricao": "Inversores on-grid e off-grid"},
+      {"nome": "Baterias Estacionárias", "descricao": "Baterias para sistemas de energia"},
+      {"nome": "Geradores", "descricao": "Geradores a diesel, gasolina e gás"},
+      {"nome": "Controladores de Carga", "descricao": "Controladores PWM e MPPT"},
+      {"nome": "Estruturas para Painéis", "descricao": "Estruturas metálicas de fixação"},
+      {"nome": "Energia Eólica", "descricao": "Turbinas eólicas e aerogeradores"},
+      {"nome": "Cabos Solares", "descricao": "Cabos especiais para sistemas fotovoltaicos"},
+      {"nome": "Conectores e Proteções", "descricao": "MC4, string box e fusíveis"},
+      {"nome": "Monitoramento", "descricao": "Sistemas de monitoramento de energia"}
+    ]
+  },
+  {
+    "categoria": "GRAFICA_E_PERSONALIZADOS",
+    "subcategorias": [
+      {"nome": "Impressão Digital", "descricao": "Banners, lonas e adesivos"},
+      {"nome": "Impressão Offset", "descricao": "Livros, revistas e materiais gráficos"},
+      {"nome": "Serigrafia", "descricao": "Estampas em tecidos e camisetas"},
+      {"nome": "Sublimação", "descricao": "Canecas, camisetas e brindes sublimados"},
+      {"nome": "Corte e Recorte", "descricao": "Adesivos recortados e letras caixa"},
+      {"nome": "Brindes Personalizados", "descricao": "Canetas, chaveiros e brindes corporativos"},
+      {"nome": "Papelaria", "descricao": "Cartões de visita, folders e panfletos"},
+      {"nome": "Comunicação Visual", "descricao": "Placas, totens e fachadas"},
+      {"nome": "Embalagens Personalizadas", "descricao": "Caixas, sacolas e embalagens customizadas"},
+      {"nome": "Equipamentos Gráficos", "descricao": "Plotters, impressoras e prensas"}
+    ]
+  },
+  {
+    "categoria": "ARTESANATO_E_HOBBIES",
+    "subcategorias": [
+      {"nome": "Materiais para Pintura", "descricao": "Tintas, pincéis, telas e cavaletes"},
+      {"nome": "Scrapbook", "descricao": "Papéis, carimbos e adesivos decorativos"},
+      {"nome": "Bijuterias", "descricao": "Miçangas, correntes, pingentes e ferramentas"},
+      {"nome": "Crochê e Tricô", "descricao": "Lãs, agulhas e acessórios"},
+      {"nome": "Patchwork e Quilting", "descricao": "Tecidos, réguas e cortadores"},
+      {"nome": "Modelagem", "descricao": "Massas de modelar, biscuit e argila"},
+      {"nome": "Decoupage", "descricao": "Papéis, vernizes e pincéis"},
+      {"nome": "Carimbos e Estênceis", "descricao": "Carimbos, estênceis e tintas"},
+      {"nome": "Ferramentas Artesanato", "descricao": "Tesouras, cortadores e furadoras"},
+      {"nome": "Kits Artesanato", "descricao": "Kits completos para diversos artesanatos"}
+    ]
+  },
+  {
+    "categoria": "OUTROS",
+    "subcategorias": [
+      {"nome": "Produtos Diversos", "descricao": "Produtos variados não categorizados"},
+      {"nome": "Importados", "descricao": "Produtos importados diversos"},
+      {"nome": "Usados e Seminovos", "descricao": "Produtos de segunda mão"},
+      {"nome": "Colecionáveis", "descricao": "Itens de coleção e antiguidades"},
+      {"nome": "Artigos Religiosos", "descricao": "Imagens, terços e artigos religiosos"},
+      {"nome": "Instrumentos Musicais", "descricao": "Violões, teclados e acessórios"},
+      {"nome": "Fotografia", "descricao": "Câmeras, lentes e acessórios fotográficos"},
+      {"nome": "Livros e Revistas", "descricao": "Livros, revistas e publicações"},
+      {"nome": "Antiguidades", "descricao": "Móveis e objetos antigos"},
+      {"nome": "Serviços", "descricao": "Diversos serviços profissionais"}
+    ]
+  }
+]

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos | Radar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js?v=5" defer></script>
+</head>
+<body data-standalone="true">
+<div class="flex min-h-screen">
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+    <div class="flex-1 flex flex-col md:ml-64 main-content-overlay">
+        <header class="bg-black/80 backdrop-blur-md text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
+            <div class="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4">
+                <a href="/pages/produtos.html" class="flex items-center gap-3 font-black text-lg md:hidden">
+                    <i class="fa-solid fa-satellite-dish text-sky-400"></i> RADAR
+                </a>
+                <div id="user-info" class="flex items-center gap-3 text-sm font-semibold ml-auto"></div>
+            </div>
+        </header>
+        
+        <main class="mx-auto max-w-7xl px-6 py-8 w-full flex-1">
+            <!-- Breadcrumb -->
+            <nav class="mb-6">
+                <ol class="flex items-center gap-2 text-sm flex-wrap">
+                    <li><a href="/pages/produtos.html" class="text-sky-700 hover:text-sky-900 font-semibold">Produtos</a></li>
+                    <li><i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i></li>
+                    <li id="breadcrumb-categoria"><a href="#" class="text-sky-700 hover:text-sky-900 font-semibold">Categoria</a></li>
+                    <li><i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i></li>
+                    <li id="breadcrumb-subcategoria" class="text-slate-600 font-semibold">Subcategoria</li>
+                </ol>
+            </nav>
+
+            <!-- Cabeçalho da Subcategoria -->
+            <div class="mb-8">
+                <div class="flex items-center gap-4 mb-2">
+                    <i id="icone-subcategoria" class="fa-solid fa-layer-group text-4xl text-sky-600"></i>
+                    <div>
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-sky-700">Subcategoria</p>
+                        <h1 id="titulo-subcategoria" class="mt-1 text-4xl font-black text-slate-900 tracking-tight">Carregando...</h1>
+                    </div>
+                </div>
+                <p id="descricao-subcategoria" class="text-slate-600 font-medium"></p>
+            </div>
+
+            <!-- Busca de produtos -->
+            <div class="relative mb-8 max-w-3xl">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                <input id="busca-produto" class="w-full rounded-xl border border-slate-200 bg-white pl-12 pr-4 py-4 text-sm shadow-sm outline-none focus:ring-2 focus:ring-sky-500" placeholder="Buscar produto...">
+            </div>
+
+            <!-- Lista de Produtos -->
+            <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="mb-5 flex items-center justify-between">
+                    <h2 class="text-xl font-black text-slate-800">Produtos Encontrados</h2>
+                    <span id="quantidade" class="rounded-full bg-sky-50 px-3 py-1 text-xs font-bold text-sky-700">0 produtos</span>
+                </div>
+                <div id="lista-produtos" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <!-- Carregando... -->
+                    <div class="col-span-full py-12 text-center">
+                        <i class="fa-solid fa-spinner fa-spin text-3xl text-sky-600 mb-3"></i>
+                        <p class="text-slate-500">Carregando produtos...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Voltar -->
+            <div class="mt-12">
+                <a id="link-voltar" href="/pages/produtos.html" class="inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
+                    <i class="fa-solid fa-arrow-left"></i> Voltar para subcategorias
+                </a>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal de Compra -->
+<div id="modal-compra" class="fixed inset-0 z-[60] hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="mx-auto my-16 max-w-lg rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b px-7 py-5">
+            <div>
+                <p class="text-xs font-black uppercase tracking-widest text-sky-700">Finalizar compra</p>
+                <h2 id="produto-compra" class="mt-1 text-xl font-black text-slate-800"></h2>
+            </div>
+            <button id="fechar-compra" class="text-2xl text-slate-400 hover:text-slate-700">&times;</button>
+        </div>
+        <form id="form-compra" class="space-y-5 p-7">
+            <input id="produto-id-compra" type="hidden">
+            <label class="campo">CEP de entrega<input id="cep-compra" required maxlength="9" class="mt-1" placeholder="00000-000" oninput="mascaraCep(this)"></label>
+            <fieldset>
+                <legend class="mb-3 text-sm font-bold text-slate-700">Forma de pagamento</legend>
+                <div class="space-y-2 text-sm font-semibold text-slate-700">
+                    <label class="flex gap-2"><input type="radio" name="forma" value="PIX" checked> Pix</label>
+                    <label class="flex gap-2"><input type="radio" name="forma" value="CARTAO_CREDITO_VIRTUAL"> Cartão virtual de crédito</label>
+                    <label class="flex gap-2"><input type="radio" name="forma" value="CARTAO_DEBITO"> Cartão de débito</label>
+                    <label class="flex gap-2"><input type="radio" name="forma" value="BOLETO_BANCARIO"> Boleto bancário</label>
+                </div>
+            </fieldset>
+            <p id="resultado-compra" class="hidden rounded-lg p-3 text-sm"></p>
+            <button class="w-full rounded-xl bg-sky-600 px-6 py-3 font-black text-white hover:bg-sky-700">GERAR PAGAMENTO</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Avaliação -->
+<div id="modal-avaliacao" class="fixed inset-0 z-[60] hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="mx-auto my-16 max-w-lg rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b px-7 py-5">
+            <div>
+                <p class="text-xs font-black uppercase tracking-widest text-sky-700">Avaliação do produto</p>
+                <h2 id="produto-avaliado" class="mt-1 text-xl font-black text-slate-800"></h2>
+            </div>
+            <button id="fechar-avaliacao" class="text-2xl text-slate-400 hover:text-slate-700">&times;</button>
+        </div>
+        <form id="form-avaliacao" class="space-y-5 p-7">
+            <input id="produto-id-avaliacao" type="hidden">
+            <div>
+                <p class="mb-2 text-sm font-bold text-slate-700">Sua nota</p>
+                <div id="estrelas-input" class="flex gap-2 text-3xl text-slate-300"></div>
+                <input id="nota-avaliacao" type="hidden" value="0">
+                <p id="erro-nota" class="mt-2 hidden text-xs font-bold text-rose-600">Escolha de 1 a 5 estrelas.</p>
+            </div>
+            <label class="campo">Conte sua experiência<textarea id="comentario-avaliacao" required maxlength="1000" rows="4" class="mt-1 resize-none" placeholder="Como foi sua experiência com este produto?"></textarea></label>
+            <button class="w-full rounded-xl bg-sky-600 px-6 py-3 font-black text-white hover:bg-sky-700">PUBLICAR AVALIAÇÃO</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let produtos = [];
+    let subcategoriaId = null;
+    let categoriaAtual = '';
+    let subcategoriaAtual = null;
+
+    const escapar = valor => {
+        const el = document.createElement('span');
+        el.textContent = valor || '';
+        return el.innerHTML;
+    };
+
+    function obterParametroURL(nome) {
+        const params = new URLSearchParams(window.location.search);
+        return params.get(nome);
+    }
+
+    function estrelas(nota) {
+        return Array.from({length: 5}, (_, i) => 
+            `<i class="fa-${i < Math.round(nota) ? 'solid' : 'regular'} fa-star text-amber-400"></i>`
+        ).join('');
+    }
+
+    function renderizarProdutos() {
+        const busca = document.getElementById('busca-produto').value.trim().toLowerCase();
+        const filtrados = produtos.filter(produto => 
+            produto.nome.toLowerCase().includes(busca) || 
+            (produto.descricao && produto.descricao.toLowerCase().includes(busca))
+        );
+
+        document.getElementById('quantidade').textContent = 
+            `${filtrados.length} ${filtrados.length === 1 ? 'produto' : 'produtos'}`;
+
+        const lista = document.getElementById('lista-produtos');
+
+        if (filtrados.length === 0) {
+            lista.innerHTML = `
+                <div class="col-span-full py-12 text-center">
+                    <i class="fa-solid fa-inbox text-5xl text-slate-300 mb-4"></i>
+                    <p class="text-slate-700 font-semibold mb-2">Nenhum produto encontrado</p>
+                    <p class="text-sm text-slate-500">Não há produtos cadastrados para esta subcategoria.</p>
+                    <a href="${document.getElementById('link-voltar').href}" class="mt-4 inline-block text-sm font-bold text-sky-700 hover:text-sky-900">
+                        ← Voltar para subcategorias
+                    </a>
+                </div>
+            `;
+            return;
+        }
+
+        lista.innerHTML = filtrados.map(produto => `
+            <article class="rounded-xl border border-slate-200 p-5 shadow-sm transition hover:shadow-md">
+                <h3 class="text-lg font-black text-slate-800">${escapar(produto.nome)}</h3>
+                <p class="mt-2 text-sm text-slate-600">${escapar(produto.descricao || 'Sem descrição disponível.')}</p>
+                ${produto.preco != null ? `
+                    <p class="mt-4 text-xl font-black text-slate-800">
+                        ${Number(produto.preco).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}
+                    </p>
+                    <button data-produto-id="${produto.id}" class="comprar-produto mt-3 w-full rounded-lg bg-sky-600 px-4 py-3 text-sm font-black text-white hover:bg-sky-700 transition">
+                        <i class="fa-solid fa-shopping-cart mr-2"></i>COMPRAR
+                    </button>
+                ` : '<p class="mt-4 text-sm text-slate-500 italic">Preço sob consulta</p>'}
+                <div class="mt-4 flex gap-4 border-t border-slate-100 pt-4">
+                    <button data-produto-id="${produto.id}" class="avaliar-produto text-sm font-black text-amber-600 hover:text-amber-700">
+                        <i class="fa-solid fa-star mr-1"></i>Avaliar
+                    </button>
+                    <button data-produto-id="${produto.id}" class="ver-avaliacoes text-sm font-bold text-sky-700 hover:text-sky-900">
+                        Ver comentários
+                    </button>
+                </div>
+                <div id="avaliacoes-${produto.id}" class="mt-4 hidden border-t border-slate-100 pt-4"></div>
+            </article>
+        `).join('');
+
+        // Eventos
+        document.querySelectorAll('.avaliar-produto').forEach(botao => {
+            botao.onclick = () => abrirAvaliacao(Number(botao.dataset.produtoId));
+        });
+        document.querySelectorAll('.ver-avaliacoes').forEach(botao => {
+            botao.onclick = () => carregarAvaliacoes(Number(botao.dataset.produtoId));
+        });
+        document.querySelectorAll('.comprar-produto').forEach(botao => {
+            botao.onclick = () => abrirCompra(Number(botao.dataset.produtoId));
+        });
+    }
+
+    async function carregarAvaliacoes(produtoId) {
+        const painel = document.getElementById(`avaliacoes-${produtoId}`);
+        if (!painel) return;
+        
+        if (!painel.classList.contains('hidden')) {
+            painel.classList.add('hidden');
+            return;
+        }
+
+        try {
+            const resposta = await fetch(`/api/avaliacoes/produto/${produtoId}`);
+            const avaliacoes = await resposta.json();
+            
+            painel.innerHTML = avaliacoes.length ? avaliacoes.map(avaliacao => `
+                <div class="mb-3 rounded-lg bg-slate-50 p-3">
+                    <div class="flex items-center justify-between">
+                        <strong class="text-sm text-slate-700">${escapar(avaliacao.cliente)}</strong>
+                        <span class="text-sm">${estrelas(avaliacao.nota)}</span>
+                    </div>
+                    <p class="mt-2 text-sm text-slate-600">${escapar(avaliacao.comentario)}</p>
+                </div>
+            `).join('') : '<p class="text-sm text-slate-500">Este produto ainda não recebeu comentários.</p>';
+            
+            painel.classList.remove('hidden');
+        } catch (error) {
+            console.error('Erro ao carregar avaliações:', error);
+        }
+    }
+
+    function abrirAvaliacao(id) {
+        const produto = produtos.find(item => item.id === id);
+        document.getElementById('produto-id-avaliacao').value = id;
+        document.getElementById('produto-avaliado').textContent = produto.nome;
+        document.getElementById('nota-avaliacao').value = 0;
+        document.getElementById('comentario-avaliacao').value = '';
+        renderizarEstrelas(0);
+        document.getElementById('modal-avaliacao').classList.remove('hidden');
+    }
+
+    function abrirCompra(id) {
+        const produto = produtos.find(item => item.id === id);
+        document.getElementById('produto-id-compra').value = id;
+        document.getElementById('produto-compra').textContent = produto.nome;
+        document.getElementById('cep-compra').value = '';
+        document.getElementById('resultado-compra').classList.add('hidden');
+        document.getElementById('modal-compra').classList.remove('hidden');
+    }
+
+    function renderizarEstrelas(selecionada) {
+        document.getElementById('estrelas-input').innerHTML = Array.from({length: 5}, (_, i) => 
+            `<button type="button" data-nota="${i + 1}" class="hover:scale-110 ${i < selecionada ? 'text-amber-400' : 'text-slate-300'}">
+                <i class="fa-solid fa-star"></i>
+            </button>`
+        ).join('');
+        
+        document.querySelectorAll('#estrelas-input button').forEach(botao => {
+            botao.onclick = () => {
+                const nota = Number(botao.dataset.nota);
+                document.getElementById('nota-avaliacao').value = nota;
+                document.getElementById('erro-nota').classList.add('hidden');
+                renderizarEstrelas(nota);
+            };
+        });
+    }
+
+    async function carregarDados() {
+        subcategoriaId = obterParametroURL('subcategoria');
+
+        if (!subcategoriaId) {
+            alert('Subcategoria não especificada');
+            window.location.href = '/pages/produtos.html';
+            return;
+        }
+
+        try {
+            // Carregar subcategoria
+            console.log('Buscando subcategoria ID:', subcategoriaId);
+            const respostaSubcategoria = await fetch(`/api/subcategorias/${subcategoriaId}`);
+            
+            if (!respostaSubcategoria.ok) {
+                throw new Error(`Subcategoria não encontrada (${respostaSubcategoria.status})`);
+            }
+
+            subcategoriaAtual = await respostaSubcategoria.json();
+            categoriaAtual = subcategoriaAtual.categoria;
+
+            console.log('Subcategoria:', subcategoriaAtual);
+
+            // Atualizar informações da página
+            document.getElementById('titulo-subcategoria').textContent = subcategoriaAtual.nome;
+            document.getElementById('descricao-subcategoria').textContent = subcategoriaAtual.descricao || '';
+            document.title = `${subcategoriaAtual.nome} - Produtos | Radar`;
+
+            // Atualizar breadcrumb
+            const linkCategoria = document.querySelector('#breadcrumb-categoria a');
+            linkCategoria.textContent = categoriaAtual;
+            linkCategoria.href = `/pages/produtos-subcategorias.html?categoria=${categoriaAtual}`;
+            document.getElementById('breadcrumb-subcategoria').textContent = subcategoriaAtual.nome;
+
+            // Atualizar link voltar
+            document.getElementById('link-voltar').href = `/pages/produtos-subcategorias.html?categoria=${categoriaAtual}`;
+
+            // Carregar produtos (por enquanto vamos buscar todos e filtrar, depois criamos endpoint específico)
+            const respostaProdutos = await fetch('/api/produtos');
+            const todosProdutos = await respostaProdutos.json();
+            
+            // Filtrar produtos pela categoria (já que ainda não temos subcategoriaId nos produtos)
+            produtos = todosProdutos.filter(p => p.categoria === categoriaAtual);
+            
+            console.log('Produtos encontrados:', produtos.length);
+            
+            renderizarProdutos();
+
+        } catch (error) {
+            console.error('Erro ao carregar dados:', error);
+            document.getElementById('lista-produtos').innerHTML = `
+                <div class="col-span-full py-12 text-center">
+                    <i class="fa-solid fa-exclamation-triangle text-5xl text-rose-400 mb-4"></i>
+                    <p class="text-slate-700 font-semibold mb-2">Erro ao carregar dados</p>
+                    <p class="text-sm text-slate-500 mb-4">${error.message}</p>
+                    <button onclick="window.location.reload()" class="rounded-lg bg-sky-600 px-6 py-2 text-sm font-bold text-white hover:bg-sky-700">
+                        Tentar novamente
+                    </button>
+                    <br><br>
+                    <a href="/pages/produtos.html" class="text-sm font-bold text-sky-700 hover:text-sky-900">
+                        ← Voltar para categorias
+                    </a>
+                </div>
+            `;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await carregarMenuLateral();
+        exibirInfoUsuario();
+        aplicarControlesDeAcesso();
+
+        await carregarDados();
+
+        // Eventos
+        document.getElementById('busca-produto').addEventListener('input', renderizarProdutos);
+        document.getElementById('fechar-avaliacao').onclick = () => document.getElementById('modal-avaliacao').classList.add('hidden');
+        document.getElementById('fechar-compra').onclick = () => document.getElementById('modal-compra').classList.add('hidden');
+        
+        // Form de avaliação
+        document.getElementById('form-avaliacao').onsubmit = async event => {
+            event.preventDefault();
+            const nota = Number(document.getElementById('nota-avaliacao').value);
+            
+            if (!nota) {
+                document.getElementById('erro-nota').classList.remove('hidden');
+                return;
+            }
+
+            try {
+                const resposta = await fetch('/api/avaliacoes', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        produtoId: Number(document.getElementById('produto-id-avaliacao').value),
+                        nota,
+                        comentario: document.getElementById('comentario-avaliacao').value.trim()
+                    })
+                });
+
+                if (!resposta.ok) {
+                    alert(await resposta.text());
+                    return;
+                }
+
+                document.getElementById('modal-avaliacao').classList.add('hidden');
+                alert('Avaliação publicada com sucesso!');
+            } catch (error) {
+                alert('Erro ao publicar avaliação');
+            }
+        };
+        
+        // Form de compra
+        document.getElementById('form-compra').onsubmit = async event => {
+            event.preventDefault();
+            
+            try {
+                const resposta = await fetch('/api/pagamentos', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        produtoId: Number(document.getElementById('produto-id-compra').value),
+                        forma: document.querySelector('input[name="forma"]:checked').value,
+                        cepEntrega: document.getElementById('cep-compra').value
+                    })
+                });
+
+                const aviso = document.getElementById('resultado-compra');
+                const texto = resposta.ok ? 
+                    `Pagamento criado com sucesso.${(await resposta.json()).vencimentoBoleto ? ' O boleto vence no próximo dia útil.' : ''}` : 
+                    await resposta.text();
+                
+                aviso.textContent = texto;
+                aviso.className = `rounded-lg p-3 text-sm ${resposta.ok ? 'bg-emerald-50 text-emerald-800' : 'bg-rose-50 text-rose-800'}`;
+                aviso.classList.remove('hidden');
+            } catch (error) {
+                const aviso = document.getElementById('resultado-compra');
+                aviso.textContent = 'Erro ao processar pagamento';
+                aviso.className = 'rounded-lg p-3 text-sm bg-rose-50 text-rose-800';
+                aviso.classList.remove('hidden');
+            }
+        };
+    });
+</script>
+</body>
+</html>

@@ -33,6 +33,23 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.listarTodos());
     }
 
+    // Endpoint temporário para debug - listar fornecedores (sem autenticação)
+    @GetMapping("/debug/fornecedores")
+    public ResponseEntity<?> listarFornecedoresDebug() {
+        List<Usuario> fornecedores = usuarioService.listarTodos().stream()
+            .filter(u -> u.getFornecedor() != null && u.getFornecedor())
+            .toList();
+        
+        return ResponseEntity.ok(fornecedores.stream().map(f -> Map.of(
+            "id", f.getId(),
+            "username", f.getUsername(),
+            "tipo", f.getTipo().name(),
+            "cnpjOuCpf", f.getCnpjOuCpf() != null ? f.getCnpjOuCpf() : "N/A",
+            "ativo", f.getAtivo(),
+            "fornecedor", f.getFornecedor()
+        )).toList());
+    }
+
     @PostMapping
     public ResponseEntity<?> cadastrar(@RequestBody Usuario novoUsuario, HttpSession session) {
         if (isNotAdmin(session)) {

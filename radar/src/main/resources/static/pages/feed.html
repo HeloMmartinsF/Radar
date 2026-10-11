@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed Comercial | Radar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js?v=5" defer></script>
+    <style>
+        /* Animações suaves */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        
+        /* Efeito de curtida */
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        .heart-beat { animation: heartBeat 0.3s ease-in-out; }
+        
+        /* Carrossel de imagens */
+        .carousel-container { position: relative; }
+        .carousel-dots { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+        .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: #cbd5e1; cursor: pointer; transition: all 0.3s; }
+        .carousel-dot.active { background: #0284c7; width: 24px; border-radius: 4px; }
+    </style>
+</head>
+<body data-standalone="true">
+<div class="flex min-h-screen bg-slate-50">
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+    <div class="flex-1 flex flex-col md:ml-64 main-content-overlay">
+        <header class="bg-black/80 backdrop-blur-md text-white shadow-lg sticky top-0 z-40 border-b border-slate-800">
+            <div class="mx-auto flex max-w-4xl items-center justify-between gap-6 px-6 py-4">
+                <a href="/pages/feed.html" class="flex items-center gap-3 font-black text-lg md:hidden">
+                    <i class="fa-solid fa-satellite-dish text-sky-400"></i> RADAR FEED
+                </a>
+                <div id="user-info" class="flex items-center gap-3 text-sm font-semibold ml-auto"></div>
+            </div>
+        </header>
+        
+        <main class="mx-auto max-w-2xl px-4 py-6 w-full flex-1">
+            
+            <!-- Botão Criar Publicação (apenas fornecedores) -->
+            <div id="criar-publicacao-btn" class="hidden mb-6 fade-in">
+                <button onclick="abrirModalCriarPublicacao()" 
+                        class="w-full rounded-xl border-2 border-dashed border-sky-300 bg-white p-6 text-center transition hover:border-sky-500 hover:bg-sky-50">
+                    <i class="fa-solid fa-plus-circle text-3xl text-sky-600 mb-2"></i>
+                    <p class="text-sm font-black text-slate-800">Criar Nova Publicação</p>
+                    <p class="text-xs text-slate-500 mt-1">Divulgue seus produtos e promoções</p>
+                </button>
+            </div>
+
+            <!-- Feed de Publicações -->
+            <div id="feed-container" class="space-y-6">
+                <!-- Loading inicial -->
+                <div class="text-center py-12">
+                    <i class="fa-solid fa-spinner fa-spin text-4xl text-sky-600 mb-4"></i>
+                    <p class="text-slate-600 font-semibold">Carregando feed...</p>
+                </div>
+            </div>
+
+            <!-- Mensagem vazia -->
+            <div id="feed-vazio" class="hidden text-center py-16">
+                <i class="fa-solid fa-rss text-6xl text-slate-300 mb-4"></i>
+                <p class="text-slate-700 font-black text-xl mb-2">Nenhuma publicação ainda</p>
+                <p class="text-slate-500">Seja o primeiro a compartilhar produtos e ofertas!</p>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Modal: Criar/Editar Publicação -->
+<div id="modal-publicacao" class="fixed inset-0 z-[60] hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="mx-auto my-8 max-w-2xl rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b px-7 py-5">
+            <div>
+                <p class="text-xs font-black uppercase tracking-widest text-sky-700">Nova Publicação</p>
+                <h2 class="mt-1 text-xl font-black text-slate-800">Divulgue seu produto</h2>
+            </div>
+            <button onclick="fecharModalPublicacao()" class="text-2xl text-slate-400 hover:text-slate-700">&times;</button>
+        </div>
+        <form id="form-publicacao" class="space-y-5 p-7">
+            <input id="publicacao-id" type="hidden">
+            
+            <label class="block">
+                <span class="text-sm font-bold text-slate-700">Título da Publicação *</span>
+                <input id="pub-titulo" required maxlength="200" 
+                       class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none" 
+                       placeholder="Ex: Promoção Especial de Parafusos">
+            </label>
+
+            <label class="block">
+                <span class="text-sm font-bold text-slate-700">Descrição</span>
+                <textarea id="pub-descricao" rows="4" maxlength="1000"
+                          class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm resize-none focus:ring-2 focus:ring-sky-500 outline-none"
+                          placeholder="Descreva seu produto, ofertas especiais, condições de venda..."></textarea>
+            </label>
+
+            <div class="grid grid-cols-2 gap-4">
+                <label class="block">
+                    <span class="text-sm font-bold text-slate-700">Preço (R$)</span>
+                    <input id="pub-preco" type="number" step="0.01" min="0"
+                           class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                           placeholder="0,00">
+                </label>
+
+                <label class="block">
+                    <span class="text-sm font-bold text-slate-700">Preço Promocional (R$)</span>
+                    <input id="pub-preco-promo" type="number" step="0.01" min="0"
+                           class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                           placeholder="0,00">
+                </label>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <label class="block">
+                    <span class="text-sm font-bold text-slate-700">Unidade de Venda</span>
+                    <select id="pub-unidade"
+                            class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none">
+                        <option value="">Selecione</option>
+                        <option value="unidade">Unidade</option>
+                        <option value="kg">Kg</option>
+                        <option value="caixa">Caixa</option>
+                        <option value="pacote">Pacote</option>
+                        <option value="metro">Metro</option>
+                        <option value="litro">Litro</option>
+                    </select>
+                </label>
+
+                <label class="block">
+                    <span class="text-sm font-bold text-slate-700">Quantidade Mínima</span>
+                    <input id="pub-qtd-min" type="number" min="1"
+                           class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                           placeholder="1">
+                </label>
+            </div>
+
+            <label class="block">
+                <span class="text-sm font-bold text-slate-700">Condições Especiais</span>
+                <input id="pub-condicoes" maxlength="500"
+                       class="mt-1 w-full rounded-xl border border-slate-300 px-4 py-3 text-sm focus:ring-2 focus:ring-sky-500 outline-none"
+                       placeholder="Ex: Desconto de 10% acima de 100 unidades">
+            </label>
+
+            <div class="block">
+                <span class="text-sm font-bold text-slate-700 mb-2 block">Imagens do Produto</span>
+                <div class="flex items-center gap-3">
+                    <label class="cursor-pointer rounded-xl border-2 border-dashed border-sky-300 bg-sky-50 px-6 py-4 text-center transition hover:border-sky-500 hover:bg-sky-100">
+                        <i class="fa-solid fa-cloud-arrow-up text-2xl text-sky-600"></i>
+                        <p class="text-xs font-bold text-sky-700 mt-2">Adicionar Imagem</p>
+                        <input type="file" id="input-imagem" accept="image/*" class="hidden" onchange="uploadImagem(this)">
+                    </label>
+                    <div id="preview-imagens" class="flex-1 flex flex-wrap gap-2"></div>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">Até 5 imagens (JPG, PNG, WebP)</p>
+            </div>
+
+            <div class="flex gap-3">
+                <button type="button" onclick="fecharModalPublicacao()" 
+                        class="flex-1 rounded-xl border-2 border-slate-300 px-6 py-3 font-black text-slate-700 hover:bg-slate-50">
+                    Cancelar
+                </button>
+                <button type="submit" 
+                        class="flex-1 rounded-xl bg-sky-600 px-6 py-3 font-black text-white hover:bg-sky-700">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>Publicar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Contato com Fornecedor -->
+<div id="modal-contato" class="fixed inset-0 z-[60] hidden overflow-y-auto bg-slate-950/80 backdrop-blur-sm p-4">
+    <div class="mx-auto my-16 max-w-lg rounded-2xl bg-white shadow-2xl">
+        <div class="flex items-center justify-between border-b px-7 py-5">
+            <div>
+                <p class="text-xs font-black uppercase tracking-widest text-sky-700">Contato Comercial</p>
+                <h2 id="contato-fornecedor-nome" class="mt-1 text-xl font-black text-slate-800"></h2>
+            </div>
+            <button onclick="fecharModalContato()" class="text-2xl text-slate-400 hover:text-slate-700">&times;</button>
+        </div>
+        <div class="p-7 space-y-4">
+            <p class="text-sm text-slate-600">Entre em contato com o fornecedor através dos canais disponíveis:</p>
+            <div id="contato-info" class="space-y-3"></div>
+            <button onclick="fecharModalContato()" 
+                    class="w-full rounded-xl bg-slate-600 px-6 py-3 font-black text-white hover:bg-slate-700 mt-6">
+                Fechar
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+let publicacoes = [];
+let usuarioLogado = null;
+let imagensUpload = [];
+
+const escapar = valor => {
+    const el = document.createElement('span');
+    el.textContent = valor || '';
+    return el.innerHTML;
+};
+
+function formatarData(dataStr) {
+    const data = new Date(dataStr);
+    const agora = new Date();
+    const diff = Math.floor((agora - data) / 1000);
+    
+    if (diff < 60) return 'Agora mesmo';
+    if (diff < 3600) return `Há ${Math.floor(diff / 60)} min`;
+    if (diff < 86400) return `Há ${Math.floor(diff / 3600)}h`;
+    if (diff < 604800) return `Há ${Math.floor(diff / 86400)}d`;
+    
+    return data.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+}
+
+function formatarPreco(preco) {
+    return Number(preco).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+async function carregarFeed() {
+    try {
+        const response = await fetch('/api/feed');
+        if (!response.ok) throw new Error('Erro ao carregar feed');
+        
+        publicacoes = await response.json();
+        console.log('Publicações carregadas:', publicacoes.length);
+        
+        renderizarFeed();
+    } catch (error) {
+        console.error('Erro ao carregar feed:', error);
+        document.getElementById('feed-container').innerHTML = `
+            <div class="text-center py-12 bg-white rounded-xl border border-rose-200">
+                <i class="fa-solid fa-exclamation-triangle text-4xl text-rose-400 mb-4"></i>
+                <p class="text-slate-700 font-semibold mb-2">Erro ao carregar o feed</p>
+                <button onclick="carregarFeed()" class="mt-4 rounded-lg bg-sky-600 px-6 py-2 text-sm font-black text-white hover:bg-sky-700">
+                    Tentar novamente
+                </button>
+            </div>
+        `;
+    }
+}
+
+function renderizarFeed() {
+    const container = document.getElementById('feed-container');
+    const vazio = document.getElementById('feed-vazio');
+    
+    if (publicacoes.length === 0) {
+        container.classList.add('hidden');
+        vazio.classList.remove('hidden');
+        return;
+    }
+    
+    container.classList.remove('hidden');
+    vazio.classList.add('hidden');
+    
+    container.innerHTML = publicacoes.map(pub => `
+        <article class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+            <!-- Header: Fornecedor -->
+            <div class="flex items-center justify-between px-5 py-4 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center overflow-hidden">
+                        ${pub.fornecedor.foto ? 
+                            `<img src="${pub.fornecedor.foto}" alt="${escapar(pub.fornecedor.nome)}" class="w-full h-full object-cover">` :
+                            `<i class="fa-solid fa-building text-white text-lg"></i>`
+                        }
+                    </div>
+                    <div>
+                        <h3 class="font-black text-slate-800 text-sm">${escapar(pub.fornecedor.nome)}</h3>
+                        <p class="text-xs text-slate-500">${formatarData(pub.criadaEm)}</p>
+                    </div>
+                </div>
+                ${pub.minhaPublicacao ? `
+                    <div class="relative">
+                        <button onclick="toggleMenuPublicacao(${pub.id})" class="text-slate-400 hover:text-slate-700 px-2">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div id="menu-pub-${pub.id}" class="hidden absolute right-0 mt-2 w-48 rounded-xl bg-white shadow-lg border border-slate-200 py-2 z-10">
+                            <button onclick="editarPublicacao(${pub.id})" class="w-full px-4 py-2 text-left text-sm font-bold text-slate-700 hover:bg-slate-50">
+                                <i class="fa-solid fa-pen mr-2"></i>Editar
+                            </button>
+                            <button onclick="excluirPublicacao(${pub.id})" class="w-full px-4 py-2 text-left text-sm font-bold text-rose-600 hover:bg-rose-50">
+                                <i class="fa-solid fa-trash mr-2"></i>Excluir
+                            </button>
+                        </div>
+                    </div>
+                ` : ''}
+            </div>
+
+            <!-- Imagens do Produto -->
+            ${pub.imagens && pub.imagens.length > 0 ? renderizarCarrossel(pub.id, pub.imagens) : ''}
+
+            <!-- Conteúdo -->
+            <div class="px-5 py-4">
+                <h2 class="text-xl font-black text-slate-900 mb-2">${escapar(pub.titulo)}</h2>
+                ${pub.descricao ? `<p class="text-sm text-slate-600 mb-4 leading-relaxed">${escapar(pub.descricao)}</p>` : ''}
+                
+                <!-- Preços -->
+                <div class="flex items-center gap-3 mb-4">
+                    ${pub.precoPromocional ? `
+                        <div>
+                            <span class="text-sm text-slate-400 line-through">${formatarPreco(pub.preco)}</span>
+                            <span class="text-2xl font-black text-green-600 ml-2">${formatarPreco(pub.precoPromocional)}</span>
+                            <span class="ml-2 rounded-full bg-green-100 px-2 py-1 text-xs font-bold text-green-700">
+                                PROMOÇÃO
+                            </span>
+                        </div>
+                    ` : pub.preco ? `
+                        <span class="text-2xl font-black text-slate-900">${formatarPreco(pub.preco)}</span>
+                    ` : ''}
+                    ${pub.unidadeVenda ? `<span class="text-sm text-slate-500">/ ${pub.unidadeVenda}</span>` : ''}
+                </div>
+
+                <!-- Informações adicionais -->
+                ${pub.quantidadeMinima || pub.condicoesEspeciais ? `
+                    <div class="space-y-2 mb-4">
+                        ${pub.quantidadeMinima ? `
+                            <p class="text-xs text-slate-600">
+                                <i class="fa-solid fa-box text-sky-600 mr-2"></i>
+                                Quantidade mínima: <span class="font-bold">${pub.quantidadeMinima} ${pub.unidadeVenda || 'un'}</span>
+                            </p>
+                        ` : ''}
+                        ${pub.condicoesEspeciais ? `
+                            <p class="text-xs text-slate-600">
+                                <i class="fa-solid fa-info-circle text-sky-600 mr-2"></i>
+                                ${escapar(pub.condicoesEspeciais)}
+                            </p>
+                        ` : ''}
+                    </div>
+                ` : ''}
+            </div>
+
+            <!-- Ações: Curtir e Contato -->
+            <div class="border-t border-slate-100 px-5 py-3 flex items-center justify-between">
+                <button onclick="curtirPublicacao(${pub.id})" 
+                        id="btn-curtir-${pub.id}"
+                        class="flex items-center gap-2 text-sm font-bold transition ${pub.curtidoPorMim ? 'text-rose-600' : 'text-slate-600 hover:text-rose-600'}">
+                    <i class="fa-${pub.curtidoPorMim ? 'solid' : 'regular'} fa-heart text-lg"></i>
+                    <span id="curtidas-${pub.id}">${pub.totalCurtidas}</span>
+                </button>
+                <button onclick="abrirModalContato(${pub.id})" 
+                        class="flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-black text-white hover:bg-sky-700 transition">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Entrar em Contato
+                </button>
+            </div>
+        </article>
+    `).join('');
+}
+
+function renderizarCarrossel(pubId, imagens) {
+    if (imagens.length === 1) {
+        return `
+            <div class="w-full bg-slate-100">
+                <img src="${imagens[0]}" alt="Imagem do produto" class="w-full h-auto max-h-[500px] object-contain">
+            </div>
+        `;
+    }
+    
+    return `
+        <div class="carousel-container">
+            <div id="carousel-${pubId}" class="relative bg-slate-100 overflow-hidden">
+                ${imagens.map((img, idx) => `
+                    <img src="${img}" alt="Imagem ${idx + 1}" 
+                         class="w-full h-auto max-h-[500px] object-contain ${idx === 0 ? '' : 'hidden'}" 
+                         data-carousel-img="${pubId}-${idx}">
+                `).join('')}
+                ${imagens.length > 1 ? `
+                    <button onclick="mudarImagemCarrossel(${pubId}, -1)" 
+                            class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 rounded-full hover:bg-black/70 transition">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    <button onclick="mudarImagemCarrossel(${pubId}, 1)" 
+                            class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 rounded-full hover:bg-black/70 transition">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                ` : ''}
+            </div>
+            ${imagens.length > 1 ? `
+                <div class="carousel-dots">
+                    ${imagens.map((_, idx) => `
+                        <div class="carousel-dot ${idx === 0 ? 'active' : ''}" 
+                             data-dot="${pubId}-${idx}" 
+                             onclick="irParaImagemCarrossel(${pubId}, ${idx})"></div>
+                    `).join('')}
+                </div>
+            ` : ''}
+        </div>
+    `;
+}
+
+let carrosselAtual = {};
+
+function mudarImagemCarrossel(pubId, direcao) {
+    const pub = publicacoes.find(p => p.id === pubId);
+    if (!pub || !pub.imagens) return;
+    
+    const total = pub.imagens.length;
+    const atual = carrosselAtual[pubId] || 0;
+    const proximo = (atual + direcao + total) % total;
+    
+    irParaImagemCarrossel(pubId, proximo);
+}
+
+function irParaImagemCarrossel(pubId, indice) {
+    const pub = publicacoes.find(p => p.id === pubId);
+    if (!pub || !pub.imagens) return;
+    
+    // Ocultar imagem atual
+    const imagemAtual = document.querySelector(`[data-carousel-img="${pubId}-${carrosselAtual[pubId] || 0}"]`);
+    const dotAtual = document.querySelector(`[data-dot="${pubId}-${carrosselAtual[pubId] || 0}"]`);
+    if (imagemAtual) imagemAtual.classList.add('hidden');
+    if (dotAtual) dotAtual.classList.remove('active');
+    
+    // Mostrar nova imagem
+    const novaImagem = document.querySelector(`[data-carousel-img="${pubId}-${indice}"]`);
+    const novoDot = document.querySelector(`[data-dot="${pubId}-${indice}"]`);
+    if (novaImagem) novaImagem.classList.remove('hidden');
+    if (novoDot) novoDot.classList.add('active');
+    
+    carrosselAtual[pubId] = indice;
+}
+
+function toggleMenuPublicacao(pubId) {
+    const menu = document.getElementById(`menu-pub-${pubId}`);
+    menu.classList.toggle('hidden');
+    
+    // Fechar ao clicar fora
+    if (!menu.classList.contains('hidden')) {
+        setTimeout(() => {
+            document.addEventListener('click', function fecharMenu(e) {
+                if (!e.target.closest(`#menu-pub-${pubId}`)) {
+                    menu.classList.add('hidden');
+                    document.removeEventListener('click', fecharMenu);
+                }
+            });
+        }, 10);
+    }
+}
+
+async function curtirPublicacao(pubId) {
+    try {
+        const response = await fetch(`/api/feed/${pubId}/curtir`, { method: 'POST' });
+        if (!response.ok) {
+            const erro = await response.text();
+            alert(erro);
+            return;
+        }
+        
+        const resultado = await response.json();
+        
+        // Atualizar UI
+        const btn = document.getElementById(`btn-curtir-${pubId}`);
+        const contador = document.getElementById(`curtidas-${pubId}`);
+        const icone = btn.querySelector('i');
+        
+        if (resultado.curtido) {
+            btn.classList.remove('text-slate-600');
+            btn.classList.add('text-rose-600');
+            icone.classList.remove('fa-regular');
+            icone.classList.add('fa-solid', 'heart-beat');
+            setTimeout(() => icone.classList.remove('heart-beat'), 300);
+        } else {
+            btn.classList.remove('text-rose-600');
+            btn.classList.add('text-slate-600');
+            icone.classList.remove('fa-solid');
+            icone.classList.add('fa-regular');
+        }
+        
+        contador.textContent = resultado.totalCurtidas;
+        
+        // Atualizar array local
+        const pub = publicacoes.find(p => p.id === pubId);
+        if (pub) {
+            pub.curtidoPorMim = resultado.curtido;
+            pub.totalCurtidas = resultado.totalCurtidas;
+        }
+        
+    } catch (error) {
+        console.error('Erro ao curtir:', error);
+        alert('Erro ao curtir publicação');
+    }
+}
+
+function abrirModalContato(pubId) {
+    const pub = publicacoes.find(p => p.id === pubId);
+    if (!pub) return;
+    
+    document.getElementById('contato-fornecedor-nome').textContent = pub.fornecedor.nome;
+    
+    let contatoHTML = '';
+    if (pub.fornecedor.telefone) {
+        contatoHTML += `
+            <a href="tel:${pub.fornecedor.telefone}" 
+               class="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 hover:bg-slate-100 transition">
+                <i class="fa-solid fa-phone text-sky-600 text-lg"></i>
+                <div class="text-left flex-1">
+                    <p class="text-xs font-bold text-slate-500 uppercase">Telefone</p>
+                    <p class="text-sm font-black text-slate-800">${escapar(pub.fornecedor.telefone)}</p>
+                </div>
+            </a>
+        `;
+    }
+    if (pub.fornecedor.email) {
+        contatoHTML += `
+            <a href="mailto:${pub.fornecedor.email}?subject=Interesse em: ${escapar(pub.titulo)}" 
+               class="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 hover:bg-slate-100 transition">
+                <i class="fa-solid fa-envelope text-sky-600 text-lg"></i>
+                <div class="text-left flex-1">
+                    <p class="text-xs font-bold text-slate-500 uppercase">E-mail</p>
+                    <p class="text-sm font-black text-slate-800">${escapar(pub.fornecedor.email)}</p>
+                </div>
+            </a>
+        `;
+    }
+    
+    if (!contatoHTML) {
+        contatoHTML = '<p class="text-sm text-slate-500">Informações de contato não disponíveis.</p>';
+    }
+    
+    document.getElementById('contato-info').innerHTML = contatoHTML;
+    document.getElementById('modal-contato').classList.remove('hidden');
+}
+
+function fecharModalContato() {
+    document.getElementById('modal-contato').classList.add('hidden');
+}
+
+function abrirModalCriarPublicacao() {
+    document.getElementById('publicacao-id').value = '';
+    document.getElementById('form-publicacao').reset();
+    imagensUpload = [];
+    document.getElementById('preview-imagens').innerHTML = '';
+    document.getElementById('modal-publicacao').classList.remove('hidden');
+}
+
+function fecharModalPublicacao() {
+    document.getElementById('modal-publicacao').classList.add('hidden');
+}
+
+async function uploadImagem(input) {
+    const arquivo = input.files[0];
+    if (!arquivo) return;
+    
+    if (imagensUpload.length >= 5) {
+        alert('Máximo de 5 imagens por publicação');
+        input.value = '';
+        return;
+    }
+    
+    const formData = new FormData();
+    formData.append('imagem', arquivo);
+    
+    try {
+        const response = await fetch('/api/feed/upload', {
+            method: 'POST',
+            body: formData
+        });
+        
+        if (!response.ok) {
+            const erro = await response.json();
+            alert(erro.erro || 'Erro ao fazer upload');
+            return;
+        }
+        
+        const resultado = await response.json();
+        imagensUpload.push(resultado.url);
+        
+        atualizarPreviewImagens();
+        input.value = '';
+        
+    } catch (error) {
+        console.error('Erro ao fazer upload:', error);
+        alert('Erro ao fazer upload da imagem');
+    }
+}
+
+function atualizarPreviewImagens() {
+    const preview = document.getElementById('preview-imagens');
+    preview.innerHTML = imagensUpload.map((url, idx) => `
+        <div class="relative w-20 h-20 rounded-lg overflow-hidden border-2 border-sky-200">
+            <img src="${url}" alt="Preview ${idx + 1}" class="w-full h-full object-cover">
+            <button type="button" onclick="removerImagem(${idx})" 
+                    class="absolute top-0 right-0 bg-rose-600 text-white w-6 h-6 rounded-bl-lg hover:bg-rose-700">
+                <i class="fa-solid fa-times text-xs"></i>
+            </button>
+        </div>
+    `).join('');
+}
+
+function removerImagem(indice) {
+    imagensUpload.splice(indice, 1);
+    atualizarPreviewImagens();
+}
+
+document.getElementById('form-publicacao').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const pubId = document.getElementById('publicacao-id').value;
+    const isEdicao = pubId && pubId !== '';
+    
+    const dados = {
+        titulo: document.getElementById('pub-titulo').value.trim(),
+        descricao: document.getElementById('pub-descricao').value.trim() || null,
+        preco: document.getElementById('pub-preco').value || null,
+        precoPromocional: document.getElementById('pub-preco-promo').value || null,
+        unidadeVenda: document.getElementById('pub-unidade').value || null,
+        quantidadeMinima: document.getElementById('pub-qtd-min').value || null,
+        condicoesEspeciais: document.getElementById('pub-condicoes').value.trim() || null,
+        imagens: imagensUpload.join(',')
+    };
+    
+    try {
+        let response;
+        
+        if (isEdicao) {
+            // Editar publicação existente
+            response = await fetch(`/api/feed/${pubId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+        } else {
+            // Criar nova publicação
+            response = await fetch('/api/feed', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+        }
+        
+        if (!response.ok) {
+            const erro = await response.text();
+            alert(erro);
+            return;
+        }
+        
+        alert(isEdicao ? 'Publicação atualizada com sucesso!' : 'Publicação criada com sucesso!');
+        fecharModalPublicacao();
+        await carregarFeed();
+        
+    } catch (error) {
+        console.error('Erro ao salvar publicação:', error);
+        alert('Erro ao salvar publicação');
+    }
+});
+
+async function editarPublicacao(pubId) {
+    try {
+        // Buscar dados da publicação
+        const response = await fetch(`/api/feed/${pubId}`);
+        if (!response.ok) {
+            alert('Erro ao carregar publicação');
+            return;
+        }
+        
+        const publicacao = await response.json();
+        
+        // Verificar se é o dono
+        if (!publicacao.minhaPublicacao) {
+            alert('Você só pode editar suas próprias publicações');
+            return;
+        }
+        
+        // Preencher formulário
+        document.getElementById('publicacao-id').value = publicacao.id;
+        document.getElementById('pub-titulo').value = publicacao.titulo || '';
+        document.getElementById('pub-descricao').value = publicacao.descricao || '';
+        document.getElementById('pub-preco').value = publicacao.preco || '';
+        document.getElementById('pub-preco-promo').value = publicacao.precoPromocional || '';
+        document.getElementById('pub-unidade').value = publicacao.unidadeVenda || '';
+        document.getElementById('pub-qtd-min').value = publicacao.quantidadeMinima || '';
+        document.getElementById('pub-condicoes').value = publicacao.condicoesEspeciais || '';
+        
+        // Carregar imagens existentes
+        imagensUpload = publicacao.imagens || [];
+        atualizarPreviewImagens();
+        
+        // Abrir modal
+        document.getElementById('modal-publicacao').classList.remove('hidden');
+        
+    } catch (error) {
+        console.error('Erro ao editar publicação:', error);
+        alert('Erro ao carregar dados para edição');
+    }
+}
+
+async function salvarEdicaoPublicacao(pubId, dados) {
+    try {
+        const response = await fetch(`/api/feed/${pubId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dados)
+        });
+        
+        if (!response.ok) {
+            const erro = await response.text();
+            throw new Error(erro);
+        }
+        
+        return await response.json();
+        
+    } catch (error) {
+        console.error('Erro ao salvar edição:', error);
+        throw error;
+    }
+}
+
+async function excluirPublicacao(pubId) {
+    if (!confirm('Tem certeza que deseja excluir esta publicação?')) return;
+    
+    try {
+        const response = await fetch(`/api/feed/${pubId}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Erro ao excluir');
+        
+        alert('Publicação excluída com sucesso!');
+        await carregarFeed();
+        
+    } catch (error) {
+        console.error('Erro ao excluir:', error);
+        alert('Erro ao excluir publicação');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await carregarMenuLateral();
+    exibirInfoUsuario();
+    aplicarControlesDeAcesso();
+    
+    // Verificar usuário logado
+    try {
+        const response = await fetch('/api/login/session');
+        if (response.ok) {
+            usuarioLogado = await response.json();
+            
+            // Mostrar botão criar apenas para fornecedores
+            if (usuarioLogado.fornecedor) {
+                document.getElementById('criar-publicacao-btn').classList.remove('hidden');
+            }
+        }
+    } catch (error) {
+        console.log('Usuário não logado');
+    }
+    
+    await carregarFeed();
+});
+</script>
+</body>
+</html>
