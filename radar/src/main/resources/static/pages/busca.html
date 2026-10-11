@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Produtos - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="/js/menu.js"></script>
+    <script src="/js/controle-acesso.js"></script>
+</head>
+<body class="bg-slate-50" data-standalone="true">
+    <!-- Menu Lateral -->
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+    <!-- Container Principal -->
+    <div class="md:ml-64 min-h-screen p-6">
+        <!-- Header -->
+        <div class="max-w-7xl mx-auto mb-8">
+            <h1 class="text-3xl font-black text-slate-800 mb-2">
+                <i class="fa-solid fa-magnifying-glass text-sky-600"></i>
+                Busca de Produtos
+            </h1>
+            <p class="text-slate-600">Encontre produtos e fornecedores de forma rápida e inteligente</p>
+        </div>
+
+        <!-- Barra de Busca -->
+        <div class="max-w-7xl mx-auto mb-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <div class="flex gap-3">
+                    <div class="flex-1 relative">
+                        <input 
+                            type="text" 
+                            id="input-busca"
+                            placeholder="Buscar por nome, descrição ou categoria..."
+                            class="w-full px-4 py-3 pr-12 border-2 border-slate-200 rounded-xl focus:border-sky-500 focus:outline-none text-slate-700"
+                            autocomplete="off">
+                        <i class="fa-solid fa-magnifying-glass absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        
+                        <!-- Sugestões de autocomplete -->
+                        <div id="sugestoes" class="hidden absolute top-full left-0 right-0 mt-2 bg-white border-2 border-slate-200 rounded-xl shadow-lg max-h-64 overflow-y-auto z-10"></div>
+                    </div>
+                    
+                    <button onclick="executarBusca()" class="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl transition">
+                        <i class="fa-solid fa-search mr-2"></i>
+                        Buscar
+                    </button>
+                    
+                    <button onclick="toggleFiltros()" class="px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-xl transition">
+                        <i class="fa-solid fa-filter mr-2"></i>
+                        Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel de Filtros (inicialmente oculto) -->
+        <div id="painel-filtros" class="hidden max-w-7xl mx-auto mb-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                <h3 class="text-lg font-bold text-slate-800 mb-4">
+                    <i class="fa-solid fa-sliders mr-2"></i>Filtros Avançados
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Categoria -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Categoria</label>
+                        <select id="filtro-categoria" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:border-sky-500 focus:outline-none">
+                            <option value="">Todas as categorias</option>
+                        </select>
+                    </div>
+
+                    <!-- Preço Mínimo -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Preço Mínimo</label>
+                        <input type="number" id="filtro-preco-min" placeholder="R$ 0,00" step="0.01" min="0"
+                               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:border-sky-500 focus:outline-none">
+                    </div>
+
+                    <!-- Preço Máximo -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Preço Máximo</label>
+                        <input type="number" id="filtro-preco-max" placeholder="R$ 10.000,00" step="0.01" min="0"
+                               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:border-sky-500 focus:outline-none">
+                    </div>
+
+                    <!-- Ordenação -->
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Ordenar por</label>
+                        <select id="filtro-ordenacao" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:border-sky-500 focus:outline-none">
+                            <option value="relevancia">Relevância</option>
+                            <option value="menor_preco">Menor Preço</option>
+                            <option value="maior_preco">Maior Preço</option>
+                            <option value="nome_az">Nome (A-Z)</option>
+                            <option value="nome_za">Nome (Z-A)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex gap-3">
+                    <button onclick="executarBusca()" class="px-6 py-2 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg transition">
+                        <i class="fa-solid fa-check mr-2"></i>Aplicar Filtros
+                    </button>
+                    <button onclick="limparFiltros()" class="px-6 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg transition">
+                        <i class="fa-solid fa-times mr-2"></i>Limpar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informações da Busca -->
+        <div id="info-busca" class="hidden max-w-7xl mx-auto mb-4">
+            <div class="bg-sky-50 border-l-4 border-sky-600 p-4 rounded-lg">
+                <p class="text-sm text-slate-700">
+                    <i class="fa-solid fa-info-circle text-sky-600 mr-2"></i>
+                    <span id="texto-info-busca"></span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="hidden max-w-7xl mx-auto text-center py-12">
+            <i class="fa-solid fa-spinner fa-spin text-4xl text-sky-600 mb-4"></i>
+            <p class="text-slate-600">Buscando produtos...</p>
+        </div>
+
+        <!-- Resultados -->
+        <div id="resultados" class="max-w-7xl mx-auto">
+            <!-- Mensagem inicial -->
+            <div id="msg-inicial" class="text-center py-20">
+                <i class="fa-solid fa-magnifying-glass text-6xl text-slate-300 mb-6"></i>
+                <h2 class="text-2xl font-bold text-slate-400 mb-2">Digite algo para buscar</h2>
+                <p class="text-slate-500">Use a barra de busca acima para encontrar produtos e fornecedores</p>
+            </div>
+
+            <!-- Lista de produtos -->
+            <div id="lista-produtos" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards serão inseridos via JavaScript -->
+            </div>
+
+            <!-- Sem resultados -->
+            <div id="sem-resultados" class="hidden text-center py-20">
+                <i class="fa-solid fa-search-minus text-6xl text-slate-300 mb-6"></i>
+                <h2 class="text-2xl font-bold text-slate-600 mb-2">Nenhum produto encontrado</h2>
+                <p class="text-slate-500 mb-6">Tente usar outros termos ou ajustar os filtros</p>
+                <button onclick="limparBusca()" class="px-6 py-3 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-xl transition">
+                    <i class="fa-solid fa-redo mr-2"></i>Nova Busca
+                </button>
+            </div>
+        </div>
+
+        <!-- Paginação -->
+        <div id="paginacao" class="hidden max-w-7xl mx-auto mt-8">
+            <div class="flex justify-center items-center gap-2">
+                <button onclick="irParaPagina(paginaAtual - 1)" id="btn-anterior" class="px-4 py-2 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                
+                <span id="info-paginacao" class="px-4 py-2 text-sm font-bold text-slate-700"></span>
+                
+                <button onclick="irParaPagina(paginaAtual + 1)" id="btn-proxima" class="px-4 py-2 bg-white border border-slate-300 rounded-lg hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+// Variáveis globais
+let paginaAtual = 0;
+let totalPaginas = 0;
+let tempoDebounce = null;
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', async () => {
+    await carregarMenuLateral();
+    exibirInfoUsuario();
+    aplicarControlesDeAcesso();
+    
+    carregarCategorias();
+    
+    // Autocomplete
+    document.getElementById('input-busca').addEventListener('input', (e) => {
+        clearTimeout(tempoDebounce);
+        tempoDebounce = setTimeout(() => buscarSugestoes(e.target.value), 300);
+    });
+    
+    // Enter para buscar
+    document.getElementById('input-busca').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            executarBusca();
+            document.getElementById('sugestoes').classList.add('hidden');
+        }
+    });
+    
+    // Fechar sugestões ao clicar fora
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#input-busca') && !e.target.closest('#sugestoes')) {
+            document.getElementById('sugestoes').classList.add('hidden');
+        }
+    });
+});
+
+// Carregar categorias disponíveis
+async function carregarCategorias() {
+    try {
+        const response = await fetch('/api/busca/categorias');
+        if (!response.ok) return;
+        
+        const categorias = await response.json();
+        const select = document.getElementById('filtro-categoria');
+        
+        categorias.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.valor;
+            option.textContent = cat.nome;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Erro ao carregar categorias:', error);
+    }
+}
+
+// Buscar sugestões para autocomplete
+async function buscarSugestoes(termo) {
+    if (!termo || termo.trim().length < 2) {
+        document.getElementById('sugestoes').classList.add('hidden');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/busca/sugestoes?termo=${encodeURIComponent(termo)}`);
+        if (!response.ok) return;
+        
+        const sugestoes = await response.json();
+        const divSugestoes = document.getElementById('sugestoes');
+        
+        if (sugestoes.length === 0) {
+            divSugestoes.classList.add('hidden');
+            return;
+        }
+        
+        divSugestoes.innerHTML = sugestoes.map(s => `
+            <div onclick="selecionarSugestao('${s.nome}')" 
+                 class="px-4 py-3 hover:bg-slate-50 cursor-pointer border-b border-slate-100 last:border-0">
+                <div class="font-bold text-slate-800">${s.nome}</div>
+                <div class="text-xs text-slate-500">${s.categoria}</div>
+            </div>
+        `).join('');
+        
+        divSugestoes.classList.remove('hidden');
+    } catch (error) {
+        console.error('Erro ao buscar sugestões:', error);
+    }
+}
+
+// Selecionar sugestão
+function selecionarSugestao(nome) {
+    document.getElementById('input-busca').value = nome;
+    document.getElementById('sugestoes').classList.add('hidden');
+    executarBusca();
+}
+
+// Executar busca
+async function executarBusca() {
+    const termo = document.getElementById('input-busca').value.trim();
+    const categoria = document.getElementById('filtro-categoria').value;
+    const precoMin = document.getElementById('filtro-preco-min').value;
+    const precoMax = document.getElementById('filtro-preco-max').value;
+    const ordenacao = document.getElementById('filtro-ordenacao').value;
+    
+    // Construir URL
+    const params = new URLSearchParams();
+    if (termo) params.append('termo', termo);
+    if (categoria) params.append('categoria', categoria);
+    if (precoMin) params.append('precoMin', precoMin);
+    if (precoMax) params.append('precoMax', precoMax);
+    if (ordenacao) params.append('ordenacao', ordenacao);
+    params.append('pagina', paginaAtual);
+    params.append('tamanho', 15);
+    
+    // Mostrar loading
+    document.getElementById('msg-inicial').classList.add('hidden');
+    document.getElementById('lista-produtos').classList.add('hidden');
+    document.getElementById('sem-resultados').classList.add('hidden');
+    document.getElementById('loading').classList.remove('hidden');
+    document.getElementById('paginacao').classList.add('hidden');
+    
+    try {
+        const response = await fetch(`/api/busca/produtos?${params}`);
+        if (!response.ok) throw new Error('Erro na busca');
+        
+        const data = await response.json();
+        
+        document.getElementById('loading').classList.add('hidden');
+        
+        // Atualizar informações
+        totalPaginas = data.totalPaginas;
+        
+        // Mostrar info
+        if (data.produtos.length > 0) {
+            document.getElementById('texto-info-busca').textContent = 
+                `${data.totalItens} produto(s) encontrado(s)`;
+            document.getElementById('info-busca').classList.remove('hidden');
+            
+            renderizarProdutos(data.produtos);
+            renderizarPaginacao(data);
+        } else {
+            document.getElementById('info-busca').classList.add('hidden');
+            document.getElementById('sem-resultados').classList.remove('hidden');
+        }
+        
+    } catch (error) {
+        document.getElementById('loading').classList.add('hidden');
+        console.error('Erro ao buscar:', error);
+        alert('Erro ao buscar produtos. Tente novamente.');
+    }
+}
+
+// Renderizar produtos
+function renderizarProdutos(produtos) {
+    const lista = document.getElementById('lista-produtos');
+    
+    lista.innerHTML = produtos.map(p => `
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition">
+            <div class="mb-4">
+                <span class="inline-block px-3 py-1 bg-sky-100 text-sky-700 text-xs font-bold rounded-full">
+                    ${p.categoriaNome}
+                </span>
+            </div>
+            
+            <h3 class="text-lg font-bold text-slate-800 mb-2">${p.nome}</h3>
+            
+            <p class="text-sm text-slate-600 mb-4 line-clamp-2">
+                ${p.descricao || 'Sem descrição disponível'}
+            </p>
+            
+            ${p.fornecedor ? `
+                <div class="mb-4 text-sm text-slate-500">
+                    <i class="fa-solid fa-building mr-1"></i>
+                    ${p.fornecedor.nome}
+                    ${p.fornecedor.cidade ? ` - ${p.fornecedor.cidade}/${p.fornecedor.estado}` : ''}
+                </div>
+            ` : ''}
+            
+            <div class="flex items-center justify-between">
+                <div>
+                    <span class="text-2xl font-black text-sky-600">
+                        ${p.preco ? `R$ ${Number(p.preco).toFixed(2)}` : 'Consultar'}
+                    </span>
+                </div>
+                
+                <a href="/pages/produtos.html?produto=${p.id}" 
+                   class="px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white font-bold rounded-lg transition">
+                    Ver Detalhes
+                </a>
+            </div>
+        </div>
+    `).join('');
+    
+    lista.classList.remove('hidden');
+}
+
+// Renderizar paginação
+function renderizarPaginacao(data) {
+    if (data.totalPaginas <= 1) {
+        document.getElementById('paginacao').classList.add('hidden');
+        return;
+    }
+    
+    document.getElementById('info-paginacao').textContent = 
+        `Página ${data.paginaAtual + 1} de ${data.totalPaginas}`;
+    
+    document.getElementById('btn-anterior').disabled = !data.temAnterior;
+    document.getElementById('btn-proxima').disabled = !data.temProxima;
+    
+    document.getElementById('paginacao').classList.remove('hidden');
+}
+
+// Ir para página
+function irParaPagina(pagina) {
+    if (pagina < 0 || pagina >= totalPaginas) return;
+    paginaAtual = pagina;
+    executarBusca();
+    window.scrollTo(0, 0);
+}
+
+// Toggle filtros
+function toggleFiltros() {
+    document.getElementById('painel-filtros').classList.toggle('hidden');
+}
+
+// Limpar filtros
+function limparFiltros() {
+    document.getElementById('filtro-categoria').value = '';
+    document.getElementById('filtro-preco-min').value = '';
+    document.getElementById('filtro-preco-max').value = '';
+    document.getElementById('filtro-ordenacao').value = 'relevancia';
+    executarBusca();
+}
+
+// Limpar busca
+function limparBusca() {
+    document.getElementById('input-busca').value = '';
+    limparFiltros();
+    paginaAtual = 0;
+    document.getElementById('info-busca').classList.add('hidden');
+    document.getElementById('sem-resultados').classList.add('hidden');
+    document.getElementById('msg-inicial').classList.remove('hidden');
+}
+</script>
+</body>
+</html>
