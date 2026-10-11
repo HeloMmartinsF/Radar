@@ -104,27 +104,27 @@
     const metaCategorias = {
         AUTOMOTIVO: { descricao: 'Automotivo', icone: 'fa-car' },
         MOTOCICLETAS: { descricao: 'Motocicletas', icone: 'fa-motorcycle' },
-        MODA_TEXTIL: { descricao: 'Moda e Têxtil', icone: 'fa-shirt' },
+        MODA_E_TEXTIL: { descricao: 'Moda e Têxtil', icone: 'fa-shirt' },
         EMBALAGENS: { descricao: 'Embalagens', icone: 'fa-box' },
         TECNOLOGIA: { descricao: 'Tecnologia', icone: 'fa-laptop' },
         CONSTRUCAO: { descricao: 'Construção', icone: 'fa-helmet-safety' },
-        MOVEIS: { descricao: 'Móveis', icone: 'fa-chair' },
-        ELETRICA: { descricao: 'Elétrica', icone: 'fa-plug' },
-        FERRAMENTAS: { descricao: 'Ferramentas', icone: 'fa-screwdriver-wrench' },
-        BELEZA: { descricao: 'Beleza', icone: 'fa-pump-soap' },
-        SAUDE: { descricao: 'Saúde', icone: 'fa-kit-medical' },
-        ALIMENTOS: { descricao: 'Alimentos', icone: 'fa-utensils' },
+        MOVEIS_E_ESCRITORIO: { descricao: 'Móveis e Escritório', icone: 'fa-chair' },
+        ELETRICA_E_ELETRONICA: { descricao: 'Elétrica e Eletrônica', icone: 'fa-plug' },
+        FERRAMENTAS_E_EQUIPAMENTOS: { descricao: 'Ferramentas e Equipamentos', icone: 'fa-screwdriver-wrench' },
+        BELEZA_E_COSMETICOS: { descricao: 'Beleza e Cosméticos', icone: 'fa-pump-soap' },
+        SAUDE_E_HOSPITALAR: { descricao: 'Saúde e Hospitalar', icone: 'fa-kit-medical' },
+        ALIMENTOS_E_BEBIDAS: { descricao: 'Alimentos e Bebidas', icone: 'fa-utensils' },
         AGRONEGOCIO: { descricao: 'Agronegócio', icone: 'fa-seedling' },
-        LIMPEZA: { descricao: 'Limpeza', icone: 'fa-broom' },
+        LIMPEZA_E_HIGIENE: { descricao: 'Limpeza e Higiene', icone: 'fa-broom' },
         PET: { descricao: 'Pet', icone: 'fa-paw' },
-        ESPORTES: { descricao: 'Esportes', icone: 'fa-dumbbell' },
-        BRINQUEDOS: { descricao: 'Brinquedos', icone: 'fa-puzzle-piece' },
-        CASA: { descricao: 'Casa', icone: 'fa-house' },
+        ESPORTES_E_FITNESS: { descricao: 'Esportes e Fitness', icone: 'fa-dumbbell' },
+        BRINQUEDOS_E_INFANTIL: { descricao: 'Brinquedos e Infantil', icone: 'fa-puzzle-piece' },
+        CASA_E_DECORACAO: { descricao: 'Casa e Decoração', icone: 'fa-house' },
         INDUSTRIAL: { descricao: 'Industrial', icone: 'fa-industry' },
         SEGURANCA: { descricao: 'Segurança', icone: 'fa-shield-halved' },
         ENERGIA: { descricao: 'Energia', icone: 'fa-solar-panel' },
-        GRAFICA: { descricao: 'Gráfica', icone: 'fa-print' },
-        ARTESANATO: { descricao: 'Artesanato', icone: 'fa-palette' },
+        GRAFICA_E_PERSONALIZADOS: { descricao: 'Gráfica e Personalizados', icone: 'fa-print' },
+        ARTESANATO_E_HOBBIES: { descricao: 'Artesanato e Hobbies', icone: 'fa-palette' },
         OUTROS: { descricao: 'Outros', icone: 'fa-boxes-stacked' }
     };
 
@@ -151,7 +151,7 @@
             const descricao = typeof cat === 'string' ? (metaCategorias[codigo]?.descricao || codigo) : cat.descricao;
             const icone = typeof cat === 'string' ? (metaCategorias[codigo]?.icone || 'fa-tag') : cat.icone;
             
-            return `<a href="/pages/produtos-subcategorias.html?categoria=${codigo}" data-categoria="${codigo}" class="categoria-produto rounded-xl border p-4 text-left transition hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md border-slate-200 bg-white block"><i class="fa-solid ${icone} mb-3 text-xl text-sky-600"></i><span class="block text-sm font-black text-slate-700">${escapar(descricao)}</span><span class="mt-1 block text-xs text-sky-500 font-semibold">Ver subcategorias <i class="fa-solid fa-chevron-right text-[10px]"></i></span></a>`;
+            return `<a href="/pages/produtos-subcategorias.html?categoria=${codigo}" data-categoria="${codigo}" class="categoria-produto rounded-xl border p-4 text-left transition hover:-translate-y-0.5 hover:border-sky-400 hover:shadow-md ${categoriaSelecionada === codigo ? 'border-sky-500 bg-sky-50 ring-2 ring-sky-200' : 'border-slate-200 bg-white'} block"><i class="fa-solid ${icone} mb-3 text-xl text-sky-600"></i><span class="block text-sm font-black text-slate-700">${escapar(descricao)}</span></a>`;
         }).join('');
     }
 

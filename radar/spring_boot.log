@@ -11,13 +11,10 @@
 [INFO] Using 'UTF-8' encoding to copy filtered resources.
 [INFO] Using 'UTF-8' encoding to copy filtered properties files.
 [INFO] Copying 1 resource
-[INFO] Copying 47 resources
+[INFO] Copying 50 resources
 [INFO] 
 [INFO] --- compiler:3.10.1:compile (default-compile) @ radar ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 87 source files to C:\Projeto\Projeto_Radar_Fornecedor\radar\target\classes
-[INFO] /C:/Projeto/Projeto_Radar_Fornecedor/radar/src/main/java/br/com/radarfornecedor/radar/service/ConsultaCnpjService.java: Some input files use unchecked or unsafe operations.
-[INFO] /C:/Projeto/Projeto_Radar_Fornecedor/radar/src/main/java/br/com/radarfornecedor/radar/service/ConsultaCnpjService.java: Recompile with -Xlint:unchecked for details.
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] --- resources:3.2.0:testResources (default-testResources) @ radar ---
 [INFO] Using 'UTF-8' encoding to copy filtered resources.
@@ -25,8 +22,7 @@
 [INFO] skip non existing resourceDirectory C:\Projeto\Projeto_Radar_Fornecedor\radar\src\test\resources
 [INFO] 
 [INFO] --- compiler:3.10.1:testCompile (default-testCompile) @ radar ---
-[INFO] Changes detected - recompiling the module!
-[INFO] Compiling 2 source files to C:\Projeto\Projeto_Radar_Fornecedor\radar\target\test-classes
+[INFO] Nothing to compile - all classes are up to date
 [INFO] 
 [INFO] <<< spring-boot:2.7.14:run (default-cli) < test-compile @ radar <<<
 [INFO] 
@@ -42,35 +38,2824 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::               (v2.7.14)
 
-2026-10-07 23:42:18.148  INFO 8200 --- [           main] b.c.r.radar.RadarApplication             : Starting RadarApplication using Java 17.0.18 on DESKTOP-AGNHM2K with PID 8200 (C:\Projeto\Projeto_Radar_Fornecedor\radar\target\classes started by Home-PC in C:\Projeto\Projeto_Radar_Fornecedor\radar)
-2026-10-07 23:42:18.151  INFO 8200 --- [           main] b.c.r.radar.RadarApplication             : No active profile set, falling back to 1 default profile: "default"
-2026-10-07 23:42:18.756  INFO 8200 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2026-10-07 23:42:18.856  INFO 8200 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 83 ms. Found 14 JPA repository interfaces.
-2026-10-07 23:42:19.326  INFO 8200 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
-2026-10-07 23:42:19.342  INFO 8200 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2026-10-07 23:42:19.342  INFO 8200 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.78]
-2026-10-07 23:42:19.442  INFO 8200 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2026-10-07 23:42:19.442  INFO 8200 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1261 ms
-2026-10-07 23:42:19.458  INFO 8200 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2026-10-07 23:42:19.696  INFO 8200 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2026-10-07 23:42:19.712  INFO 8200 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:./DBLRadar'
-2026-10-07 23:42:19.812  INFO 8200 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2026-10-07 23:42:19.843  INFO 8200 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
-2026-10-07 23:42:19.991  INFO 8200 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2026-10-07 23:42:20.075  INFO 8200 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
-2026-10-07 23:42:20.846  INFO 8200 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2026-10-07 23:42:20.846  INFO 8200 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2026-10-07 23:42:21.717  WARN 8200 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2026-10-07 23:42:21.965  INFO 8200 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
-2026-10-07 23:42:21.965  INFO 8200 --- [           main] b.c.r.radar.RadarApplication             : Started RadarApplication in 4.14 seconds (JVM running for 4.451)
-[MIGRATIONS] Verificando subcategorias...
-[SUBCATS] 0 subcategorias inseridas, 221 já existiam.
+2026-10-11 00:12:52.978  INFO 5272 --- [           main] b.c.r.radar.RadarApplication             : Starting RadarApplication using Java 17.0.18 on DESKTOP-AGNHM2K with PID 5272 (C:\Projeto\Projeto_Radar_Fornecedor\radar\target\classes started by Home-PC in C:\Projeto\Projeto_Radar_Fornecedor\radar)
+2026-10-11 00:12:52.978  INFO 5272 --- [           main] b.c.r.radar.RadarApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-10-11 00:12:53.608  INFO 5272 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-11 00:12:53.693  INFO 5272 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 80 ms. Found 15 JPA repository interfaces.
+2026-10-11 00:12:54.194  INFO 5272 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2026-10-11 00:12:54.210  INFO 5272 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-11 00:12:54.210  INFO 5272 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.78]
+2026-10-11 00:12:54.310  INFO 5272 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-10-11 00:12:54.310  INFO 5272 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1283 ms
+2026-10-11 00:12:54.348  INFO 5272 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-11 00:12:58.707  INFO 5272 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-11 00:12:58.722  INFO 5272 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:file:./DBLRadar'
+2026-10-11 00:12:58.823  INFO 5272 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-11 00:12:58.876  INFO 5272 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.15.Final
+2026-10-11 00:12:59.007  INFO 5272 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-10-11 00:12:59.092  INFO 5272 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+Hibernate: 
+    
+    alter table curtidas_publicacao 
+       drop constraint if exists UK1b0pyr2gvdnoobojfo7arxuns
+Hibernate: 
+    
+    alter table curtidas_publicacao 
+       add constraint UK1b0pyr2gvdnoobojfo7arxuns unique (publicacao_id, usuario_id)
+2026-10-11 00:12:59.825  INFO 5272 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-10-11 00:12:59.841  INFO 5272 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+Hibernate: 
+    select
+        count(*) as col_0_0_ 
+    from
+        atividades atividade0_
+Hibernate: 
+    select
+        usuario0_.id as id1_14_,
+        usuario0_.aguardando_aprovacao as aguardan2_14_,
+        usuario0_.ativo as ativo3_14_,
+        usuario0_.cadastro_completo as cadastro4_14_,
+        usuario0_.cliente as cliente5_14_,
+        usuario0_.cnpj_ou_cpf as cnpj_ou_6_14_,
+        usuario0_.comprador as comprado7_14_,
+        usuario0_.fornecedor as forneced8_14_,
+        usuario0_.representante as represen9_14_,
+        usuario0_.senha as senha10_14_,
+        usuario0_.tipo as tipo11_14_,
+        usuario0_.username as usernam12_14_ 
+    from
+        usuarios usuario0_ 
+    where
+        usuario0_.username=?
+Hibernate: 
+    select
+        count(*) as col_0_0_ 
+    from
+        categorias categoria0_
+2026-10-11 00:13:00.743  WARN 5272 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-11 00:13:00.981  INFO 5272 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2026-10-11 00:13:00.997  INFO 5272 --- [           main] b.c.r.radar.RadarApplication             : Started RadarApplication in 8.342 seconds (JVM running for 8.653)
+[MIGRATIONS] Banco já tem todas as migrations aplicadas (v30-32)
 [APPLICATION STARTUP] Iniciando backup automático do banco de dados...
 [BACKUP SERVICE] Comando BACKUP executado com sucesso.
-[BACKUP SERVICE] Backup criado: BackUpBanco\backup_2026-10-07_234222.zip
-[BACKUP SERVICE] Backup antigo removido: backup_2026-10-07_213356.zip
+[BACKUP SERVICE] Backup criado: BackUpBanco\backup_2026-10-11_001300.zip
+[BACKUP SERVICE] Backup antigo removido: backup_2026-10-11_000806.zip
 [APPLICATION STARTUP] Backup automático concluído com sucesso.
-2026-10-07 23:42:34.266  INFO 8200 --- [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2026-10-07 23:42:34.266  INFO 8200 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2026-10-07 23:42:34.266  INFO 8200 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-[LOGIN] Usuário 'admin' autenticado com sucesso. Senha validada com BCrypt.
+2026-10-11 00:13:14.087  INFO 5272 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-11 00:13:14.087  INFO 5272 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-11 00:13:14.087  INFO 5272 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+Hibernate: 
+    select
+        solicitaca0_.id as id1_12_,
+        solicitaca0_.aceitou_termos as aceitou_2_12_,
+        solicitaca0_.aprovada_em as aprovada3_12_,
+        solicitaca0_.aprovado as aprovado4_12_,
+        solicitaca0_.celular as celular5_12_,
+        solicitaca0_.celular_com_whatsapp as celular_6_12_,
+        solicitaca0_.cliente as cliente7_12_,
+        solicitaca0_.cnpj_ou_cpf as cnpj_ou_8_12_,
+        solicitaca0_.comprador as comprado9_12_,
+        solicitaca0_.criada_em as criada_10_12_,
+        solicitaca0_.email as email11_12_,
+        solicitaca0_.fornecedor as fornece12_12_,
+        solicitaca0_.motivo_rejeicao as motivo_13_12_,
+        solicitaca0_.nome_contato as nome_co14_12_,
+        solicitaca0_.nome_empresa_ou_pessoa as nome_em15_12_,
+        solicitaca0_.rejeitada_em as rejeita16_12_,
+        solicitaca0_.representante as represe17_12_,
+        solicitaca0_.senha as senha18_12_,
+        solicitaca0_.telefonefixo as telefon19_12_,
+        solicitaca0_.tipo as tipo20_12_,
+        solicitaca0_.usuario as usuario21_12_ 
+    from
+        solicitacoes_cadastro solicitaca0_ 
+    where
+        solicitaca0_.usuario=?
+Hibernate: 
+    select
+        usuario0_.id as id1_14_,
+        usuario0_.aguardando_aprovacao as aguardan2_14_,
+        usuario0_.ativo as ativo3_14_,
+        usuario0_.cadastro_completo as cadastro4_14_,
+        usuario0_.cliente as cliente5_14_,
+        usuario0_.cnpj_ou_cpf as cnpj_ou_6_14_,
+        usuario0_.comprador as comprado7_14_,
+        usuario0_.fornecedor as forneced8_14_,
+        usuario0_.representante as represen9_14_,
+        usuario0_.senha as senha10_14_,
+        usuario0_.tipo as tipo11_14_,
+        usuario0_.username as usernam12_14_ 
+    from
+        usuarios usuario0_ 
+    where
+        usuario0_.username=?
+[LOGIN] Usuário 'fTeka' autenticado com sucesso. Senha validada com BCrypt.
+Hibernate: 
+    select
+        categoria0_.id as id1_2_,
+        categoria0_.ativa as ativa2_2_,
+        categoria0_.atualizada_em as atualiza3_2_,
+        categoria0_.criada_em as criada_e4_2_,
+        categoria0_.descricao as descrica5_2_,
+        categoria0_.icone as icone6_2_,
+        categoria0_.nome as nome7_2_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.ativa=true
+Hibernate: 
+    select
+        atividade0_.id as id1_0_,
+        atividade0_.ativa as ativa2_0_,
+        atividade0_.atualizada_em as atualiza3_0_,
+        atividade0_.cnae as cnae4_0_,
+        atividade0_.criada_em as criada_e5_0_,
+        atividade0_.descricao as descrica6_0_,
+        atividade0_.divisao as divisao7_0_,
+        atividade0_.secao as secao8_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.ativa=true
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_,
+        categoria0_.ativa as ativa2_2_,
+        categoria0_.atualizada_em as atualiza3_2_,
+        categoria0_.criada_em as criada_e4_2_,
+        categoria0_.descricao as descrica5_2_,
+        categoria0_.icone as icone6_2_,
+        categoria0_.nome as nome7_2_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.ativa=true
+Hibernate: 
+    select
+        atividade0_.id as id1_0_,
+        atividade0_.ativa as ativa2_0_,
+        atividade0_.atualizada_em as atualiza3_0_,
+        atividade0_.cnae as cnae4_0_,
+        atividade0_.criada_em as criada_e5_0_,
+        atividade0_.descricao as descrica6_0_,
+        atividade0_.divisao as divisao7_0_,
+        atividade0_.secao as secao8_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.ativa=true
+Hibernate: 
+    select
+        publicacao0_.id as id1_10_,
+        publicacao0_.ativa as ativa2_10_,
+        publicacao0_.atualizada_em as atualiza3_10_,
+        publicacao0_.condicoes_especiais as condicoe4_10_,
+        publicacao0_.criada_em as criada_e5_10_,
+        publicacao0_.descricao as descrica6_10_,
+        publicacao0_.fornecedor_id as forneced7_10_,
+        publicacao0_.imagens as imagens8_10_,
+        publicacao0_.preco as preco9_10_,
+        publicacao0_.preco_promocional as preco_p10_10_,
+        publicacao0_.produto_id as produto11_10_,
+        publicacao0_.quantidade_minima as quantid12_10_,
+        publicacao0_.titulo as titulo13_10_,
+        publicacao0_.total_curtidas as total_c14_10_,
+        publicacao0_.unidade_venda as unidade15_10_ 
+    from
+        publicacoes publicacao0_ 
+    where
+        publicacao0_.ativa=? 
+    order by
+        publicacao0_.criada_em desc
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_0_,
+        fornecedor0_.aceitacpf as aceitacp2_7_0_,
+        fornecedor0_.atividade_id as ativida22_7_0_,
+        fornecedor0_.bairro as bairro3_7_0_,
+        fornecedor0_.categoria_id as categor23_7_0_,
+        fornecedor0_.cep as cep4_7_0_,
+        fornecedor0_.cidade as cidade5_7_0_,
+        fornecedor0_.cnpj as cnpj6_7_0_,
+        fornecedor0_.cod_cidade as cod_cida7_7_0_,
+        fornecedor0_.complemento as compleme8_7_0_,
+        fornecedor0_.email as email9_7_0_,
+        fornecedor0_.estado as estado10_7_0_,
+        fornecedor0_.foto as foto11_7_0_,
+        fornecedor0_.foto_nome as foto_no12_7_0_,
+        fornecedor0_.latitude as latitud13_7_0_,
+        fornecedor0_.logradouro as logrado14_7_0_,
+        fornecedor0_.longitude as longitu15_7_0_,
+        fornecedor0_.empresa as empresa16_7_0_,
+        fornecedor0_.numero as numero17_7_0_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_0_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_0_,
+        fornecedor0_.status as status20_7_0_,
+        fornecedor0_.telefone as telefon21_7_0_,
+        atividade1_.id as id1_0_1_,
+        atividade1_.ativa as ativa2_0_1_,
+        atividade1_.atualizada_em as atualiza3_0_1_,
+        atividade1_.cnae as cnae4_0_1_,
+        atividade1_.criada_em as criada_e5_0_1_,
+        atividade1_.descricao as descrica6_0_1_,
+        atividade1_.divisao as divisao7_0_1_,
+        atividade1_.secao as secao8_0_1_,
+        categoria2_.id as id1_2_2_,
+        categoria2_.ativa as ativa2_2_2_,
+        categoria2_.atualizada_em as atualiza3_2_2_,
+        categoria2_.criada_em as criada_e4_2_2_,
+        categoria2_.descricao as descrica5_2_2_,
+        categoria2_.icone as icone6_2_2_,
+        categoria2_.nome as nome7_2_2_ 
+    from
+        fornecedores fornecedor0_ 
+    left outer join
+        atividades atividade1_ 
+            on fornecedor0_.atividade_id=atividade1_.id 
+    left outer join
+        categorias categoria2_ 
+            on fornecedor0_.categoria_id=categoria2_.id 
+    where
+        fornecedor0_.id=?
+Hibernate: 
+    select
+        curtidapub0_.id as col_0_0_ 
+    from
+        curtidas_publicacao curtidapub0_ 
+    where
+        curtidapub0_.publicacao_id=? 
+        and curtidapub0_.usuario_id=? limit ?
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        subcategor0_.id as id1_13_,
+        subcategor0_.ativa as ativa2_13_,
+        subcategor0_.categoria as categori3_13_,
+        subcategor0_.criada_em as criada_e4_13_,
+        subcategor0_.descricao as descrica5_13_,
+        subcategor0_.nome as nome6_13_ 
+    from
+        subcategoria subcategor0_ 
+    where
+        subcategor0_.categoria=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?
+Hibernate: 
+    select
+        publicacao0_.id as id1_10_,
+        publicacao0_.ativa as ativa2_10_,
+        publicacao0_.atualizada_em as atualiza3_10_,
+        publicacao0_.condicoes_especiais as condicoe4_10_,
+        publicacao0_.criada_em as criada_e5_10_,
+        publicacao0_.descricao as descrica6_10_,
+        publicacao0_.fornecedor_id as forneced7_10_,
+        publicacao0_.imagens as imagens8_10_,
+        publicacao0_.preco as preco9_10_,
+        publicacao0_.preco_promocional as preco_p10_10_,
+        publicacao0_.produto_id as produto11_10_,
+        publicacao0_.quantidade_minima as quantid12_10_,
+        publicacao0_.titulo as titulo13_10_,
+        publicacao0_.total_curtidas as total_c14_10_,
+        publicacao0_.unidade_venda as unidade15_10_ 
+    from
+        publicacoes publicacao0_ 
+    where
+        publicacao0_.ativa=? 
+    order by
+        publicacao0_.criada_em desc
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_0_,
+        fornecedor0_.aceitacpf as aceitacp2_7_0_,
+        fornecedor0_.atividade_id as ativida22_7_0_,
+        fornecedor0_.bairro as bairro3_7_0_,
+        fornecedor0_.categoria_id as categor23_7_0_,
+        fornecedor0_.cep as cep4_7_0_,
+        fornecedor0_.cidade as cidade5_7_0_,
+        fornecedor0_.cnpj as cnpj6_7_0_,
+        fornecedor0_.cod_cidade as cod_cida7_7_0_,
+        fornecedor0_.complemento as compleme8_7_0_,
+        fornecedor0_.email as email9_7_0_,
+        fornecedor0_.estado as estado10_7_0_,
+        fornecedor0_.foto as foto11_7_0_,
+        fornecedor0_.foto_nome as foto_no12_7_0_,
+        fornecedor0_.latitude as latitud13_7_0_,
+        fornecedor0_.logradouro as logrado14_7_0_,
+        fornecedor0_.longitude as longitu15_7_0_,
+        fornecedor0_.empresa as empresa16_7_0_,
+        fornecedor0_.numero as numero17_7_0_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_0_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_0_,
+        fornecedor0_.status as status20_7_0_,
+        fornecedor0_.telefone as telefon21_7_0_,
+        atividade1_.id as id1_0_1_,
+        atividade1_.ativa as ativa2_0_1_,
+        atividade1_.atualizada_em as atualiza3_0_1_,
+        atividade1_.cnae as cnae4_0_1_,
+        atividade1_.criada_em as criada_e5_0_1_,
+        atividade1_.descricao as descrica6_0_1_,
+        atividade1_.divisao as divisao7_0_1_,
+        atividade1_.secao as secao8_0_1_,
+        categoria2_.id as id1_2_2_,
+        categoria2_.ativa as ativa2_2_2_,
+        categoria2_.atualizada_em as atualiza3_2_2_,
+        categoria2_.criada_em as criada_e4_2_2_,
+        categoria2_.descricao as descrica5_2_2_,
+        categoria2_.icone as icone6_2_2_,
+        categoria2_.nome as nome7_2_2_ 
+    from
+        fornecedores fornecedor0_ 
+    left outer join
+        atividades atividade1_ 
+            on fornecedor0_.atividade_id=atividade1_.id 
+    left outer join
+        categorias categoria2_ 
+            on fornecedor0_.categoria_id=categoria2_.id 
+    where
+        fornecedor0_.id=?
+Hibernate: 
+    select
+        curtidapub0_.id as col_0_0_ 
+    from
+        curtidas_publicacao curtidapub0_ 
+    where
+        curtidapub0_.publicacao_id=? 
+        and curtidapub0_.usuario_id=? limit ?
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        produto0_.id as id1_9_,
+        produto0_.categoria as categori2_9_,
+        produto0_.descricao as descrica3_9_,
+        produto0_.fornecedor_id as forneced4_9_,
+        produto0_.nome as nome5_9_,
+        produto0_.preco as preco6_9_ 
+    from
+        produtos produto0_
+Hibernate: 
+    select
+        fornecedor0_.id as id1_7_,
+        fornecedor0_.aceitacpf as aceitacp2_7_,
+        fornecedor0_.atividade_id as ativida22_7_,
+        fornecedor0_.bairro as bairro3_7_,
+        fornecedor0_.categoria_id as categor23_7_,
+        fornecedor0_.cep as cep4_7_,
+        fornecedor0_.cidade as cidade5_7_,
+        fornecedor0_.cnpj as cnpj6_7_,
+        fornecedor0_.cod_cidade as cod_cida7_7_,
+        fornecedor0_.complemento as compleme8_7_,
+        fornecedor0_.email as email9_7_,
+        fornecedor0_.estado as estado10_7_,
+        fornecedor0_.foto as foto11_7_,
+        fornecedor0_.foto_nome as foto_no12_7_,
+        fornecedor0_.latitude as latitud13_7_,
+        fornecedor0_.logradouro as logrado14_7_,
+        fornecedor0_.longitude as longitu15_7_,
+        fornecedor0_.empresa as empresa16_7_,
+        fornecedor0_.numero as numero17_7_,
+        fornecedor0_.pontuacao_risco as pontuac18_7_,
+        fornecedor0_.prazo_entrega_dias as prazo_e19_7_,
+        fornecedor0_.status as status20_7_,
+        fornecedor0_.telefone as telefon21_7_ 
+    from
+        fornecedores fornecedor0_ 
+    where
+        fornecedor0_.cnpj=?
+Hibernate: 
+    select
+        atividade0_.id as id1_0_0_,
+        atividade0_.ativa as ativa2_0_0_,
+        atividade0_.atualizada_em as atualiza3_0_0_,
+        atividade0_.cnae as cnae4_0_0_,
+        atividade0_.criada_em as criada_e5_0_0_,
+        atividade0_.descricao as descrica6_0_0_,
+        atividade0_.divisao as divisao7_0_0_,
+        atividade0_.secao as secao8_0_0_ 
+    from
+        atividades atividade0_ 
+    where
+        atividade0_.id=?
+Hibernate: 
+    select
+        avaliacaop0_.id as id1_1_,
+        avaliacaop0_.cliente as cliente2_1_,
+        avaliacaop0_.comentario as comentar3_1_,
+        avaliacaop0_.criado_em as criado_e4_1_,
+        avaliacaop0_.fornecedor_id as forneced5_1_,
+        avaliacaop0_.nota as nota6_1_,
+        avaliacaop0_.produto_id as produto_7_1_ 
+    from
+        avaliacoes_produtos avaliacaop0_
+Hibernate: 
+    select
+        categoria0_.id as id1_2_0_,
+        categoria0_.ativa as ativa2_2_0_,
+        categoria0_.atualizada_em as atualiza3_2_0_,
+        categoria0_.criada_em as criada_e4_2_0_,
+        categoria0_.descricao as descrica5_2_0_,
+        categoria0_.icone as icone6_2_0_,
+        categoria0_.nome as nome7_2_0_ 
+    from
+        categorias categoria0_ 
+    where
+        categoria0_.id=?

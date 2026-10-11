@@ -41,7 +41,6 @@
                         <h1 id="titulo-categoria" class="mt-1 text-4xl font-black text-slate-900 tracking-tight">Carregando...</h1>
                     </div>
                 </div>
-                <p id="descricao-categoria" class="mt-2 text-slate-600 font-medium"></p>
             </div>
 
             <!-- Busca de subcategorias -->
@@ -79,27 +78,27 @@
     const metaCategorias = {
         AUTOMOTIVO: { descricao: 'Automotivo', icone: 'fa-car' },
         MOTOCICLETAS: { descricao: 'Motocicletas', icone: 'fa-motorcycle' },
-        MODA_TEXTIL: { descricao: 'Moda e Têxtil', icone: 'fa-shirt' },
+        MODA_E_TEXTIL: { descricao: 'Moda e Têxtil', icone: 'fa-shirt' },
         EMBALAGENS: { descricao: 'Embalagens', icone: 'fa-box' },
         TECNOLOGIA: { descricao: 'Tecnologia', icone: 'fa-laptop' },
         CONSTRUCAO: { descricao: 'Construção', icone: 'fa-helmet-safety' },
-        MOVEIS: { descricao: 'Móveis', icone: 'fa-chair' },
-        ELETRICA: { descricao: 'Elétrica', icone: 'fa-plug' },
-        FERRAMENTAS: { descricao: 'Ferramentas', icone: 'fa-screwdriver-wrench' },
-        BELEZA: { descricao: 'Beleza', icone: 'fa-pump-soap' },
-        SAUDE: { descricao: 'Saúde', icone: 'fa-kit-medical' },
-        ALIMENTOS: { descricao: 'Alimentos', icone: 'fa-utensils' },
+        MOVEIS_E_ESCRITORIO: { descricao: 'Móveis e Escritório', icone: 'fa-chair' },
+        ELETRICA_E_ELETRONICA: { descricao: 'Elétrica e Eletrônica', icone: 'fa-plug' },
+        FERRAMENTAS_E_EQUIPAMENTOS: { descricao: 'Ferramentas e Equipamentos', icone: 'fa-screwdriver-wrench' },
+        BELEZA_E_COSMETICOS: { descricao: 'Beleza e Cosméticos', icone: 'fa-pump-soap' },
+        SAUDE_E_HOSPITALAR: { descricao: 'Saúde e Hospitalar', icone: 'fa-kit-medical' },
+        ALIMENTOS_E_BEBIDAS: { descricao: 'Alimentos e Bebidas', icone: 'fa-utensils' },
         AGRONEGOCIO: { descricao: 'Agronegócio', icone: 'fa-seedling' },
-        LIMPEZA: { descricao: 'Limpeza', icone: 'fa-broom' },
+        LIMPEZA_E_HIGIENE: { descricao: 'Limpeza e Higiene', icone: 'fa-broom' },
         PET: { descricao: 'Pet', icone: 'fa-paw' },
-        ESPORTES: { descricao: 'Esportes', icone: 'fa-dumbbell' },
-        BRINQUEDOS: { descricao: 'Brinquedos', icone: 'fa-puzzle-piece' },
-        CASA: { descricao: 'Casa', icone: 'fa-house' },
+        ESPORTES_E_FITNESS: { descricao: 'Esportes e Fitness', icone: 'fa-dumbbell' },
+        BRINQUEDOS_E_INFANTIL: { descricao: 'Brinquedos e Infantil', icone: 'fa-puzzle-piece' },
+        CASA_E_DECORACAO: { descricao: 'Casa e Decoração', icone: 'fa-house' },
         INDUSTRIAL: { descricao: 'Industrial', icone: 'fa-industry' },
         SEGURANCA: { descricao: 'Segurança', icone: 'fa-shield-halved' },
         ENERGIA: { descricao: 'Energia', icone: 'fa-solar-panel' },
-        GRAFICA: { descricao: 'Gráfica', icone: 'fa-print' },
-        ARTESANATO: { descricao: 'Artesanato', icone: 'fa-palette' },
+        GRAFICA_E_PERSONALIZADOS: { descricao: 'Gráfica e Personalizados', icone: 'fa-print' },
+        ARTESANATO_E_HOBBIES: { descricao: 'Artesanato e Hobbies', icone: 'fa-palette' },
         OUTROS: { descricao: 'Outros', icone: 'fa-boxes-stacked' }
     };
 
@@ -133,8 +132,11 @@
             lista.innerHTML = `
                 <div class="col-span-full py-12 text-center">
                     <i class="fa-solid fa-inbox text-5xl text-slate-300 mb-4"></i>
-                    <p class="text-slate-500 font-medium">Nenhuma subcategoria encontrada</p>
-                    <p class="text-sm text-slate-400 mt-2">Tente buscar com outros termos ou volte para ver todas</p>
+                    <p class="text-slate-700 font-semibold mb-2">Nenhuma subcategoria encontrada</p>
+                    <p class="text-sm text-slate-500">Esta categoria ainda não possui subcategorias cadastradas.</p>
+                    <a href="/pages/produtos.html" class="mt-4 inline-block text-sm font-bold text-sky-700 hover:text-sky-900">
+                        ← Voltar para categorias
+                    </a>
                 </div>
             `;
             return;
@@ -146,8 +148,8 @@
                     <h3 class="text-lg font-black text-slate-800">${escapar(sub.nome)}</h3>
                     ${sub.ativa ? '<span class="rounded-full bg-green-100 px-2 py-1 text-xs font-bold text-green-700">Ativa</span>' : '<span class="rounded-full bg-slate-100 px-2 py-1 text-xs font-bold text-slate-500">Inativa</span>'}
                 </div>
-                <p class="text-sm text-slate-600 mb-4">${escapar(sub.descricao || 'Sem descrição disponível')}</p>
-                <a href="/pages/produtos.html?subcategoria=${sub.id}" class="inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
+                <p class="text-sm text-slate-600 mb-4">${escapar(sub.descricao || 'Subcategoria de ' + metaCategorias[categoriaAtual]?.descricao)}</p>
+                <a href="/pages/produtos-por-subcategoria.html?subcategoria=${sub.id}" class="inline-flex items-center gap-2 text-sm font-bold text-sky-700 hover:text-sky-900">
                     Ver produtos <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </article>
@@ -172,13 +174,15 @@
 
         // Carregar subcategorias via API
         try {
+            console.log('Buscando subcategorias para:', categoriaAtual);
             const response = await fetch(`/api/subcategorias/categoria/${categoriaAtual}`);
             
             if (!response.ok) {
-                throw new Error('Erro ao carregar subcategorias');
+                throw new Error(`Erro HTTP ${response.status}: ${response.statusText}`);
             }
 
             subcategorias = await response.json();
+            console.log('Subcategorias recebidas:', subcategorias.length);
             
             // Ordenar por nome
             subcategorias.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -186,15 +190,19 @@
             renderizarSubcategorias();
 
         } catch (error) {
-            console.error('Erro:', error);
+            console.error('Erro ao carregar subcategorias:', error);
             document.getElementById('lista-subcategorias').innerHTML = `
                 <div class="col-span-full py-12 text-center">
                     <i class="fa-solid fa-exclamation-triangle text-5xl text-rose-400 mb-4"></i>
                     <p class="text-slate-700 font-semibold mb-2">Erro ao carregar subcategorias</p>
-                    <p class="text-sm text-slate-500">${error.message}</p>
-                    <button onclick="window.location.reload()" class="mt-4 rounded-lg bg-sky-600 px-6 py-2 text-sm font-bold text-white hover:bg-sky-700">
+                    <p class="text-sm text-slate-500 mb-4">${error.message}</p>
+                    <button onclick="window.location.reload()" class="rounded-lg bg-sky-600 px-6 py-2 text-sm font-bold text-white hover:bg-sky-700">
                         Tentar novamente
                     </button>
+                    <br><br>
+                    <a href="/pages/produtos.html" class="text-sm font-bold text-sky-700 hover:text-sky-900">
+                        ← Voltar para categorias
+                    </a>
                 </div>
             `;
         }

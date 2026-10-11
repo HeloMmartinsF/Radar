@@ -78,18 +78,6 @@ public class Fornecedor {
     @Column(name = "FotoNome")
     private String fotoNome;
 
-    /** Descrição/bio da empresa para o perfil público (máx 1000 caracteres). */
-    @Column(name = "Bio", columnDefinition = "TEXT")
-    private String bio;
-
-    /** Site ou URL da empresa. */
-    @Column(name = "Site", length = 255)
-    private String site;
-
-    /** Nome fantasia da empresa. */
-    @Column(name = "NomeFantasia", length = 150)
-    private String nomeFantasia;
-
     // Relacionamento com Categoria e Atividade
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoria_id")
@@ -172,15 +160,6 @@ public class Fornecedor {
 
     public String getFotoNome() { return fotoNome; }
     public void setFotoNome(String fotoNome) { this.fotoNome = fotoNome; }
-
-    public String getBio() { return bio; }
-    public void setBio(String bio) { this.bio = bio; }
-
-    public String getSite() { return site; }
-    public void setSite(String site) { this.site = site; }
-
-    public String getNomeFantasia() { return nomeFantasia; }
-    public void setNomeFantasia(String nomeFantasia) { this.nomeFantasia = nomeFantasia; }
 
     public Categoria getCategoria() { return categoria; }
     public void setCategoria(Categoria categoria) { this.categoria = categoria; }

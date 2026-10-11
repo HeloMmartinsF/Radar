@@ -69,14 +69,6 @@ public class Cliente {
     @Column(name = "FotoNome")
     private String fotoNome;
 
-    /** Descrição/bio do cliente para o perfil público (máx 1000 caracteres). */
-    @Column(name = "Bio", columnDefinition = "TEXT")
-    private String bio;
-
-    /** Segmento/tipo de negócio do cliente. */
-    @Column(name = "Segmento", length = 150)
-    private String segmento;
-
     public Cliente() {}
 
     public Cliente(Long id, String nome, String status) {
@@ -149,10 +141,4 @@ public class Cliente {
 
     public String getFotoNome() { return fotoNome; }
     public void setFotoNome(String fotoNome) { this.fotoNome = fotoNome; }
-
-    public String getBio() { return bio; }
-    public void setBio(String bio) { this.bio = bio; }
-
-    public String getSegmento() { return segmento; }
-    public void setSegmento(String segmento) { this.segmento = segmento; }
 }
