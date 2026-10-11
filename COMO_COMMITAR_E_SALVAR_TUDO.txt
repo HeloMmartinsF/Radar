@@ -1,0 +1,210 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   COMO SALVAR TUDO NO GIT - PASSO A PASSO                  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│  OPÇÃO 1: USAR SCRIPT POWERSHELL (RECOMENDADO)              │
+└──────────────────────────────────────────────────────────────┘
+
+1. Abra o PowerShell
+
+2. Execute:
+   cd C:\Projeto\Projeto_Radar_Fornecedor
+   .\COMMIT_E_PUSH.ps1
+
+3. O script vai:
+   ✓ Mostrar o que mudou (git status)
+   ✓ Adicionar TODOS os arquivos (git add -A)
+   ✓ Criar commit com mensagem completa
+   ✓ Perguntar se quer fazer push
+   ✓ Fazer push para o repositório remoto
+
+
+┌──────────────────────────────────────────────────────────────┐
+│  OPÇÃO 2: USAR SCRIPT .BAT (ALTERNATIVA)                    │
+└──────────────────────────────────────────────────────────────┘
+
+Duplo clique no arquivo:
+   C:\Projeto\Projeto_Radar_Fornecedor\COMMIT_TUDO_AGORA.bat
+
+Ou execute no CMD:
+   cd C:\Projeto\Projeto_Radar_Fornecedor\radar
+   ..\COMMIT_TUDO_AGORA.bat
+
+
+┌──────────────────────────────────────────────────────────────┐
+│  OPÇÃO 3: COMANDOS MANUAIS NO GIT                           │
+└──────────────────────────────────────────────────────────────┘
+
+1. Abra PowerShell ou CMD
+
+2. Navegue até a pasta:
+   cd C:\Projeto\Projeto_Radar_Fornecedor\radar
+
+3. Adicione todos os arquivos:
+   git add -A
+
+4. Crie o commit:
+   git commit -m "feat: Busca Inteligente + Java 17"
+
+5. Faça o push:
+   git push
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   O QUE SERÁ SALVO NO GIT?                                  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+📁 CÓDIGO FONTE (Java)
+   ✓ BuscaProdutoController.java (corrigido)
+   ✓ BuscaProdutoService.java (novo)
+   ✓ Todas as outras classes
+
+📁 INTERFACE (HTML/CSS/JS)
+   ✓ busca.html (nova página)
+   ✓ menu-lateral.html (link adicionado)
+   ✓ Todos os outros arquivos estáticos
+
+📁 CONFIGURAÇÕES
+   ✓ pom.xml (Java 17, Maven 3.13.0)
+   ✓ .gitignore (atualizado)
+   ✓ application.properties
+
+📁 DOCUMENTAÇÃO
+   ✓ CHANGELOG_BUSCA_INTELIGENTE.md
+   ✓ CORRECOES_BUSCA_INTELIGENTE.md
+   ✓ SOLUCAO_JAVA_25.md
+   ✓ OPCAO_ALTERNATIVA_COMPILAR.md
+
+📁 SCRIPTS DE AUTOMAÇÃO
+   ✓ COMPILAR_AGORA_JAVA17.bat
+   ✓ INICIAR_SERVIDOR_AGORA.bat
+   ✓ COMMIT_TUDO_AGORA.bat
+   ✓ COMMIT_E_PUSH.ps1
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   O QUE NÃO SERÁ SALVO (PROTEGIDO PELO .gitignore)          ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+🚫 ARQUIVOS EXCLUÍDOS:
+   ✗ Banco de dados (DBLRadar.mv.db, *.db)
+   ✗ Logs (spring_boot.log, *.log)
+   ✗ Compilados (target/, *.class)
+   ✗ Backups (BackUpBanco/*.zip)
+   ✗ desktop.ini
+   ✗ Arquivos temporários
+
+Isso é CORRETO! Esses arquivos não devem ir para o Git.
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   VERIFICAR SE O COMMIT DEU CERTO                           ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Após fazer o commit, execute:
+
+   git log -1
+
+Você deve ver:
+   - Commit hash (ex: abc123...)
+   - Autor e data
+   - Mensagem: "feat: Implementa Busca Inteligente..."
+
+
+Ou visite seu repositório no navegador:
+   https://github.com/seu-usuario/seu-repositorio
+
+Você deve ver:
+   - Commit mais recente com a mensagem
+   - Arquivos atualizados
+   - Data/hora do commit
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   SE DER ERRO NO PUSH                                       ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Possíveis causas:
+
+1. SEM INTERNET:
+   - Verifique sua conexão
+   - Tente novamente: git push
+
+2. CREDENCIAIS INVÁLIDAS:
+   - Use Personal Access Token (PAT)
+   - Não use senha antiga do GitHub
+   - Gere novo token em: github.com/settings/tokens
+
+3. BRANCH DESATUALIZADO:
+   - Baixe mudanças primeiro: git pull
+   - Resolva conflitos (se houver)
+   - Tente push novamente: git push
+
+4. REMOTE NÃO CONFIGURADO:
+   - Verifique: git remote -v
+   - Configure: git remote add origin <url>
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   IMPORTANTE: DADOS DO BANCO DE DADOS                       ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+⚠️  O BANCO DE DADOS NÃO VAI PARA O GIT!
+
+Isso é PROPOSITAL e CORRETO:
+   ✓ Bancos de dados são grandes demais
+   ✓ Contêm dados de produção sensíveis
+   ✓ Devem ter backups separados
+
+Seus dados estão seguros em:
+   C:\Projeto\Projeto_Radar_Fornecedor\radar\DBLRadar.mv.db
+
+Para fazer backup do banco:
+   1. Copie o arquivo DBLRadar.mv.db
+   2. Salve em outro local (HD externo, nuvem)
+   3. Ou use: radar/BackUpBanco/ (já tem backup automático)
+
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   RESUMO RÁPIDO                                             ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Para salvar TUDO no Git:
+
+   1. Execute: .\COMMIT_E_PUSH.ps1
+   2. Aguarde o commit
+   3. Digite "S" para fazer push
+   4. Pronto! Tudo salvo no GitHub
+
+OU
+
+   1. git add -A
+   2. git commit -m "feat: Busca Inteligente"
+   3. git push
+
+
+═══════════════════════════════════════════════════════════════
+
+PRECISA DE AJUDA?
+
+Se tiver dúvidas ou erros:
+   1. Copie a mensagem de erro completa
+   2. Envie para análise
+   3. Vou ajudar a resolver!
+
+═══════════════════════════════════════════════════════════════

@@ -131,11 +131,13 @@ public class BuscaProdutoController {
             );
 
             List<Map<String, Object>> sugestoes = resultados.getContent().stream()
-                    .map(p -> Map.of(
-                            "id", p.getId(),
-                            "nome", p.getNome(),
-                            "categoria", p.getCategoria().name()
-                    ))
+                    .map(p -> {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("id", p.getId());
+                        map.put("nome", p.getNome());
+                        map.put("categoria", p.getCategoria().name());
+                        return map;
+                    })
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(sugestoes);
@@ -202,8 +204,15 @@ public class BuscaProdutoController {
      * Formatar nome da categoria para exibição
      */
     private String formatarNomeCategoria(String categoria) {
-        return categoria.replace("_", " ")
-                .toLowerCase()
-                .replaceAll("\\b(\\w)", m -> m.group(1).toUpperCase());
+        String[] palavras = categoria.replace("_", " ").toLowerCase().split(" ");
+        StringBuilder resultado = new StringBuilder();
+        for (String palavra : palavras) {
+            if (palavra.length() > 0) {
+                resultado.append(Character.toUpperCase(palavra.charAt(0)))
+                        .append(palavra.substring(1))
+                        .append(" ");
+            }
+        }
+        return resultado.toString().trim();
     }
 }

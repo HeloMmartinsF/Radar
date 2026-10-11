@@ -31,3 +31,35 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Database Files ###
+*.db
+*.db.backup*
+*.db.failed*
+*.db.antes_restauracao*
+DBLRadar.mv.db
+DBLRadar.trace.db
+DBLRadar.lock.db
+*.mv.db
+*.trace.db
+
+### Logs ###
+*.log
+spring_boot.log
+compile_test.log
+inspect_compile.log
+rebuild.log
+
+### Backup Files ###
+BackUpBanco/*.zip
+
+### Desktop.ini ###
+desktop.ini
+
+### Compiled Java Classes ###
+*.class
+
+### Python ###
+__pycache__/
+*.py[cod]
+*$py.class
