@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     List<Produto> findByCategoria(CategoriaProduto categoria);
+    
+    // Métodos para Perfil Social
+    List<Produto> findByFornecedorId(Long fornecedorId);
+    long countByFornecedorId(Long fornecedorId);
 }

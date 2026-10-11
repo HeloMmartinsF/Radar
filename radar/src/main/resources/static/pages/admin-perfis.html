@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administração de Perfis - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50" data-standalone="true">
+    <!-- Menu Lateral -->
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+    <!-- Container Principal -->
+    <div class="md:ml-64 min-h-screen">
+        <!-- Header -->
+        <div class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 py-6">
+                <div class="flex items-center justify-between">
+                    <h1 class="text-2xl font-bold text-gray-800">
+                        <i class="fas fa-users-cog text-[#d4af37] mr-2"></i>
+                        Administração de Perfis
+                    </h1>
+                    <button onclick="atualizarLista()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                        <i class="fas fa-sync-alt mr-2"></i>
+                        Atualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo -->
+        <div class="max-w-7xl mx-auto px-4 py-6">
+            <!-- Filtros -->
+            <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="text" id="filtroNome" placeholder="Buscar por nome ou username..." 
+                           class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37]"
+                           oninput="filtrarPerfis()">
+                    <select id="filtroTipo" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37]"
+                            onchange="filtrarPerfis()">
+                        <option value="">Todos os Tipos</option>
+                        <option value="ADMIN">Administrador</option>
+                        <option value="FORNECEDOR">Fornecedor</option>
+                        <option value="CLIENTE">Cliente</option>
+                        <option value="REPRESENTANTE">Representante</option>
+                        <option value="COMPRADOR">Comprador</option>
+                    </select>
+                    <select id="filtroPrivacidade" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37]"
+                            onchange="filtrarPerfis()">
+                        <option value="">Todos os Perfis</option>
+                        <option value="publico">Apenas Públicos</option>
+                        <option value="privado">Apenas Privados</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Lista de Perfis -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Usuário
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Tipo
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Privacidade
+                                </th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Ações
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaPerfis" class="bg-white divide-y divide-gray-200">
+                            <!-- Perfis carregados dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Mensagem de carregamento -->
+            <div id="loading" class="text-center py-8 hidden">
+                <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37]"></i>
+                <p class="text-gray-500 mt-2">Carregando perfis...</p>
+            </div>
+
+            <!-- Mensagem de vazio -->
+            <div id="vazio" class="text-center py-8 hidden">
+                <i class="fas fa-users text-4xl text-gray-300"></i>
+                <p class="text-gray-500 mt-2">Nenhum perfil encontrado</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição -->
+    <div id="modalEditarPerfil" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Editar Perfil</h3>
+                    <button onclick="fecharModal()" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-sm text-gray-500">
+                        <strong>Usuário:</strong> <span id="modalUsername">-</span>
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        <strong>Tipo:</strong> <span id="modalTipo">-</span>
+                    </p>
+                </div>
+
+                <form id="formEditarPerfil" class="space-y-4">
+                    <input type="hidden" id="modalUsuarioId">
+
+                    <!-- Biografia -->
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Biografia</label>
+                        <textarea id="modalBiografia" rows="4" maxlength="500" 
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#d4af37]"
+                                  placeholder="Biografia do usuário..."></textarea>
+                        <p class="text-sm text-gray-500 mt-1">
+                            <span id="contadorBiografia">0</span>/500 caracteres
+                        </p>
+                    </div>
+
+                    <!-- Configurações de Privacidade -->
+                    <div class="border-t pt-4">
+                        <h4 class="font-medium text-gray-700 mb-3">Configurações de Privacidade</h4>
+                        
+                        <div class="space-y-3">
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="modalPerfilPublico" class="w-5 h-5 text-[#d4af37] rounded">
+                                <span>Perfil Público</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="modalPermiteContato" class="w-5 h-5 text-[#d4af37] rounded">
+                                <span>Permite Contato</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="modalExibeEmail" class="w-5 h-5 text-[#d4af37] rounded">
+                                <span>Exibir Email</span>
+                            </label>
+
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" id="modalExibeTelefone" class="w-5 h-5 text-[#d4af37] rounded">
+                                <span>Exibir Telefone</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="flex gap-3 pt-4">
+                        <button type="submit" class="flex-1 bg-[#d4af37] text-white py-3 rounded-lg hover:bg-[#c4a037] transition font-medium">
+                            <i class="fas fa-save mr-2"></i>Salvar Alterações
+                        </button>
+                        <button type="button" onclick="fecharModal()" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/layout/menu-lateral.html"></script>
+    <script src="/script.js"></script>
+    <script>
+        let perfisOriginal = [];
+        let perfis = [];
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            await carregarMenuLateral();
+            exibirInfoUsuario();
+            aplicarControlesDeAcesso();
+            
+            // Verificar se é admin
+            const tipoUsuario = sessionStorage.getItem('tipoUsuario');
+            if (tipoUsuario !== 'ADMIN') {
+                alert('Acesso negado. Apenas administradores.');
+                window.location.href = '/index.html';
+                return;
+            }
+            
+            await carregarPerfis();
+            configurarEventos();
+        });
+
+        async function carregarPerfis() {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('vazio').classList.add('hidden');
+
+            try {
+                const response = await fetch('/api/perfil/todos');
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar perfis');
+                }
+
+                perfisOriginal = await response.json();
+                perfis = [...perfisOriginal];
+                exibirPerfis(perfis);
+
+            } catch (error) {
+                console.error('Erro ao carregar perfis:', error);
+                alert('Erro ao carregar perfis. Verifique se você é administrador.');
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        }
+
+        function exibirPerfis(lista) {
+            const tbody = document.getElementById('listaPerfis');
+            const vazio = document.getElementById('vazio');
+
+            if (!lista || lista.length === 0) {
+                tbody.innerHTML = '';
+                vazio.classList.remove('hidden');
+                return;
+            }
+
+            vazio.classList.add('hidden');
+            tbody.innerHTML = lista.map(perfil => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10">
+                                <img class="h-10 w-10 rounded-full object-cover" 
+                                     src="${perfil.fotoPerfil || '/img/avatar-default.png'}" 
+                                     alt="Foto">
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">
+                                    ${perfil.nomeExibicao || perfil.username}
+                                </div>
+                                <div class="text-sm text-gray-500">@${perfil.username}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                     ${getTipoBadgeColor(perfil.tipo)}">
+                            ${perfil.tipo}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        ${perfil.perfilPublico !== undefined ? `
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                         ${perfil.perfilPublico ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}">
+                                <i class="fas fa-${perfil.perfilPublico ? 'globe' : 'lock'} mr-1"></i>
+                                ${perfil.perfilPublico ? 'Público' : 'Privado'}
+                            </span>
+                        ` : '<span class="text-gray-400">Sem perfil</span>'}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <button onclick="verPerfil(${perfil.id})" 
+                                class="text-blue-600 hover:text-blue-900 mr-3"
+                                title="Ver Perfil">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button onclick="editarPerfil(${perfil.id})" 
+                                class="text-yellow-600 hover:text-yellow-900"
+                                title="Editar Perfil">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getTipoBadgeColor(tipo) {
+            const colors = {
+                'ADMIN': 'bg-red-100 text-red-800',
+                'FORNECEDOR': 'bg-blue-100 text-blue-800',
+                'CLIENTE': 'bg-green-100 text-green-800',
+                'REPRESENTANTE': 'bg-purple-100 text-purple-800',
+                'COMPRADOR': 'bg-yellow-100 text-yellow-800'
+            };
+            return colors[tipo] || 'bg-gray-100 text-gray-800';
+        }
+
+        function filtrarPerfis() {
+            const textoFiltro = document.getElementById('filtroNome').value.toLowerCase();
+            const tipoFiltro = document.getElementById('filtroTipo').value;
+            const privacidadeFiltro = document.getElementById('filtroPrivacidade').value;
+
+            perfis = perfisOriginal.filter(perfil => {
+                const matchTexto = !textoFiltro || 
+                                   perfil.username.toLowerCase().includes(textoFiltro) ||
+                                   (perfil.nomeExibicao && perfil.nomeExibicao.toLowerCase().includes(textoFiltro));
+                
+                const matchTipo = !tipoFiltro || perfil.tipo === tipoFiltro;
+                
+                const matchPrivacidade = !privacidadeFiltro ||
+                                         (privacidadeFiltro === 'publico' && perfil.perfilPublico === true) ||
+                                         (privacidadeFiltro === 'privado' && perfil.perfilPublico === false);
+
+                return matchTexto && matchTipo && matchPrivacidade;
+            });
+
+            exibirPerfis(perfis);
+        }
+
+        function verPerfil(usuarioId) {
+            window.open(`/pages/perfil.html?id=${usuarioId}`, '_blank');
+        }
+
+        async function editarPerfil(usuarioId) {
+            try {
+                const response = await fetch(`/api/perfil/${usuarioId}`);
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar perfil');
+                }
+
+                const perfil = await response.json();
+                
+                // Preencher modal
+                document.getElementById('modalUsuarioId').value = usuarioId;
+                document.getElementById('modalUsername').textContent = perfil.usuario.username;
+                document.getElementById('modalTipo').textContent = perfil.usuario.tipo;
+                document.getElementById('modalBiografia').value = perfil.perfilSocial.biografia || '';
+                document.getElementById('contadorBiografia').textContent = (perfil.perfilSocial.biografia || '').length;
+                document.getElementById('modalPerfilPublico').checked = perfil.perfilSocial.perfilPublico;
+                document.getElementById('modalPermiteContato').checked = perfil.perfilSocial.permiteContato;
+                document.getElementById('modalExibeEmail').checked = perfil.perfilSocial.exibeEmail;
+                document.getElementById('modalExibeTelefone').checked = perfil.perfilSocial.exibeTelefone;
+
+                document.getElementById('modalEditarPerfil').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Erro ao carregar perfil:', error);
+                alert('Erro ao carregar perfil para edição.');
+            }
+        }
+
+        function fecharModal() {
+            document.getElementById('modalEditarPerfil').classList.add('hidden');
+        }
+
+        function configurarEventos() {
+            document.getElementById('formEditarPerfil').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const usuarioId = document.getElementById('modalUsuarioId').value;
+                const dados = {
+                    biografia: document.getElementById('modalBiografia').value.trim(),
+                    perfilPublico: document.getElementById('modalPerfilPublico').checked,
+                    permiteContato: document.getElementById('modalPermiteContato').checked,
+                    exibeEmail: document.getElementById('modalExibeEmail').checked,
+                    exibeTelefone: document.getElementById('modalExibeTelefone').checked
+                };
+
+                try {
+                    const response = await fetch(`/api/perfil/${usuarioId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(dados)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Erro ao atualizar perfil');
+                    }
+
+                    alert('Perfil atualizado com sucesso!');
+                    fecharModal();
+                    await carregarPerfis();
+
+                } catch (error) {
+                    console.error('Erro ao salvar perfil:', error);
+                    alert('Erro ao salvar alterações. Tente novamente.');
+                }
+            });
+
+            document.getElementById('modalBiografia').addEventListener('input', (e) => {
+                document.getElementById('contadorBiografia').textContent = e.target.value.length;
+            });
+        }
+
+        function atualizarLista() {
+            carregarPerfis();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,347 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   GUIA DE TESTE - PERFIL SOCIAL                             ║
+║   Passo a passo para testar a nova funcionalidade           ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════
+ PASSO 1: RECOMPILAR O PROJETO
+═══════════════════════════════════════════════════════════════
+
+Execute no terminal:
+
+    cd C:\Projeto\Projeto_Radar_Fornecedor\radar
+    .\mvnw.cmd clean compile
+
+⏱️  Tempo estimado: 30-60 segundos
+
+✓ Resultado esperado: BUILD SUCCESS
+
+Por que recompilar?
+→ Novos arquivos Java foram criados (PerfilSocial, PerfilSocialService, etc)
+→ Repositories foram atualizados com novos métodos
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 2: INICIAR O SERVIDOR
+═══════════════════════════════════════════════════════════════
+
+Execute:
+
+    cd C:\Projeto\Projeto_Radar_Fornecedor
+    "Iniciar SpringBoot Radar Fornecedor.bat"
+
+⏱️  Tempo de startup: 15-20 segundos
+
+✓ Aguarde a mensagem: "Started RadarApplication in X.XXX seconds"
+
+⚠️  Se o servidor já estiver rodando:
+   1. Pare o servidor (Ctrl+C no terminal)
+   2. Execute o .bat novamente
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 3: FAZER LOGIN
+═══════════════════════════════════════════════════════════════
+
+Abra o navegador e acesse:
+
+    http://localhost:8080/login.html
+
+Faça login com um usuário FORNECEDOR que já tenha:
+   ✓ Produtos cadastrados
+   ✓ Publicações no feed (opcional, mas recomendado)
+
+Exemplo:
+   Usuário: fornecedor1
+   Senha: (sua senha)
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 4: ACESSAR O PERFIL
+═══════════════════════════════════════════════════════════════
+
+Após o login, você tem 3 opções:
+
+OPÇÃO A: Pelo Menu Lateral
+   → Clique em "Meu Perfil" (ícone de usuário, badge NOVO roxo)
+
+OPÇÃO B: URL Direta
+   → http://localhost:8080/pages/perfil.html
+
+OPÇÃO C: Pela barra de endereços
+   → Digite: /pages/perfil.html
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 5: VALIDAR O PERFIL
+═══════════════════════════════════════════════════════════════
+
+Verifique se a página carrega e exibe:
+
+┌─────────────────────────────────────────────────────────────┐
+│ SEÇÃO: CABEÇALHO DO PERFIL                                  │
+└─────────────────────────────────────────────────────────────┘
+
+✓ Foto de perfil (círculo com imagem padrão ou personalizada)
+✓ Nome da empresa (mesmo de /pages/fornecedores.html)
+✓ Username (@seuusuario)
+✓ Tipo de usuário (badge colorido: FORNECEDOR)
+✓ Botão "Editar Perfil" (canto superior direito)
+
+┌─────────────────────────────────────────────────────────────┐
+│ SEÇÃO: INFORMAÇÕES                                          │
+└─────────────────────────────────────────────────────────────┘
+
+✓ Biografia (ou "Nenhuma biografia adicionada ainda")
+✓ CNPJ formatado (XX.XXX.XXX/XXXX-XX)
+✓ Email (se configurado para exibir)
+✓ Telefone (se configurado para exibir)
+✓ Cidade e Estado
+
+┌─────────────────────────────────────────────────────────────┐
+│ SEÇÃO: ESTATÍSTICAS                                         │
+└─────────────────────────────────────────────────────────────┘
+
+✓ Total de Produtos (deve bater com o total em /produtos)
+✓ Total de Publicações (deve bater com o total em /feed)
+✓ Total de Curtidas (soma de curtidas nas publicações)
+
+┌─────────────────────────────────────────────────────────────┐
+│ SEÇÃO: TABS                                                 │
+└─────────────────────────────────────────────────────────────┘
+
+Tab "Produtos":
+   ✓ Grid com 3 colunas
+   ✓ Produtos listados são os MESMOS de /pages/produtos.html
+   ✓ Nome, descrição, categoria e preço corretos
+   ✓ Se não houver produtos: "Nenhum produto cadastrado ainda"
+
+Tab "Publicações":
+   ✓ Lista de posts do feed
+   ✓ Publicações são as MESMAS de /pages/feed.html
+   ✓ Título, descrição e curtidas visíveis
+   ✓ Se não houver publicações: "Nenhuma publicação criada ainda"
+
+Tab "Sobre":
+   ✓ Informações da empresa (Razão Social, CNPJ, Categoria, etc)
+   ✓ Informações da conta (Usuário, Tipo, Data de criação)
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 6: TESTAR EDIÇÃO DO PERFIL
+═══════════════════════════════════════════════════════════════
+
+1. Clique no botão "Editar Perfil"
+   ✓ Modal deve abrir
+
+2. No modal, você deve ver:
+   ✓ Campo de texto "Biografia" (textarea com contador de caracteres)
+   ✓ Checkbox "Perfil Público"
+   ✓ Checkbox "Permite Contato"
+   ✓ Checkbox "Exibir Email"
+   ✓ Checkbox "Exibir Telefone"
+   ✓ Botões "Salvar Alterações" e "Cancelar"
+
+3. Digite uma biografia de teste:
+   "Fornecedor de alimentos desde 1995. Especializado em grãos e cereais."
+
+4. Marque/desmarque algumas opções de privacidade
+
+5. Clique em "Salvar Alterações"
+   ✓ Deve aparecer mensagem de sucesso
+   ✓ Modal deve fechar
+   ✓ Biografia deve aparecer na tela
+
+6. Recarregue a página (F5)
+   ✓ Biografia deve continuar lá (persistida no banco)
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 7: TESTAR UPLOAD DE FOTO
+═══════════════════════════════════════════════════════════════
+
+1. Clique no ícone de câmera (sobreposto na foto de perfil)
+
+2. Selecione uma imagem do seu computador
+   ✓ Formatos aceitos: JPG, PNG, GIF, WEBP
+
+3. Aguarde o upload
+   ✓ Deve aparecer mensagem de sucesso
+   ✓ Foto deve atualizar na tela imediatamente
+
+4. Recarregue a página (F5)
+   ✓ Foto deve continuar lá (salva em /uploads/perfis/)
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 8: VALIDAR INTEGRAÇÃO COM PRODUTOS
+═══════════════════════════════════════════════════════════════
+
+Este é o teste MAIS IMPORTANTE!
+
+1. No perfil, veja quantos produtos estão listados
+   Exemplo: 15 produtos
+
+2. Abra uma nova aba: http://localhost:8080/pages/produtos.html
+
+3. Cadastre UM NOVO PRODUTO
+
+4. Volte para a aba do perfil e RECARREGUE (F5)
+
+5. Verifique:
+   ✓ O novo produto DEVE aparecer na lista
+   ✓ O contador de produtos deve ter aumentado
+
+🎯 ISSO PROVA QUE NÃO HÁ DUPLICAÇÃO!
+   → O perfil exibe produtos da TABELA ORIGINAL
+   → Não há cópia dos dados
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 9: VALIDAR INTEGRAÇÃO COM FEED
+═══════════════════════════════════════════════════════════════
+
+1. No perfil, vá para a tab "Publicações"
+   Veja quantas publicações estão listadas
+
+2. Abra uma nova aba: http://localhost:8080/pages/feed.html
+
+3. Crie UMA NOVA PUBLICAÇÃO
+
+4. Volte para a aba do perfil e RECARREGUE (F5)
+
+5. Verifique:
+   ✓ A nova publicação DEVE aparecer na lista
+   ✓ O contador de publicações deve ter aumentado
+
+🎯 ISSO PROVA INTEGRAÇÃO TOTAL!
+   → O perfil exibe publicações do FEED EXISTENTE
+   → Mesma fonte de dados
+
+
+═══════════════════════════════════════════════════════════════
+ PASSO 10: TESTAR API DIRETAMENTE (OPCIONAL)
+═══════════════════════════════════════════════════════════════
+
+Abra uma nova aba do navegador e acesse:
+
+    http://localhost:8080/api/perfil/meu
+
+Você deve ver um JSON completo com:
+   ✓ perfilSocial (foto, biografia, privacidade)
+   ✓ usuario (username, tipo)
+   ✓ fornecedor (empresa, CNPJ, contato)
+   ✓ produtos (array com produtos cadastrados)
+   ✓ publicacoes (array com posts do feed)
+   ✓ estatisticas (totais calculados)
+
+
+═══════════════════════════════════════════════════════════════
+ CHECKLIST COMPLETO DE VALIDAÇÃO
+═══════════════════════════════════════════════════════════════
+
+Backend:
+[ ] Servidor iniciou sem erros de compilação
+[ ] Endpoint GET /api/perfil/meu retorna 200 OK
+[ ] JSON contém todos os campos esperados
+[ ] Produtos no JSON são os mesmos de /api/produtos
+[ ] Publicações no JSON são as mesmas de /api/feed
+
+Frontend:
+[ ] Página perfil.html carrega sem erro 404
+[ ] Foto de perfil exibida (ou placeholder)
+[ ] Nome da empresa correto
+[ ] CNPJ formatado corretamente
+[ ] Estatísticas calculadas corretamente
+[ ] Tab Produtos funciona e exibe produtos
+[ ] Tab Publicações funciona e exibe posts
+[ ] Tab Sobre funciona e exibe informações
+
+Edição:
+[ ] Botão "Editar Perfil" abre modal
+[ ] Modal tem todos os campos
+[ ] Biografia pode ser editada e salva
+[ ] Privacidade pode ser alterada e salva
+[ ] Mudanças persistem após reload
+
+Upload:
+[ ] Botão câmera abre seletor de arquivo
+[ ] Upload de imagem funciona
+[ ] Foto atualiza na tela
+[ ] Foto persiste após reload
+
+Integração (CRÍTICO):
+[ ] Cadastrar produto em /produtos reflete no perfil
+[ ] Criar publicação em /feed reflete no perfil
+[ ] Estatísticas batem com dados reais
+[ ] Nenhum dado duplicado no banco
+
+
+═══════════════════════════════════════════════════════════════
+ PROBLEMAS COMUNS E SOLUÇÕES
+═══════════════════════════════════════════════════════════════
+
+❌ ERRO: Página não carrega (404)
+✓ SOLUÇÃO: Execute COPIAR_PERFIL_PARA_TARGET.bat novamente
+
+❌ ERRO: "Usuário não autenticado"
+✓ SOLUÇÃO: Faça login em /login.html primeiro
+
+❌ ERRO: Produtos não aparecem
+✓ SOLUÇÃO: 
+   1. Verifique se o usuário logado é fornecedor
+   2. Verifique se há produtos cadastrados para este fornecedor
+   3. Abra /api/perfil/meu e veja se "produtos" está vazio
+
+❌ ERRO: Compilação falha
+✓ SOLUÇÃO: 
+   1. Verifique se Java 17 está instalado (java -version)
+   2. Execute: .\mvnw.cmd clean compile -X (modo debug)
+
+❌ ERRO: Foto não faz upload
+✓ SOLUÇÃO:
+   1. Verifique se a pasta existe: src/main/resources/static/uploads/perfis
+   2. Verifique permissões de escrita
+
+❌ ERRO: Modal não abre
+✓ SOLUÇÃO:
+   1. Abra console do navegador (F12)
+   2. Veja se há erros JavaScript
+   3. Recarregue com Ctrl+Shift+R (hard refresh)
+
+
+═══════════════════════════════════════════════════════════════
+ APÓS OS TESTES
+═══════════════════════════════════════════════════════════════
+
+Se tudo funcionou corretamente:
+
+✓ Marque esta tarefa como concluída
+✓ Documente qualquer problema encontrado
+✓ Faça commit das alterações no Git
+
+Comandos para commit:
+
+    cd C:\Projeto\Projeto_Radar_Fornecedor\radar
+    git add -A
+    git commit -m "feat: Implementa Perfil Social com reutilização de dados"
+    git push
+
+
+═══════════════════════════════════════════════════════════════
+ DÚVIDAS OU PROBLEMAS?
+═══════════════════════════════════════════════════════════════
+
+Consulte a documentação completa em:
+    radar/PERFIL_SOCIAL_IMPLEMENTADO.md
+
+Ou relate o problema específico que encontrou.
+
+
+═══════════════════════════════════════════════════════════════
+
+BOA SORTE COM OS TESTES! 🚀
+
+═══════════════════════════════════════════════════════════════
