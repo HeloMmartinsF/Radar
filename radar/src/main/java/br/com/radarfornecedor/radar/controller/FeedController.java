@@ -33,6 +33,7 @@ public class FeedController {
     private final FornecedorRepository fornecedorRepository;
     private final ProdutoRepository produtoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final br.com.radarfornecedor.radar.service.NotificacaoService notificacaoService;
 
     // Diretórios para upload de imagens (src + target para persistência)
     private static final String UPLOAD_DIR_SRC = "src/main/resources/static/uploads/feed/";
@@ -43,12 +44,14 @@ public class FeedController {
             CurtidaPublicacaoRepository curtidaRepository,
             FornecedorRepository fornecedorRepository,
             ProdutoRepository produtoRepository,
-            UsuarioRepository usuarioRepository) {
+            UsuarioRepository usuarioRepository,
+            br.com.radarfornecedor.radar.service.NotificacaoService notificacaoService) {
         this.publicacaoRepository = publicacaoRepository;
         this.curtidaRepository = curtidaRepository;
         this.fornecedorRepository = fornecedorRepository;
         this.produtoRepository = produtoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.notificacaoService = notificacaoService;
 
         // Criar diretórios de upload se não existirem
         criarDiretorioUpload();
@@ -216,6 +219,17 @@ public class FeedController {
             }
 
             Publicacao salva = publicacaoRepository.save(publicacao);
+            
+            // TODO: NOTIFICAÇÕES - Quando sistema de seguidores for implementado, adicionar aqui:
+            // 1. Buscar todos os seguidores do fornecedor
+            // 2. Para cada seguidor, criar notificação usando:
+            //    notificacaoService.notificarNovaPublicacao(
+            //        seguidorUsuarioId, 
+            //        salva.getId(), 
+            //        fornecedor.getRazaoSocial(), 
+            //        salva.getTitulo(), 
+            //        fornecedor.getCnpj()
+            //    );
             
             return ResponseEntity.status(HttpStatus.CREATED).body(montarPublicacaoDTO(salva, usuario));
             

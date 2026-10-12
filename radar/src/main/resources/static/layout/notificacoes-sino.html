@@ -1,0 +1,58 @@
+<!-- 
+    notificacoes-sino.html
+    Componente de ícone sino com badge e dropdown de notificações
+    
+    Uso: incluir este HTML onde o ícone deve aparecer (geralmente no header/menu)
+    Requer: notificacoes.js, Tailwind CSS, Font Awesome
+-->
+
+<div class="relative inline-block">
+    <!-- Ícone Sino com Badge -->
+    <button id="notificacoes-icon" 
+            class="relative p-2 text-gray-600 hover:text-[#d4af37] transition-colors focus:outline-none"
+            title="Notificações">
+        <i class="fas fa-bell text-xl"></i>
+        
+        <!-- Badge de não lidas (inicialmente oculto) -->
+        <span id="notificacoes-badge" 
+              class="hidden absolute top-0 right-0 inline-flex items-center justify-center 
+                     w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full 
+                     border-2 border-white">
+            0
+        </span>
+    </button>
+    
+    <!-- Dropdown de Notificações (inicialmente oculto) -->
+    <div id="notificacoes-dropdown" 
+         class="hidden absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+        
+        <!-- Header do Dropdown -->
+        <div class="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50 rounded-t-lg">
+            <h3 class="text-sm font-semibold text-gray-800">
+                <i class="fas fa-bell text-[#d4af37]"></i> Notificações
+            </h3>
+            <button onclick="marcarTodasComoLidas()" 
+                    class="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                    title="Marcar todas como lidas">
+                Ler todas
+            </button>
+        </div>
+        
+        <!-- Lista de Notificações (últimas 5) -->
+        <div id="notificacoes-lista" class="max-h-96 overflow-y-auto">
+            <!-- Preenchido dinamicamente por notificacoes.js -->
+            <div class="px-4 py-8 text-center text-gray-400">
+                <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                <p>Carregando...</p>
+            </div>
+        </div>
+        
+        <!-- Footer do Dropdown -->
+        <div class="px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+            <a href="/pages/central-notificacoes.html" 
+               class="block text-center text-sm text-[#d4af37] hover:text-[#b8941f] font-medium">
+                Ver todas as notificações <i class="fas fa-arrow-right text-xs"></i>
+            </a>
+        </div>
+    </div>
+</div>

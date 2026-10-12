@@ -102,6 +102,58 @@
             </div>
         </div>
 
+        <!-- Sino de Notificações -->
+        <div class="mb-6 px-4">
+            <div class="relative inline-block w-full">
+                <button id="notificacoes-icon" 
+                        class="w-full flex items-center justify-between gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200 focus:outline-none"
+                        title="Notificações">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-bell w-5 text-center text-[#d4af37]"></i>
+                        <span class="font-bold text-sm">Notificações</span>
+                    </div>
+                    <!-- Badge de não lidas -->
+                    <span id="notificacoes-badge" 
+                          class="hidden inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full">
+                        0
+                    </span>
+                </button>
+                
+                <!-- Dropdown de Notificações -->
+                <div id="notificacoes-dropdown" 
+                     class="hidden absolute left-full top-0 ml-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-[100]">
+                    
+                    <!-- Header do Dropdown -->
+                    <div class="px-4 py-3 border-b border-gray-200 flex items-center justify-between bg-gray-50 rounded-t-lg">
+                        <h3 class="text-sm font-semibold text-gray-800">
+                            <i class="fas fa-bell text-[#d4af37]"></i> Notificações
+                        </h3>
+                        <button onclick="marcarTodasComoLidas()" 
+                                class="text-xs text-blue-600 hover:text-blue-800 font-medium"
+                                title="Marcar todas como lidas">
+                            Ler todas
+                        </button>
+                    </div>
+                    
+                    <!-- Lista de Notificações (últimas 5) -->
+                    <div id="notificacoes-lista" class="max-h-96 overflow-y-auto">
+                        <div class="px-4 py-8 text-center text-gray-400">
+                            <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                            <p>Carregando...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer do Dropdown -->
+                    <div class="px-4 py-3 border-t border-gray-200 bg-gray-50 rounded-b-lg">
+                        <a href="/pages/central-notificacoes.html" 
+                           class="block text-center text-sm text-[#d4af37] hover:text-[#b8941f] font-medium">
+                            Ver todas as notificações <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Navegação Principal -->
         <nav class="space-y-1">
             <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4 px-4">Menu Principal</p>
@@ -163,6 +215,15 @@
                         <span class="font-bold text-sm">Meu Perfil</span>
                     </div>
                     <span class="text-[10px] font-black text-purple-500 bg-purple-950 px-2 py-0.5 rounded-full">NOVO</span>
+                </a>
+
+                <a id="menu-notificacoes" href="/pages/central-notificacoes.html"
+                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200">
+                    <div class="flex items-center gap-3 flex-1">
+                        <i class="fa-solid fa-bell w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
+                        <span class="font-bold text-sm">Central de Notificações</span>
+                    </div>
+                    <span class="text-[10px] font-black text-blue-500 bg-blue-950 px-2 py-0.5 rounded-full">NOVO</span>
                 </a>
 
                 <a id="menu-desempenho" href="/pages/painel-desempenho.html"
@@ -260,6 +321,9 @@
     </div>
 
 </aside>
+
+<!-- Script de Notificações -->
+<script src="/js/notificacoes.js"></script>
 
 <script>
 /**

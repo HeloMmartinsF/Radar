@@ -1,8 +1,12 @@
 package br.com.radarfornecedor.radar.controller;
 
 import br.com.radarfornecedor.radar.model.AvaliacaoFornecedor;
+import br.com.radarfornecedor.radar.model.Fornecedor;
 import br.com.radarfornecedor.radar.model.Usuario;
 import br.com.radarfornecedor.radar.service.AvaliacaoFornecedorService;
+import br.com.radarfornecedor.radar.service.NotificacaoService;
+import br.com.radarfornecedor.radar.repository.FornecedorRepository;
+import br.com.radarfornecedor.radar.repository.UsuarioRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +15,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * AvaliacaoFornecedorController - Endpoints REST para sistema de avaliações de fornecedores
@@ -27,9 +32,19 @@ import java.util.Map;
 public class AvaliacaoFornecedorController {
 
     private final AvaliacaoFornecedorService avaliacaoService;
+    private final br.com.radarfornecedor.radar.service.NotificacaoService notificacaoService;
+    private final br.com.radarfornecedor.radar.repository.FornecedorRepository fornecedorRepository;
+    private final br.com.radarfornecedor.radar.repository.UsuarioRepository usuarioRepository;
 
-    public AvaliacaoFornecedorController(AvaliacaoFornecedorService avaliacaoService) {
+    public AvaliacaoFornecedorController(
+            AvaliacaoFornecedorService avaliacaoService,
+            br.com.radarfornecedor.radar.service.NotificacaoService notificacaoService,
+            br.com.radarfornecedor.radar.repository.FornecedorRepository fornecedorRepository,
+            br.com.radarfornecedor.radar.repository.UsuarioRepository usuarioRepository) {
         this.avaliacaoService = avaliacaoService;
+        this.notificacaoService = notificacaoService;
+        this.fornecedorRepository = fornecedorRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     // ========================================
@@ -193,6 +208,41 @@ public class AvaliacaoFornecedorController {
 
             // Service valida regras de negócio
             AvaliacaoFornecedor avaliacaoCriada = avaliacaoService.adicionarAvaliacao(avaliacao, usuario);
+
+            // NOTIFICAÇÃO: Notificar o fornecedor sobre a nova avaliação
+            try {
+                // Buscar fornecedor para obter CNPJ e ID do usuário
+                Optional<br.com.radarfornecedor.radar.model.Fornecedor> fornecedorOpt = 
+                    fornecedorRepository.findById(avaliacaoCriada.getFornecedorId());
+                
+                if (fornecedorOpt.isPresent()) {
+                    br.com.radarfornecedor.radar.model.Fornecedor fornecedor = fornecedorOpt.get();
+                    
+                    // Buscar usuário do fornecedor pelo CNPJ
+                    Optional<Usuario> usuarioFornecedorOpt = 
+                        usuarioRepository.findByCnpjOuCpf(fornecedor.getCnpj());
+                    
+                    if (usuarioFornecedorOpt.isPresent()) {
+                        Usuario usuarioFornecedor = usuarioFornecedorOpt.get();
+                        
+                        // Obter nome do comprador (pode ser usuário logado ou nome do perfil)
+                        String nomeComprador = usuario.getUsername(); // Usar username como fallback
+                        
+                        // Criar notificação
+                        notificacaoService.notificarNovaAvaliacao(
+                            usuarioFornecedor.getId(),
+                            avaliacaoCriada.getId(),
+                            nomeComprador,
+                            Double.valueOf(avaliacaoCriada.getNota()),
+                            fornecedor.getCnpj()
+                        );
+                    }
+                }
+            } catch (Exception e) {
+                // Não falhar a operação se notificação falhar
+                System.err.println("Erro ao criar notificação de avaliação: " + e.getMessage());
+                e.printStackTrace();
+            }
 
             return ResponseEntity.ok(Map.of(
                     "sucesso", true,

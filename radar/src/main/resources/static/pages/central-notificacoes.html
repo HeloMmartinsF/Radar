@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Notificações - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50" data-standalone="true">
+    <!-- Menu Lateral -->
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="md:ml-64 p-4 md:p-8">
+        <!-- Cabeçalho -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-bell text-[#d4af37] mr-2"></i>
+                Central de Notificações
+            </h1>
+            <p class="text-gray-600">Acompanhe todas as suas notificações em um só lugar</p>
+        </div>
+
+        <!-- Barra de Ações -->
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+                <!-- Filtros -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <label class="text-gray-700 font-medium">Filtrar:</label>
+                    <button id="btn-todas" 
+                            onclick="filtrarNotificacoes('todas')"
+                            class="px-4 py-2 bg-[#d4af37] text-white rounded-lg hover:bg-[#b8941f] transition font-medium">
+                        <i class="fas fa-list mr-2"></i>Todas
+                    </button>
+                    <button id="btn-nao-lidas" 
+                            onclick="filtrarNotificacoes('nao-lidas')"
+                            class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium">
+                        <i class="fas fa-circle mr-2 text-xs"></i>Não lidas
+                    </button>
+                </div>
+
+                <!-- Ações -->
+                <div class="flex gap-3">
+                    <button onclick="marcarTodasComoLidas()" 
+                            class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium"
+                            title="Marcar todas como lidas">
+                        <i class="fas fa-check-double mr-2"></i>Marcar todas como lidas
+                    </button>
+                    <button onclick="carregarTodasNotificacoes(filtroAtual)" 
+                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                            title="Atualizar">
+                        <i class="fas fa-sync mr-2"></i>Atualizar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="text-center py-12">
+            <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+            <p class="text-gray-600">Carregando notificações...</p>
+        </div>
+
+        <!-- Erro -->
+        <div id="erro" class="hidden bg-red-50 border border-red-200 rounded-lg p-6 mb-6">
+            <div class="flex items-center gap-3 text-red-700">
+                <i class="fas fa-exclamation-circle text-2xl"></i>
+                <div>
+                    <h3 class="font-bold text-lg mb-1">Erro ao carregar notificações</h3>
+                    <p id="erro-mensagem">Ocorreu um erro ao carregar suas notificações. Tente novamente.</p>
+                </div>
+            </div>
+            <button onclick="carregarTodasNotificacoes(filtroAtual)" 
+                    class="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                Tentar novamente
+            </button>
+        </div>
+
+        <!-- Lista de Notificações -->
+        <div id="todas-notificacoes" class="space-y-4">
+            <!-- Preenchido dinamicamente por notificacoes.js -->
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="../script.js"></script>
+    <script src="../js/notificacoes.js"></script>
+    <script>
+        // Variável global para controle de filtro
+        let filtroAtual = 'todas';
+
+        // Carrega menu lateral e informações do usuário
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Carregar menu lateral
+                await carregarMenuLateral();
+                
+                // Exibir informações do usuário
+                await exibirInfoUsuario();
+                
+                // Aplicar controles de acesso
+                await aplicarControlesDeAcesso();
+                
+                // Carregar notificações inicial
+                await carregarTodasNotificacoes('todas');
+                
+                // Esconder loading
+                document.getElementById('loading').classList.add('hidden');
+                
+            } catch (error) {
+                console.error('Erro ao inicializar página:', error);
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('erro').classList.remove('hidden');
+            }
+        });
+
+        /**
+         * Filtra notificações (todas ou apenas não lidas)
+         */
+        async function filtrarNotificacoes(filtro) {
+            filtroAtual = filtro;
+            
+            // Atualizar estado dos botões
+            const btnTodas = document.getElementById('btn-todas');
+            const btnNaoLidas = document.getElementById('btn-nao-lidas');
+            
+            if (filtro === 'todas') {
+                btnTodas.className = 'px-4 py-2 bg-[#d4af37] text-white rounded-lg hover:bg-[#b8941f] transition font-medium';
+                btnNaoLidas.className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium';
+            } else {
+                btnTodas.className = 'px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition font-medium';
+                btnNaoLidas.className = 'px-4 py-2 bg-[#d4af37] text-white rounded-lg hover:bg-[#b8941f] transition font-medium';
+            }
+            
+            // Mostrar loading
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('erro').classList.add('hidden');
+            
+            // Carregar notificações filtradas
+            await carregarTodasNotificacoes(filtro);
+            
+            // Esconder loading
+            document.getElementById('loading').classList.add('hidden');
+        }
+    </script>
+
+    <!-- Estilos personalizados -->
+    <style>
+        /* Estilo para notificações não lidas */
+        .notificacao-card.nao-lida {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+        }
+
+        /* Estilo para notificações lidas */
+        .notificacao-card.lida {
+            background-color: #ffffff;
+            border-left: 4px solid transparent;
+        }
+
+        /* Hover nas notificações */
+        .notificacao-card:hover {
+            transform: translateY(-2px);
+            transition: all 0.2s ease;
+        }
+
+        /* Animação de entrada */
+        .notificacao-card {
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Botões de ação nas notificações */
+        .notificacao-card button {
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .notificacao-card button:hover {
+            opacity: 1;
+        }
+
+        /* Badge de tipo de notificação */
+        .badge-tipo {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-NOVA_PUBLICACAO {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-NOVA_AVALIACAO {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-NOVO_SEGUIDOR {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-NOVO_COMENTARIO {
+            background-color: #fce7f3;
+            color: #9f1239;
+        }
+
+        .badge-SISTEMA {
+            background-color: #f3e8ff;
+            color: #6b21a8;
+        }
+    </style>
+</body>
+</html>
