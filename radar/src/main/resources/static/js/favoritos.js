@@ -363,3 +363,82 @@ if (!document.querySelector('#favoritos-css')) {
 }
 
 console.log('[Favoritos] Script carregado com sucesso ✅');
+
+// ======================== RENDERIZAÇÃO DE BOTÕES ========================
+
+/**
+ * Renderiza botão de favorito para um produto e verifica status atual.
+ * 
+ * @param {number} produtoId - ID do produto
+ * @param {string} containerId - ID do container onde inserir o botão
+ */
+async function renderizarBotaoProduto(produtoId, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    try {
+        // Verificar se está favoritado
+        const response = await fetch(`/api/favoritos/produtos/${produtoId}/status`);
+        const { favoritado } = await response.json();
+        
+        // Criar botão
+        const button = document.createElement('button');
+        button.className = 'group transition-transform hover:scale-110';
+        button.dataset.tipo = 'produto';
+        button.dataset.id = produtoId;
+        button.onclick = function() { toggleFavorito(this); };
+        button.title = favoritado ? 'Remover dos favoritos' : 'Adicionar aos favoritos';
+        
+        button.innerHTML = `
+            <i class="${favoritado ? 'fas' : 'far'} fa-heart text-2xl ${favoritado ? 'text-red-500' : 'text-gray-400 group-hover:text-red-500'}"></i>
+        `;
+        
+        container.appendChild(button);
+    } catch (error) {
+        console.error(`Erro ao renderizar botão favorito para produto ${produtoId}:`, error);
+    }
+}
+
+/**
+ * Renderiza botão de favorito para um fornecedor e verifica status atual.
+ * 
+ * @param {number} fornecedorId - ID do fornecedor
+ * @param {string} containerId - ID do container onde inserir o botão
+ */
+async function renderizarBotaoFornecedor(fornecedorId, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    try {
+        // Verificar se está favoritado
+        const response = await fetch(`/api/favoritos/fornecedores/${fornecedorId}/status`);
+        const { favoritado } = await response.json();
+        
+        // Criar botão
+        const button = document.createElement('button');
+        button.className = 'group transition-transform hover:scale-110';
+        button.dataset.tipo = 'fornecedor';
+        button.dataset.id = fornecedorId;
+        button.onclick = function() { toggleFavorito(this); };
+        button.title = favoritado ? 'Deixar de seguir' : 'Seguir fornecedor';
+        
+        button.innerHTML = `
+            <i class="${favoritado ? 'fas' : 'far'} fa-heart text-2xl ${favoritado ? 'text-red-500' : 'text-gray-400 group-hover:text-red-500'}"></i>
+        `;
+        
+        container.appendChild(button);
+    } catch (error) {
+        console.error(`Erro ao renderizar botão favorito para fornecedor ${fornecedorId}:`, error);
+    }
+}
+
+// Exportar funções públicas
+window.Favoritos = {
+    toggleFavorito,
+    renderizarBotaoProduto,
+    renderizarBotaoFornecedor,
+    isProdutoFavoritado,
+    isFornecedorFavoritado,
+    buscarEstatisticasFavoritos,
+    mostrarToast
+};

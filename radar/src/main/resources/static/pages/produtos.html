@@ -10,6 +10,7 @@
     <!-- Leaflet CSS para mapas -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="/js/favoritos.js" defer></script>
     <script src="/script.js?v=5" defer></script>
 </head>
 <body data-entidade="produtos" data-singular="Produto" data-plural="Produtos" data-standalone="true">
@@ -309,10 +310,36 @@
         const busca = document.getElementById('busca-produto').value.trim().toLowerCase();
         const filtrados = produtos.filter(produto => (!categoriaSelecionada || produto.categoria === categoriaSelecionada) && [produto.nome, produto.descricao, titulo(produto.categoria)].some(valor => String(valor || '').toLowerCase().includes(busca)));
         document.getElementById('quantidade').textContent = `${filtrados.length} ${filtrados.length === 1 ? 'produto' : 'produtos'}`;
-        document.getElementById('lista-produtos').innerHTML = filtrados.length ? filtrados.map(produto => `<article class="rounded-xl border border-slate-200 p-5"><span class="text-xs font-black uppercase tracking-wider text-sky-700">${escapar(titulo(produto.categoria))}</span><h3 class="mt-2 text-lg font-black text-slate-800">${escapar(produto.nome)}</h3><p class="mt-2 text-sm text-slate-600">${escapar(produto.descricao || 'Sem descrição disponível.')}</p>${produto.preco != null ? `<p class="mt-4 text-lg font-black text-slate-800">${Number(produto.preco).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p><button data-produto-id="${produto.id}" class="comprar-produto mt-3 rounded-lg bg-sky-600 px-4 py-2 text-sm font-black text-white hover:bg-sky-700">COMPRAR</button>` : ''}<div class="mt-5 flex gap-4"><button data-produto-id="${produto.id}" class="avaliar-produto text-sm font-black text-amber-600 hover:text-amber-700"><i class="fa-solid fa-star mr-1"></i>Avaliar</button><button data-produto-id="${produto.id}" class="ver-avaliacoes text-sm font-bold text-sky-700 hover:text-sky-900">Ver comentários</button></div><div id="avaliacoes-${produto.id}" class="mt-4 hidden border-t border-slate-100 pt-4"></div></article>`).join('') : '<p class="col-span-full py-8 text-center text-slate-500">Nenhum produto encontrado para esta busca.</p>';
+        document.getElementById('lista-produtos').innerHTML = filtrados.length ? filtrados.map(produto => `
+            <article class="rounded-xl border border-slate-200 p-5 relative">
+                <div class="absolute top-4 right-4" id="favorito-produto-${produto.id}"></div>
+                <span class="text-xs font-black uppercase tracking-wider text-sky-700">${escapar(titulo(produto.categoria))}</span>
+                <h3 class="mt-2 text-lg font-black text-slate-800 pr-10">${escapar(produto.nome)}</h3>
+                <p class="mt-2 text-sm text-slate-600">${escapar(produto.descricao || 'Sem descrição disponível.')}</p>
+                ${produto.preco != null ? `
+                    <p class="mt-4 text-lg font-black text-slate-800">${Number(produto.preco).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}</p>
+                    <button data-produto-id="${produto.id}" class="comprar-produto mt-3 rounded-lg bg-sky-600 px-4 py-2 text-sm font-black text-white hover:bg-sky-700">COMPRAR</button>
+                ` : ''}
+                <div class="mt-5 flex gap-4">
+                    <button data-produto-id="${produto.id}" class="avaliar-produto text-sm font-black text-amber-600 hover:text-amber-700">
+                        <i class="fa-solid fa-star mr-1"></i>Avaliar
+                    </button>
+                    <button data-produto-id="${produto.id}" class="ver-avaliacoes text-sm font-bold text-sky-700 hover:text-sky-900">Ver comentários</button>
+                </div>
+                <div id="avaliacoes-${produto.id}" class="mt-4 hidden border-t border-slate-100 pt-4"></div>
+            </article>
+        `).join('') : '<p class="col-span-full py-8 text-center text-slate-500">Nenhum produto encontrado para esta busca.</p>';
+        
         document.querySelectorAll('.avaliar-produto').forEach(botao => botao.onclick = () => abrirAvaliacao(Number(botao.dataset.produtoId)));
         document.querySelectorAll('.ver-avaliacoes').forEach(botao => botao.onclick = () => carregarAvaliacoes(Number(botao.dataset.produtoId)));
         document.querySelectorAll('.comprar-produto').forEach(botao => botao.onclick = () => abrirCompra(Number(botao.dataset.produtoId)));
+        
+        // Inicializar botões de favoritos
+        if (window.Favoritos) {
+            filtrados.forEach(produto => {
+                window.Favoritos.renderizarBotaoProduto(produto.id, `favorito-produto-${produto.id}`);
+            });
+        }
     }
 
     async function carregarAvaliacoes(produtoId) { const painel = document.getElementById(`avaliacoes-${produtoId}`); if (!painel) return; if (!painel.classList.contains('hidden')) { painel.classList.add('hidden'); return; } const resposta = await fetch(`/api/avaliacoes/produto/${produtoId}`); const avaliacoes = await resposta.json(); painel.innerHTML = avaliacoes.length ? avaliacoes.map(avaliacao => `<div class="mb-3 rounded-lg bg-slate-50 p-3"><div class="flex items-center justify-between"><strong class="text-sm text-slate-700">${escapar(avaliacao.cliente)}</strong><span class="text-sm">${estrelas(avaliacao.nota)}</span></div><p class="mt-2 text-sm text-slate-600">${escapar(avaliacao.comentario)}</p></div>`).join('') : '<p class="text-sm text-slate-500">Este produto ainda não recebeu comentários.</p>'; painel.classList.remove('hidden'); }

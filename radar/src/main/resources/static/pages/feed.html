@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="/style.css">
+    <script src="/js/favoritos.js" defer></script>
     <script src="/script.js?v=5" defer></script>
     <style>
         /* Animações suaves */
@@ -335,14 +336,26 @@ function renderizarFeed() {
                 ` : ''}
             </div>
 
-            <!-- Ações: Curtir e Contato -->
-            <div class="border-t border-slate-100 px-5 py-3 flex items-center justify-between">
-                <button onclick="curtirPublicacao(${pub.id})" 
-                        id="btn-curtir-${pub.id}"
-                        class="flex items-center gap-2 text-sm font-bold transition ${pub.curtidoPorMim ? 'text-rose-600' : 'text-slate-600 hover:text-rose-600'}">
-                    <i class="fa-${pub.curtidoPorMim ? 'solid' : 'regular'} fa-heart text-lg"></i>
-                    <span id="curtidas-${pub.id}">${pub.totalCurtidas}</span>
-                </button>
+            <!-- Ações: Curtir, Favoritar e Contato -->
+            <div class="border-t border-slate-100 px-5 py-3 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-4">
+                    <button onclick="curtirPublicacao(${pub.id})" 
+                            id="btn-curtir-${pub.id}"
+                            class="flex items-center gap-2 text-sm font-bold transition ${pub.curtidoPorMim ? 'text-rose-600' : 'text-slate-600 hover:text-rose-600'}">
+                        <i class="fa-${pub.curtidoPorMim ? 'solid' : 'regular'} fa-heart text-lg"></i>
+                        <span id="curtidas-${pub.id}">${pub.totalCurtidas}</span>
+                    </button>
+                    
+                    ${pub.produto ? `
+                        <div id="favorito-feed-produto-${pub.produto.id}" class="inline-flex"></div>
+                        <button onclick="adicionarPublicacaoNaLista(${pub.id}, ${pub.produto.id})" 
+                                class="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition"
+                                title="Adicionar à lista de compras">
+                            <i class="fa-solid fa-shopping-cart text-lg"></i>
+                            <span class="hidden sm:inline">Adicionar à Lista</span>
+                        </button>
+                    ` : ''}
+                </div>
                 <button onclick="abrirModalContato(${pub.id})" 
                         class="flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-sm font-black text-white hover:bg-sky-700 transition">
                     <i class="fa-solid fa-paper-plane"></i>
@@ -351,6 +364,15 @@ function renderizarFeed() {
             </div>
         </article>
     `).join('');
+    
+    // Inicializar botões de favoritos para produtos
+    if (window.Favoritos) {
+        publicacoes.forEach(pub => {
+            if (pub.produto && pub.produto.id) {
+                window.Favoritos.renderizarBotaoProduto(pub.produto.id, `favorito-feed-produto-${pub.produto.id}`);
+            }
+        });
+    }
 }
 
 function renderizarCarrossel(pubId, imagens) {
@@ -529,6 +551,91 @@ function abrirModalContato(pubId) {
 
 function fecharModalContato() {
     document.getElementById('modal-contato').classList.add('hidden');
+}
+
+async function adicionarPublicacaoNaLista(publicacaoId, produtoId) {
+    try {
+        // Buscar listas ativas do usuário
+        const response = await fetch('/api/lista-compras');
+        if (!response.ok) {
+            if (window.Favoritos) {
+                window.Favoritos.mostrarToast('Erro ao carregar listas', 'error');
+            }
+            return;
+        }
+        
+        const listas = await response.json();
+        const listasAtivas = listas.filter(l => l.ativa);
+        
+        if (listasAtivas.length === 0) {
+            // Criar primeira lista automaticamente
+            const novaListaResponse = await fetch('/api/lista-compras', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nome: 'Minha Lista',
+                    descricao: 'Lista criada automaticamente'
+                })
+            });
+            
+            if (!novaListaResponse.ok) {
+                if (window.Favoritos) {
+                    window.Favoritos.mostrarToast('Erro ao criar lista', 'error');
+                }
+                return;
+            }
+            
+            const novaLista = await novaListaResponse.json();
+            await adicionarItemNaLista(novaLista.id, publicacaoId, produtoId);
+        } else if (listasAtivas.length === 1) {
+            // Adicionar na única lista ativa
+            await adicionarItemNaLista(listasAtivas[0].id, publicacaoId, produtoId);
+        } else {
+            // Mostrar modal de seleção de lista
+            mostrarModalSelecionarLista(listasAtivas, publicacaoId, produtoId);
+        }
+    } catch (error) {
+        console.error('Erro ao adicionar na lista:', error);
+        if (window.Favoritos) {
+            window.Favoritos.mostrarToast('Erro ao adicionar item', 'error');
+        }
+    }
+}
+
+async function adicionarItemNaLista(listaId, publicacaoId, produtoId) {
+    try {
+        const response = await fetch(`/api/lista-compras/${listaId}/itens`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                publicacaoId: publicacaoId,
+                produtoId: produtoId,
+                quantidade: 1,
+                unidade: 'UNIDADE'
+            })
+        });
+        
+        if (response.ok) {
+            if (window.Favoritos) {
+                window.Favoritos.mostrarToast('Item adicionado à lista de compras!', 'success');
+            }
+        } else {
+            const error = await response.text();
+            if (window.Favoritos) {
+                window.Favoritos.mostrarToast(error || 'Erro ao adicionar item', 'error');
+            }
+        }
+    } catch (error) {
+        console.error('Erro ao adicionar item:', error);
+        if (window.Favoritos) {
+            window.Favoritos.mostrarToast('Erro ao adicionar item', 'error');
+        }
+    }
+}
+
+function mostrarModalSelecionarLista(listas, publicacaoId, produtoId) {
+    // TODO: Implementar modal de seleção (por enquanto usa primeira lista)
+    adicionarItemNaLista(listas[0].id, publicacaoId, produtoId);
 }
 
 function abrirModalCriarPublicacao() {
