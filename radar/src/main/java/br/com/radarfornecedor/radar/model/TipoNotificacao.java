@@ -27,5 +27,21 @@ public enum TipoNotificacao {
     /**
      * Atualização importante do sistema
      */
-    SISTEMA
+    SISTEMA,
+    
+    /**
+     * Alerta de preço atingido - preço do produto chegou ao valor-alvo definido
+     */
+    ALERTA_PRECO_ATINGIDO,
+    
+    /**
+     * Redução de preço detectada em produto favoritado
+     */
+    REDUCAO_PRECO_DETECTADA,
+    
+    /**
+     * Nova oferta/promoção de fornecedor favorito
+     */
+    NOVA_OFERTA_FORNECEDOR_FAVORITO
 }
+
