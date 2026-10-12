@@ -12,4 +12,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     // Métodos para Perfil Social
     List<Produto> findByFornecedorId(Long fornecedorId);
     long countByFornecedorId(Long fornecedorId);
+    
+    // Busca por nome (usado em Lista de Compras)
+    List<Produto> findByNomeContainingIgnoreCase(String nome);
 }

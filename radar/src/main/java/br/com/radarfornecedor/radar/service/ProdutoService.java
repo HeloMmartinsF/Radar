@@ -22,4 +22,11 @@ public class ProdutoService {
     public Produto salvar(Produto produto) {
         return produtoRepository.save(produto);
     }
+    
+    public List<Produto> buscarPorNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return List.of();
+        }
+        return produtoRepository.findByNomeContainingIgnoreCase(nome.trim());
+    }
 }

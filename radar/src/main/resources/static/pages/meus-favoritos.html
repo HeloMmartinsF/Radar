@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Favoritos - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/imagem/Logo.png">
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-screen" data-standalone="true">
+
+    <!-- Container Principal com Menu Lateral -->
+    <div class="flex min-h-screen">
+        
+        <!-- Menu Lateral (carregado dinamicamente) -->
+        <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 md:ml-64 px-4 py-8 sm:px-6 lg:px-8">
+            
+            <!-- Cabeçalho -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-2">
+                    <i class="fas fa-heart text-3xl text-[#d4af37]"></i>
+                    <h1 class="text-3xl font-black text-white">Meus Favoritos</h1>
+                </div>
+                <p class="text-slate-400 text-sm">
+                    Acompanhe produtos e fornecedores do seu interesse
+                </p>
+            </div>
+
+            <!-- Tabs: Produtos | Fornecedores -->
+            <div class="mb-6 border-b border-slate-800">
+                <div class="flex gap-1">
+                    <button id="tab-produtos" 
+                            class="tab-button px-6 py-3 font-bold text-sm transition-colors duration-200 border-b-2 border-[#d4af37] text-white">
+                        <i class="fas fa-box mr-2"></i>
+                        Produtos
+                        <span id="badge-produtos" class="ml-2 px-2 py-0.5 text-xs font-bold bg-[#d4af37] text-black rounded-full">
+                            0
+                        </span>
+                    </button>
+                    <button id="tab-fornecedores" 
+                            class="tab-button px-6 py-3 font-bold text-sm transition-colors duration-200 border-b-2 border-transparent text-slate-400 hover:text-white">
+                        <i class="fas fa-building mr-2"></i>
+                        Fornecedores
+                        <span id="badge-fornecedores" class="ml-2 px-2 py-0.5 text-xs font-bold bg-slate-700 text-slate-300 rounded-full">
+                            0
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Painel: Produtos Favoritos -->
+            <div id="painel-produtos" class="tab-content">
+                <!-- Loading -->
+                <div id="loading-produtos" class="text-center py-20">
+                    <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+                    <p class="text-slate-400">Carregando produtos favoritos...</p>
+                </div>
+
+                <!-- Estado Vazio -->
+                <div id="vazio-produtos" class="hidden text-center py-20">
+                    <i class="fas fa-heart-crack text-6xl text-slate-700 mb-6"></i>
+                    <h3 class="text-xl font-bold text-slate-300 mb-2">Nenhum produto favoritado ainda</h3>
+                    <p class="text-slate-400 mb-6">
+                        Navegue pelo catálogo e favorite os produtos que você gostaria de acompanhar
+                    </p>
+                    <a href="/pages/busca.html" 
+                       class="inline-flex items-center gap-2 px-6 py-3 bg-[#d4af37] text-black font-bold rounded-lg hover:bg-[#c29a2f] transition-colors">
+                        <i class="fas fa-magnifying-glass"></i>
+                        Explorar Produtos
+                    </a>
+                </div>
+
+                <!-- Lista de Produtos -->
+                <div id="lista-produtos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Preenchido dinamicamente via JavaScript -->
+                </div>
+            </div>
+
+            <!-- Painel: Fornecedores Favoritos -->
+            <div id="painel-fornecedores" class="tab-content hidden">
+                <!-- Loading -->
+                <div id="loading-fornecedores" class="text-center py-20">
+                    <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+                    <p class="text-slate-400">Carregando fornecedores favoritos...</p>
+                </div>
+
+                <!-- Estado Vazio -->
+                <div id="vazio-fornecedores" class="hidden text-center py-20">
+                    <i class="fas fa-store-slash text-6xl text-slate-700 mb-6"></i>
+                    <h3 class="text-xl font-bold text-slate-300 mb-2">Nenhum fornecedor favoritado ainda</h3>
+                    <p class="text-slate-400 mb-6">
+                        Favorite fornecedores para receber notificações de novas ofertas
+                    </p>
+                    <a href="/pages/fornecedores.html" 
+                       class="inline-flex items-center gap-2 px-6 py-3 bg-[#d4af37] text-black font-bold rounded-lg hover:bg-[#c29a2f] transition-colors">
+                        <i class="fas fa-building"></i>
+                        Buscar Fornecedores
+                    </a>
+                </div>
+
+                <!-- Lista de Fornecedores -->
+                <div id="lista-fornecedores" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Preenchido dinamicamente via JavaScript -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/layout/script.js"></script>
+    <script src="/js/favoritos.js"></script>
+
+    <script>
+        let abaSelecionada = 'produtos'; // 'produtos' ou 'fornecedores'
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Carregar menu lateral, info usuário e controles de acesso
+            await carregarMenuLateral();
+            exibirInfoUsuario();
+            aplicarControlesDeAcesso();
+
+            // Configurar tabs
+            configurarTabs();
+
+            // Carregar produtos favoritos (aba inicial)
+            carregarProdutosFavoritos();
+        });
+
+        function configurarTabs() {
+            const tabProdutos = document.getElementById('tab-produtos');
+            const tabFornecedores = document.getElementById('tab-fornecedores');
+            const painelProdutos = document.getElementById('painel-produtos');
+            const painelFornecedores = document.getElementById('painel-fornecedores');
+
+            tabProdutos.addEventListener('click', () => {
+                if (abaSelecionada === 'produtos') return;
+
+                // Trocar visual das tabs
+                tabProdutos.classList.remove('border-transparent', 'text-slate-400');
+                tabProdutos.classList.add('border-[#d4af37]', 'text-white');
+                
+                tabFornecedores.classList.remove('border-[#d4af37]', 'text-white');
+                tabFornecedores.classList.add('border-transparent', 'text-slate-400');
+
+                // Trocar painéis
+                painelProdutos.classList.remove('hidden');
+                painelFornecedores.classList.add('hidden');
+
+                abaSelecionada = 'produtos';
+
+                // Carregar produtos (se ainda não carregou)
+                if (document.getElementById('lista-produtos').children.length === 0 && 
+                    !document.getElementById('loading-produtos').classList.contains('hidden')) {
+                    carregarProdutosFavoritos();
+                }
+            });
+
+            tabFornecedores.addEventListener('click', () => {
+                if (abaSelecionada === 'fornecedores') return;
+
+                // Trocar visual das tabs
+                tabFornecedores.classList.remove('border-transparent', 'text-slate-400');
+                tabFornecedores.classList.add('border-[#d4af37]', 'text-white');
+                
+                tabProdutos.classList.remove('border-[#d4af37]', 'text-white');
+                tabProdutos.classList.add('border-transparent', 'text-slate-400');
+
+                // Trocar painéis
+                painelFornecedores.classList.remove('hidden');
+                painelProdutos.classList.add('hidden');
+
+                abaSelecionada = 'fornecedores';
+
+                // Carregar fornecedores (se ainda não carregou)
+                if (document.getElementById('lista-fornecedores').children.length === 0) {
+                    carregarFornecedoresFavoritos();
+                }
+            });
+        }
+
+        async function carregarProdutosFavoritos() {
+            const loading = document.getElementById('loading-produtos');
+            const vazio = document.getElementById('vazio-produtos');
+            const lista = document.getElementById('lista-produtos');
+            const badge = document.getElementById('badge-produtos');
+
+            loading.classList.remove('hidden');
+            vazio.classList.add('hidden');
+            lista.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/favoritos/produtos');
+                const data = await response.json();
+
+                loading.classList.add('hidden');
+
+                if (!data.sucesso || data.favoritos.length === 0) {
+                    vazio.classList.remove('hidden');
+                    badge.textContent = '0';
+                    return;
+                }
+
+                // Atualizar badge
+                badge.textContent = data.quantidade;
+
+                // Renderizar produtos
+                data.favoritos.forEach(fav => {
+                    lista.appendChild(criarCardProduto(fav));
+                });
+
+            } catch (error) {
+                console.error('[Favoritos] Erro ao carregar produtos:', error);
+                loading.classList.add('hidden');
+                vazio.classList.remove('hidden');
+                vazio.querySelector('h3').textContent = 'Erro ao carregar favoritos';
+                vazio.querySelector('p').textContent = 'Tente novamente mais tarde';
+            }
+        }
+
+        async function carregarFornecedoresFavoritos() {
+            const loading = document.getElementById('loading-fornecedores');
+            const vazio = document.getElementById('vazio-fornecedores');
+            const lista = document.getElementById('lista-fornecedores');
+            const badge = document.getElementById('badge-fornecedores');
+
+            loading.classList.remove('hidden');
+            vazio.classList.add('hidden');
+            lista.innerHTML = '';
+
+            try {
+                const response = await fetch('/api/favoritos/fornecedores');
+                const data = await response.json();
+
+                loading.classList.add('hidden');
+
+                if (!data.sucesso || data.favoritos.length === 0) {
+                    vazio.classList.remove('hidden');
+                    badge.textContent = '0';
+                    return;
+                }
+
+                // Atualizar badge
+                badge.textContent = data.quantidade;
+
+                // Renderizar fornecedores
+                data.favoritos.forEach(fav => {
+                    lista.appendChild(criarCardFornecedor(fav));
+                });
+
+            } catch (error) {
+                console.error('[Favoritos] Erro ao carregar fornecedores:', error);
+                loading.classList.add('hidden');
+                vazio.classList.add('hidden');
+                vazio.querySelector('h3').textContent = 'Erro ao carregar favoritos';
+                vazio.querySelector('p').textContent = 'Tente novamente mais tarde';
+            }
+        }
+
+        function criarCardProduto(favorito) {
+            const card = document.createElement('div');
+            card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-[#d4af37] transition-all duration-200';
+
+            const preco = favorito.produtoPreco 
+                ? `R$ ${parseFloat(favorito.produtoPreco).toFixed(2)}` 
+                : 'Preço não disponível';
+
+            const fornecedorInfo = favorito.fornecedorNome 
+                ? `<p class="text-xs text-slate-400 mt-1"><i class="fas fa-building mr-1"></i>${favorito.fornecedorNome}</p>`
+                : '';
+
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="text-lg font-bold text-white flex-1">${favorito.produtoNome}</h3>
+                    <button onclick="desfavoritarProduto(${favorito.produtoId})" 
+                            class="text-red-400 hover:text-red-300 transition-colors ml-2"
+                            title="Remover dos favoritos">
+                        <i class="fas fa-heart-broken text-xl"></i>
+                    </button>
+                </div>
+
+                ${favorito.produtoDescricao ? `<p class="text-sm text-slate-400 mb-3 line-clamp-2">${favorito.produtoDescricao}</p>` : ''}
+                
+                ${fornecedorInfo}
+
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-slate-800">
+                    <span class="text-lg font-bold text-[#d4af37]">${preco}</span>
+                    <a href="/pages/produto-detalhes.html?id=${favorito.produtoId}" 
+                       class="px-4 py-2 bg-slate-800 hover:bg-[#d4af37] hover:text-black text-white font-bold rounded-lg transition-colors text-sm">
+                        Ver Detalhes
+                    </a>
+                </div>
+            `;
+
+            return card;
+        }
+
+        function criarCardFornecedor(favorito) {
+            const card = document.createElement('div');
+            card.className = 'bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-[#d4af37] transition-all duration-200';
+
+            const foto = favorito.fornecedorFoto || '/imagem/Logo.png';
+            const localizacao = (favorito.fornecedorCidade && favorito.fornecedorEstado) 
+                ? `${favorito.fornecedorCidade}, ${favorito.fornecedorEstado}` 
+                : 'Localização não informada';
+
+            card.innerHTML = `
+                <div class="flex items-start gap-4 mb-4">
+                    <img src="${foto}" alt="${favorito.fornecedorNome}" 
+                         class="w-16 h-16 rounded-lg object-cover bg-slate-800">
+                    <div class="flex-1">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-lg font-bold text-white">${favorito.fornecedorNome}</h3>
+                            <button onclick="desfavoritarFornecedor(${favorito.fornecedorId})" 
+                                    class="text-red-400 hover:text-red-300 transition-colors"
+                                    title="Deixar de seguir">
+                                <i class="fas fa-star-half-stroke text-xl"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">
+                            <i class="fas fa-location-dot mr-1"></i>${localizacao}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3 mb-4">
+                    <label class="flex items-center gap-2 text-sm cursor-pointer">
+                        <input type="checkbox" 
+                               ${favorito.notificarNovasOfertas ? 'checked' : ''} 
+                               onchange="toggleNotificacoes(${favorito.fornecedorId}, this.checked)"
+                               class="w-4 h-4 rounded border-slate-700 bg-slate-800 text-[#d4af37] focus:ring-[#d4af37]">
+                        <span class="text-slate-300">Notificar novas ofertas</span>
+                    </label>
+                </div>
+
+                <a href="/perfil-comercial?cnpj=${favorito.fornecedorCnpj}" 
+                   class="block w-full text-center px-4 py-2 bg-slate-800 hover:bg-[#d4af37] hover:text-black text-white font-bold rounded-lg transition-colors text-sm">
+                    Ver Perfil Completo
+                </a>
+            `;
+
+            return card;
+        }
+
+        async function desfavoritarProduto(produtoId) {
+            if (!confirm('Deseja remover este produto dos favoritos?')) return;
+
+            try {
+                const response = await fetch(`/api/favoritos/produtos/${produtoId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.sucesso) {
+                    mostrarNotificacao('Produto removido dos favoritos', 'success');
+                    carregarProdutosFavoritos(); // Recarregar lista
+                } else {
+                    mostrarNotificacao(data.erro || 'Erro ao remover favorito', 'error');
+                }
+            } catch (error) {
+                console.error('[Favoritos] Erro:', error);
+                mostrarNotificacao('Erro ao remover favorito', 'error');
+            }
+        }
+
+        async function desfavoritarFornecedor(fornecedorId) {
+            if (!confirm('Deseja deixar de seguir este fornecedor?')) return;
+
+            try {
+                const response = await fetch(`/api/favoritos/fornecedores/${fornecedorId}`, {
+                    method: 'DELETE'
+                });
+
+                const data = await response.json();
+
+                if (data.sucesso) {
+                    mostrarNotificacao('Fornecedor removido dos favoritos', 'success');
+                    carregarFornecedoresFavoritos(); // Recarregar lista
+                } else {
+                    mostrarNotificacao(data.erro || 'Erro ao remover favorito', 'error');
+                }
+            } catch (error) {
+                console.error('[Favoritos] Erro:', error);
+                mostrarNotificacao('Erro ao remover favorito', 'error');
+            }
+        }
+
+        async function toggleNotificacoes(fornecedorId, ativar) {
+            try {
+                const response = await fetch(`/api/favoritos/fornecedores/${fornecedorId}/notificacoes`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ notificar: ativar })
+                });
+
+                const data = await response.json();
+
+                if (data.sucesso) {
+                    mostrarNotificacao(data.mensagem, 'success');
+                } else {
+                    mostrarNotificacao(data.erro || 'Erro ao atualizar notificações', 'error');
+                }
+            } catch (error) {
+                console.error('[Favoritos] Erro:', error);
+                mostrarNotificacao('Erro ao atualizar notificações', 'error');
+            }
+        }
+
+        function mostrarNotificacao(mensagem, tipo = 'info') {
+            // Criar toast notification simples
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 right-4 px-6 py-3 rounded-lg shadow-lg z-50 ${
+                tipo === 'success' ? 'bg-green-600' : 
+                tipo === 'error' ? 'bg-red-600' : 
+                'bg-blue-600'
+            } text-white font-bold`;
+            toast.textContent = mensagem;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

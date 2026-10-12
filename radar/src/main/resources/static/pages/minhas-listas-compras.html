@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Listas de Compras - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <style>
+        .lista-card {
+            transition: all 0.3s ease;
+        }
+        .lista-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .item-concluido {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        .badge-novo {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body data-standalone="true" class="bg-gray-50">
+    <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+    
+    <div class="md:ml-64 p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">
+                    <i class="fas fa-shopping-cart text-[#d4af37] mr-2"></i>
+                    Minhas Listas de Compras
+                </h1>
+                <p class="text-gray-600 mt-1">Organize suas compras e acompanhe o progresso</p>
+            </div>
+            <button onclick="abrirModalNovaLista()" class="bg-[#d4af37] hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition-all">
+                <i class="fas fa-plus mr-2"></i>Nova Lista
+            </button>
+        </div>
+
+        <!-- Estatísticas Resumidas -->
+        <div id="estatisticas-resumo" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <!-- Carregado dinamicamente -->
+        </div>
+
+        <!-- Abas -->
+        <div class="bg-white rounded-lg shadow-md mb-6">
+            <div class="border-b">
+                <nav class="flex">
+                    <button onclick="trocarAba('ativas')" id="aba-ativas" class="px-6 py-3 font-semibold text-[#d4af37] border-b-2 border-[#d4af37]">
+                        Listas Ativas
+                    </button>
+                    <button onclick="trocarAba('arquivadas')" id="aba-arquivadas" class="px-6 py-3 font-semibold text-gray-500 hover:text-gray-700">
+                        Arquivadas
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Listas Ativas -->
+        <div id="container-ativas" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="col-span-full text-center py-12">
+                <i class="fas fa-spinner fa-spin text-4xl text-gray-400 mb-4"></i>
+                <p class="text-gray-500">Carregando listas...</p>
+            </div>
+        </div>
+
+        <!-- Listas Arquivadas -->
+        <div id="container-arquivadas" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Carregado dinamicamente -->
+        </div>
+    </div>
+
+    <!-- Modal Nova Lista -->
+    <div id="modal-nova-lista" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    <i class="fas fa-list mr-2 text-[#d4af37]"></i>
+                    <span id="modal-titulo">Nova Lista</span>
+                </h2>
+                <button onclick="fecharModalNovaLista()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="form-nova-lista" onsubmit="salvarLista(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">Nome da Lista *</label>
+                    <input type="text" id="input-nome-lista" required maxlength="100" 
+                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                           placeholder="Ex: Compras da Semana">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2">Descrição (opcional)</label>
+                    <textarea id="input-descricao-lista" rows="3" maxlength="500"
+                              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                              placeholder="Adicione detalhes sobre esta lista"></textarea>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="fecharModalNovaLista()" 
+                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-semibold">
+                        Cancelar
+                    </button>
+                    <button type="submit" 
+                            class="flex-1 px-4 py-2 bg-[#d4af37] hover:bg-yellow-600 text-white rounded-lg font-semibold">
+                        <i class="fas fa-save mr-2"></i>Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Detalhes da Lista -->
+    <div id="modal-detalhes-lista" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 overflow-y-auto">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full my-8">
+            <!-- Header da Lista -->
+            <div class="bg-gradient-to-r from-[#d4af37] to-yellow-600 text-white p-6 rounded-t-lg">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <h2 id="detalhes-nome" class="text-2xl font-bold mb-2"></h2>
+                        <p id="detalhes-descricao" class="text-white/90 mb-4"></p>
+                        <div class="flex gap-4 text-sm">
+                            <span><i class="far fa-calendar mr-1"></i><span id="detalhes-data"></span></span>
+                            <span><i class="fas fa-boxes mr-1"></i><span id="detalhes-total-itens"></span> itens</span>
+                        </div>
+                    </div>
+                    <button onclick="fecharModalDetalhes()" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <!-- Barra de Progresso -->
+                <div class="mt-4">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span>Progresso</span>
+                        <span id="detalhes-percentual">0%</span>
+                    </div>
+                    <div class="w-full bg-white/30 rounded-full h-3">
+                        <div id="detalhes-barra-progresso" class="progress-bar bg-white h-3 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações -->
+            <div class="p-6 border-b bg-gray-50">
+                <div class="flex flex-wrap gap-3">
+                    <button onclick="abrirModalAdicionarItem()" class="bg-[#d4af37] hover:bg-yellow-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        <i class="fas fa-plus mr-2"></i>Adicionar Item
+                    </button>
+                    <button onclick="editarListaAtual()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        <i class="fas fa-edit mr-2"></i>Editar Lista
+                    </button>
+                    <button onclick="arquivarListaAtual()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg font-semibold">
+                        <i class="fas fa-archive mr-2"></i><span id="btn-arquivar-texto">Arquivar</span>
+                    </button>
+                    <button onclick="deletarListaAtual()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-semibold ml-auto">
+                        <i class="fas fa-trash mr-2"></i>Excluir Lista
+                    </button>
+                </div>
+            </div>
+
+            <!-- Valor Total Estimado -->
+            <div class="p-6 bg-green-50 border-b">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-gray-600 font-semibold">Valor Total Estimado</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Baseado nos preços capturados no momento da adição
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <p id="detalhes-valor-total" class="text-3xl font-bold text-green-600">R$ 0,00</p>
+                        <p class="text-sm text-gray-500">
+                            <span id="detalhes-itens-com-preco">0</span> de 
+                            <span id="detalhes-total-itens-valor">0</span> itens com preço
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Itens -->
+            <div class="p-6 max-h-96 overflow-y-auto">
+                <div id="container-itens-lista">
+                    <div class="text-center py-8 text-gray-500">
+                        <i class="fas fa-box-open text-4xl mb-3"></i>
+                        <p>Nenhum item adicionado ainda</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Adicionar Item -->
+    <div id="modal-adicionar-item" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">
+                    <i class="fas fa-plus-circle mr-2 text-[#d4af37]"></i>
+                    Adicionar Item
+                </h2>
+                <button onclick="fecharModalAdicionarItem()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <form id="form-adicionar-item" onsubmit="salvarItem(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 font-semibold mb-2">Produto *</label>
+                    <input type="text" id="input-busca-produto" 
+                           class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                           placeholder="Digite para buscar produto..."
+                           autocomplete="off">
+                    <div id="resultados-busca-produto" class="mt-2 max-h-60 overflow-y-auto border rounded-lg hidden"></div>
+                    <input type="hidden" id="input-produto-id" required>
+                    <p id="produto-selecionado" class="text-sm text-green-600 mt-2 hidden">
+                        <i class="fas fa-check-circle mr-1"></i>
+                        <span id="produto-selecionado-nome"></span>
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Quantidade *</label>
+                        <input type="number" id="input-quantidade" required min="0.01" step="0.01" value="1"
+                               class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Unidade</label>
+                        <select id="input-unidade" 
+                                class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent">
+                            <option value="UNIDADE">Unidade</option>
+                            <option value="KG">Kg</option>
+                            <option value="GRAMA">Grama</option>
+                            <option value="LITRO">Litro</option>
+                            <option value="ML">ml</option>
+                            <option value="CAIXA">Caixa</option>
+                            <option value="PACOTE">Pacote</option>
+                            <option value="FARDO">Fardo</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-semibold mb-2">Observações</label>
+                    <textarea id="input-observacoes" rows="2" maxlength="500"
+                              class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-[#d4af37] focus:border-transparent"
+                              placeholder="Ex: Preferência de marca, tamanho específico..."></textarea>
+                </div>
+                <div class="flex gap-3">
+                    <button type="button" onclick="fecharModalAdicionarItem()" 
+                            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 font-semibold">
+                        Cancelar
+                    </button>
+                    <button type="submit" 
+                            class="flex-1 px-4 py-2 bg-[#d4af37] hover:bg-yellow-600 text-white rounded-lg font-semibold">
+                        <i class="fas fa-save mr-2"></i>Adicionar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/layout.js"></script>
+    <script src="/js/listas-compras.js"></script>
+</body>
+</html>

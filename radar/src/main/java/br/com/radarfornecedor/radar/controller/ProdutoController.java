@@ -43,4 +43,10 @@ public class ProdutoController {
     public ResponseEntity<Produto> cadastrar(@Valid @RequestBody Produto produto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(produtoService.salvar(produto));
     }
+    
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Produto>> buscar(@RequestParam("q") String query) {
+        List<Produto> produtos = produtoService.buscarPorNome(query);
+        return ResponseEntity.ok(produtos);
+    }
 }
