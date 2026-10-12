@@ -246,8 +246,7 @@
                 </a>
 
                 <a id="menu-pagamentos" href="/pages/pagamentos.html"
-                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200"
-                   style="display: none;">
+                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200">
                     <div class="flex items-center gap-3 flex-1">
                         <i class="fa-solid fa-money-bill-wave w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
                         <span class="font-bold text-sm">Pagamentos</span>
@@ -269,14 +268,12 @@
             <div class="pt-4 mt-4 border-t border-slate-900">
                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4 px-4">Configurações</p>
                <a id="menu-admin" href="/pages/admin.html"
-                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 transition-all duration-200 ease-out border border-transparent"
-                   style="display: none; overflow: visible; position: relative;">
+                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200">
                    <i class="fa-solid fa-gears w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
                    <span class="font-bold text-sm">Administração</span>
                </a>
                <a id="menu-config-email" href="/pages/configuracoes-email.html"
-                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200"
-                   style="display: none;">
+                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200">
                    <i class="fa-solid fa-envelope-open-text w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
                    <span class="font-bold text-sm">Config. Email</span>
                </a>
@@ -352,32 +349,32 @@
                 
                 // === CONTROLE DE VISIBILIDADE POR TIPO DE USUÁRIO ===
                 
-                // ADMIN: Acesso a TUDO (verifica se username é "admin")
-                if (usuario.username === 'admin') {
-                    // Mostrar links administrativos
+                // Se NÃO for usuário "admin", ocultar links administrativos
+                if (usuario.username !== 'admin') {
                     if (linkAdmin) {
-                        linkAdmin.style.display = 'flex';
-                        console.log('[Menu] Link "Administração" exibido para usuário admin');
+                        linkAdmin.style.display = 'none';
+                        console.log('[Menu] Link "Administração" ocultado - usuário não é admin');
                     }
                     if (linkConfigEmail) {
-                        linkConfigEmail.style.display = 'flex';
-                        console.log('[Menu] Link "Config. Email" exibido para usuário admin');
+                        linkConfigEmail.style.display = 'none';
+                        console.log('[Menu] Link "Config. Email" ocultado - usuário não é admin');
                     }
                     if (linkPagamentos) {
-                        linkPagamentos.style.display = 'flex';
-                        console.log('[Menu] Link "Pagamentos" exibido para usuário admin');
+                        linkPagamentos.style.display = 'none';
+                        console.log('[Menu] Link "Pagamentos" ocultado - usuário não é admin');
                     }
+                } else {
+                    // Usuário é admin - links já estão visíveis por padrão
+                    console.log('[Menu] Links administrativos visíveis para usuário admin');
+                }
+                
+                // Controle de perfil baseado no tipo de usuário
+                if (usuario.username === 'admin') {
                     // Admin pode ver perfil social padrão
                     if (linkPerfil) {
                         linkPerfil.href = '/pages/perfil.html';
                     }
-                } 
-                // NÃO-ADMIN: Ocultar links administrativos (já está oculto por padrão)
-                else {
-                    console.log('[Menu] Usuário não é admin - links administrativos ocultados');
-                    
-                    // Controle de perfil para fornecedores
-                    if (usuario.fornecedor === true) {
+                } else if (usuario.fornecedor === true) {
                         if (linkPerfil) {
                             linkPerfil.href = '/pages/perfil-comercial.html';
                             console.log('[Menu] Usuário é fornecedor → perfil comercial');
