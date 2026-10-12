@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Suporte - Admin - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/imagem/Logo.png">
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-screen" data-standalone="true">
+
+    <!-- Container Principal com Menu Lateral -->
+    <div class="flex min-h-screen">
+        
+        <!-- Menu Lateral (carregado dinamicamente) -->
+        <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 md:ml-64 px-4 py-8 sm:px-6 lg:px-8">
+            
+            <!-- Cabeçalho -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-headset text-3xl text-[#d4af37]"></i>
+                            <h1 class="text-3xl font-black text-white">Gerenciar Suporte</h1>
+                        </div>
+                        <p class="text-slate-400 text-sm">
+                            Painel administrativo de chamados de suporte
+                        </p>
+                    </div>
+                    <button id="btn-atualizar" 
+                            class="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition-colors">
+                        <i class="fas fa-sync-alt"></i>
+                        Atualizar
+                    </button>
+                </div>
+
+                <!-- Estatísticas -->
+                <div id="estatisticas" class="grid grid-cols-2 md:grid-cols-5 gap-4"></div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="mb-6 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4">
+                    <i class="fas fa-filter mr-2 text-[#d4af37]"></i>
+                    Filtros
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-2">Status</label>
+                        <select id="filtro-status" 
+                                class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
+                            <option value="">Todos</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-2">Categoria</label>
+                        <select id="filtro-categoria" 
+                                class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-slate-400 mb-2">Urgência</label>
+                        <select id="filtro-urgencia" 
+                                class="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="flex items-end">
+                        <button id="btn-aplicar-filtros" 
+                                class="w-full px-4 py-2 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                            <i class="fas fa-search mr-2"></i>
+                            Aplicar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Chamados -->
+            <div id="loading" class="flex items-center justify-center py-16">
+                <div class="text-center">
+                    <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+                    <p class="text-slate-400">Carregando chamados...</p>
+                </div>
+            </div>
+
+            <div id="empty" class="hidden bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-12 text-center">
+                <i class="fas fa-inbox text-6xl text-slate-700 mb-4"></i>
+                <h3 class="text-xl font-bold text-white mb-2">Nenhum chamado encontrado</h3>
+                <p class="text-slate-400">Não há chamados que correspondam aos filtros selecionados</p>
+            </div>
+
+            <div id="lista-chamados" class="hidden space-y-4"></div>
+
+        </main>
+
+    </div>
+
+    <!-- Modal: Gerenciar Chamado -->
+    <div id="modal-gerenciar" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+            
+            <!-- Header Modal -->
+            <div class="flex items-center justify-between p-6 border-b border-slate-800">
+                <div>
+                    <h2 id="modal-titulo" class="text-2xl font-black text-white"></h2>
+                    <p id="modal-numero" class="text-sm text-slate-400"></p>
+                </div>
+                <button id="btn-fechar-modal" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Body Modal -->
+            <div class="p-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Coluna Esquerda: Informações e Ações -->
+                    <div class="lg:col-span-1 space-y-6">
+                        
+                        <!-- Informações do Chamado -->
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <h3 class="text-sm font-bold text-white mb-3">Informações</h3>
+                            <div id="chamado-info" class="space-y-2 text-sm"></div>
+                        </div>
+
+                        <!-- Alterar Status -->
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <h3 class="text-sm font-bold text-white mb-3">Alterar Status</h3>
+                            <select id="select-status" 
+                                    class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm mb-3">
+                            </select>
+                            <button id="btn-alterar-status" 
+                                    class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors">
+                                <i class="fas fa-save mr-2"></i>
+                                Salvar Status
+                            </button>
+                        </div>
+
+                        <!-- Observações Internas -->
+                        <div class="bg-red-900/20 border border-red-800/50 rounded-lg p-4">
+                            <h3 class="text-sm font-bold text-white mb-2">
+                                <i class="fas fa-lock mr-1 text-red-400"></i>
+                                Observações Internas
+                            </h3>
+                            <p class="text-xs text-red-300 mb-3">Visível apenas para administradores</p>
+                            <textarea id="textarea-observacoes" 
+                                      rows="4"
+                                      placeholder="Notas internas sobre o atendimento..."
+                                      class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm resize-none mb-3"></textarea>
+                            <button id="btn-salvar-observacoes" 
+                                    class="w-full px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-bold rounded-lg transition-colors">
+                                <i class="fas fa-lock mr-2"></i>
+                                Salvar Observações
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <!-- Coluna Direita: Descrição e Mensagens -->
+                    <div class="lg:col-span-2 space-y-6">
+                        
+                        <!-- Descrição Inicial -->
+                        <div class="bg-slate-800/50 rounded-lg p-4">
+                            <h3 class="text-sm font-bold text-white mb-2">Descrição do Problema</h3>
+                            <p id="chamado-descricao" class="text-sm text-slate-300 whitespace-pre-wrap"></p>
+                        </div>
+
+                        <!-- Informações Técnicas -->
+                        <div id="info-tecnicas-container" class="hidden bg-slate-800/50 rounded-lg p-4">
+                            <h3 class="text-sm font-bold text-white mb-2">Informações Técnicas</h3>
+                            <p id="chamado-info-tecnicas" class="text-xs text-slate-400 font-mono"></p>
+                        </div>
+
+                        <!-- Mensagens -->
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4">
+                                <i class="fas fa-comments mr-2 text-[#d4af37]"></i>
+                                Histórico de Atendimento
+                            </h3>
+                            <div id="lista-mensagens-admin" class="space-y-4 mb-4 max-h-96 overflow-y-auto bg-slate-800/30 rounded-lg p-4"></div>
+                            
+                            <!-- Responder -->
+                            <form id="form-responder" class="flex gap-3">
+                                <input type="hidden" id="chamado-numero-resposta">
+                                <textarea id="input-resposta" 
+                                          rows="3"
+                                          placeholder="Digite sua resposta..."
+                                          class="flex-1 px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 resize-none"></textarea>
+                                <button type="submit" 
+                                        class="px-6 py-3 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/menu-lateral.js"></script>
+    <script src="/js/admin-suporte.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarMenuLateral();
+            exibirInfoUsuario();
+            aplicarControlesDeAcesso();
+            
+            // Inicializar painel admin
+            if (typeof inicializarAdminSuporte === 'function') {
+                inicializarAdminSuporte();
+            }
+        });
+    </script>
+
+</body>
+</html>

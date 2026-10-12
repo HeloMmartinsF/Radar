@@ -42,6 +42,21 @@ public enum TipoNotificacao {
     /**
      * Nova oferta/promoção de fornecedor favorito
      */
-    NOVA_OFERTA_FORNECEDOR_FAVORITO
+    NOVA_OFERTA_FORNECEDOR_FAVORITO,
+    
+    /**
+     * Novo chamado de suporte criado (notificação para administradores)
+     */
+    NOVO_CHAMADO_SUPORTE,
+    
+    /**
+     * Resposta recebida no chamado de suporte (notificação para usuário ou admin)
+     */
+    RESPOSTA_CHAMADO_SUPORTE,
+    
+    /**
+     * Status do chamado de suporte foi alterado
+     */
+    STATUS_CHAMADO_ALTERADO
 }
 

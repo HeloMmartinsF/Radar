@@ -1,0 +1,107 @@
+========================================
+GUIA DE COMPILAÇÃO MANUAL - ADMIN PERFIS
+========================================
+
+SITUAÇÃO ATUAL:
+- Código do admin de perfis foi adicionado ao PerfilSocialService e PerfilSocialController
+- Arquivo admin-perfis.html criado
+- Servidor está rodando com versão ANTIGA (sem recursos admin)
+- Precisa recompilar para incluir novos recursos
+
+PASSOS PARA COMPILAR:
+
+1. PARAR O SERVIDOR SPRING BOOT
+   - Feche a janela do servidor em execução
+   - Ou pressione Ctrl+C no terminal do servidor
+
+2. ABRIR PROMPT DE COMANDO (CMD)
+   - Pressione Win+R
+   - Digite: cmd
+   - Pressione Enter
+
+3. NAVEGAR ATÉ A PASTA DO PROJETO
+   cd C:\Projeto\Projeto_Radar_Fornecedor\radar
+
+4. EXECUTAR COMPILAÇÃO
+   mvnw.cmd clean compile
+
+5. AGUARDAR COMPILAÇÃO (pode demorar 1-2 minutos)
+   - Se aparecer "BUILD SUCCESS" → sucesso!
+   - Se aparecer erro de compilação → copie e cole o erro aqui
+
+6. REINICIAR O SERVIDOR
+   - Execute o arquivo: "Iniciar SpringBoot Radar Fornecedor.bat"
+   - Aguarde mensagem "Started RadarApplication"
+
+========================================
+TESTES APÓS COMPILAÇÃO
+========================================
+
+TESTE 1: AUTO-CRIAÇÃO DE PERFIL (Fornecedor/Cliente)
+1. Acesse: http://localhost:8080
+2. Faça login como fornecedor ou cliente (não admin)
+3. Clique em "Meu Perfil" no menu lateral (ícone roxo com badge NOVO)
+4. URL: http://localhost:8080/pages/perfil.html
+5. ESPERADO: Perfil é criado automaticamente na primeira visita
+6. Edite biografia, mude foto, salve
+7. ESPERADO: Mudanças são salvas sem pedir aprovação
+
+TESTE 2: VISUALIZAÇÃO DE PRODUTOS
+1. No perfil, clique na aba "Produtos"
+2. ESPERADO: Aparecem os produtos cadastrados deste fornecedor
+3. Vá em /produtos e cadastre um produto novo
+4. Volte para /pages/perfil.html
+5. ESPERADO: Novo produto aparece sem precisar recarregar
+
+TESTE 3: ACESSO ADMIN
+1. Faça logout e login como ADMIN
+2. Acesse: http://localhost:8080/pages/admin-perfis.html
+3. ESPERADO: Lista com TODOS os perfis de usuários
+4. Use filtros: "fornecedor", "cliente", "representante"
+5. Clique em "Editar" em qualquer perfil
+6. ESPERADO: Modal abre com dados do perfil
+7. Mude biografia ou privacidade
+8. Clique "Salvar Alterações"
+9. ESPERADO: Alteração é salva no perfil do outro usuário
+
+TESTE 4: ADMIN ACESSA PERFIL DE OUTRO USUÁRIO
+1. Como admin, acesse: http://localhost:8080/pages/perfil.html?usuario=5
+   (onde 5 é o ID de outro usuário)
+2. ESPERADO: Admin vê perfil completo de outro usuário
+3. Admin pode editar biografia/foto deste perfil
+
+========================================
+RECURSOS IMPLEMENTADOS
+========================================
+
+PERFIL SOCIAL:
+✅ Tabela PERFIS_SOCIAIS (foto_perfil, biografia, privacidade)
+✅ Reutiliza dados existentes (Usuario, Fornecedor, Cliente, Produto, Publicacao)
+✅ ZERO duplicação de dados
+✅ Auto-criação na primeira visita (sem aprovação)
+✅ Usuários editam livremente seus próprios perfis
+
+ADMIN:
+✅ Endpoint GET /api/perfil/todos → lista todos os perfis
+✅ Endpoint PUT /api/perfil/{usuarioId} → admin edita qualquer perfil
+✅ Página admin-perfis.html → interface de gerenciamento
+✅ Admin vê todos os perfis (públicos e privados)
+✅ Admin pode editar biografia, privacidade, foto de qualquer perfil
+
+SEGURANÇA:
+✅ Verificação tipoUsuario=="ADMIN" nos endpoints admin
+✅ Usuários normais só veem perfis públicos de outros
+✅ Usuários normais só editam próprio perfil
+✅ Admin bypassa todas as restrições de privacidade
+
+========================================
+PROBLEMAS CONHECIDOS?
+========================================
+
+Se após compilar e testar:
+- Perfil não abre → verifique console do navegador (F12)
+- Admin não vê todos perfis → verifique se tipoUsuario do admin é "ADMIN"
+- Produtos não aparecem → verifique se fornecedor tem produtos cadastrados
+- Erro 403/401 → verifique sessão de login
+
+Cole aqui qualquer erro que aparecer!
