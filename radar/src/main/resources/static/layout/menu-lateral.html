@@ -165,6 +165,16 @@
                     <span class="text-[10px] font-black text-purple-500 bg-purple-950 px-2 py-0.5 rounded-full">NOVO</span>
                 </a>
 
+                <a id="menu-desempenho" href="/pages/painel-desempenho.html"
+                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200"
+                   style="display: none;">
+                    <div class="flex items-center gap-3 flex-1">
+                        <i class="fa-solid fa-chart-line w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
+                        <span class="font-bold text-sm">Meu Desempenho</span>
+                    </div>
+                    <span class="text-[10px] font-black text-green-500 bg-green-950 px-2 py-0.5 rounded-full">NOVO</span>
+                </a>
+
                 <a id="menu-produtos" href="/pages/produtos.html"
                    class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200">
                     <div class="flex items-center gap-3 flex-1">
@@ -269,21 +279,33 @@
         .then(usuario => {
             if (usuario) {
                 const linkPerfil = document.getElementById('menu-perfil');
+                const linkDesempenho = document.getElementById('menu-desempenho');
                 
                 // Se usuário é fornecedor, redirecionar para perfil comercial
                 if (usuario.fornecedor === true) {
                     linkPerfil.href = '/pages/perfil-comercial.html';
                     console.log('[Menu] Usuário é fornecedor → perfil comercial');
+                    
+                    // Mostrar link "Meu Desempenho" apenas para fornecedores
+                    if (linkDesempenho) {
+                        linkDesempenho.style.display = 'flex';
+                        console.log('[Menu] Link "Meu Desempenho" exibido para fornecedor');
+                    }
                 } else {
                     // Cliente, Representante ou outros → perfil social
                     linkPerfil.href = '/pages/perfil.html';
                     console.log('[Menu] Usuário não é fornecedor → perfil social');
+                    
+                    // Ocultar link "Meu Desempenho" para não fornecedores
+                    if (linkDesempenho) {
+                        linkDesempenho.style.display = 'none';
+                    }
                 }
             }
         })
         .catch(error => {
             console.error('[Menu] Erro ao verificar tipo de usuário:', error);
-            // Em caso de erro, manter padrão (perfil social)
+            // Em caso de erro, manter padrão (perfil social) e ocultar desempenho
         });
 })();
 </script>
