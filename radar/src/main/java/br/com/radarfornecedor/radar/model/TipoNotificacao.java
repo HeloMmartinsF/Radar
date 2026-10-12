@@ -57,6 +57,11 @@ public enum TipoNotificacao {
     /**
      * Status do chamado de suporte foi alterado
      */
-    STATUS_CHAMADO_ALTERADO
+    STATUS_CHAMADO_ALTERADO,
+    
+    /**
+     * Nova mensagem recebida no chat comercial
+     */
+    NOVA_MENSAGEM_CHAT
 }
 

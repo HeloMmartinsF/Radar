@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversa - Radar Fornecedor</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .mensagem-minha {
+            background-color: #3b82f6;
+            color: white;
+            margin-left: auto;
+        }
+        .mensagem-outro {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        #area-mensagens {
+            height: calc(100vh - 300px);
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        #area-mensagens::-webkit-scrollbar {
+            width: 8px;
+        }
+        #area-mensagens::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        .digitando-indicador {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #6b7280;
+            animation: digitando 1.4s infinite;
+        }
+        .digitando-indicador:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .digitando-indicador:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes digitando {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body data-standalone="true" class="bg-gray-50">
+
+    <!-- Container principal -->
+    <div class="flex min-h-screen">
+        <!-- Menu Lateral -->
+        <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 md:ml-64">
+            <div class="h-screen flex flex-col">
+                
+                <!-- Cabeçalho da Conversa -->
+                <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <button onclick="window.location.href='/pages/mensagens.html'" 
+                                class="text-gray-600 hover:text-gray-900 md:hidden">
+                            <i class="fas fa-arrow-left text-xl"></i>
+                        </button>
+                        
+                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                            <span id="avatar-inicial">U</span>
+                        </div>
+                        
+                        <div>
+                            <h2 id="nome-participante" class="text-lg font-semibold text-gray-900">Carregando...</h2>
+                            <p id="contexto-conversa" class="text-sm text-gray-500"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a href="/pages/mensagens.html" 
+                           class="hidden md:inline-flex items-center gap-2 px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Voltar</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Área de Mensagens -->
+                <div id="area-mensagens" class="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50">
+                    <!-- Loading -->
+                    <div id="mensagens-loading" class="flex justify-center items-center h-full">
+                        <div class="text-center">
+                            <i class="fas fa-spinner fa-spin text-4xl text-blue-600 mb-4"></i>
+                            <p class="text-gray-600">Carregando mensagens...</p>
+                        </div>
+                    </div>
+
+                    <!-- Erro -->
+                    <div id="mensagens-erro" class="hidden flex justify-center items-center h-full">
+                        <div class="text-center">
+                            <i class="fas fa-exclamation-circle text-4xl text-red-600 mb-4"></i>
+                            <p class="text-gray-600 mb-4">Erro ao carregar conversa</p>
+                            <button onclick="carregarConversa()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-redo"></i> Tentar Novamente
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Container de mensagens (preenchido dinamicamente) -->
+                    <div id="lista-mensagens" class="space-y-4">
+                        <!-- Mensagens aparecerão aqui -->
+                    </div>
+                </div>
+
+                <!-- Input de Mensagem -->
+                <div class="bg-white border-t border-gray-200 p-4">
+                    <form id="form-enviar-mensagem" class="flex items-end gap-3">
+                        <div class="flex-1">
+                            <textarea id="input-mensagem"
+                                      placeholder="Digite sua mensagem..."
+                                      rows="1"
+                                      maxlength="5000"
+                                      class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                                      style="max-height: 120px;"></textarea>
+                            <div class="text-xs text-gray-500 mt-1">
+                                <span id="contador-caracteres">0</span> / 5000 caracteres
+                            </div>
+                        </div>
+                        <button type="submit"
+                                id="btn-enviar"
+                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                disabled>
+                            <i class="fas fa-paper-plane"></i>
+                            <span class="hidden md:inline ml-2">Enviar</span>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/comum.js"></script>
+    <script src="/js/conversa.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            await carregarMenuLateral();
+            await exibirInfoUsuario();
+            await aplicarControlesDeAcesso();
+            
+            // Obter ID da conversa da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const conversaId = urlParams.get('id');
+            
+            if (!conversaId) {
+                alert('ID da conversa não fornecido');
+                window.location.href = '/pages/mensagens.html';
+                return;
+            }
+            
+            await carregarConversa(conversaId);
+            configurarFormEnvio();
+            configurarAutoResize();
+            configurarContadorCaracteres();
+            iniciarPolling(conversaId);
+        });
+    </script>
+</body>
+</html>
