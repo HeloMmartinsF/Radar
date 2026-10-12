@@ -46,4 +46,14 @@ public interface PublicacaoRepository extends JpaRepository<Publicacao, Long> {
      * Conta publicações ativas de um fornecedor
      */
     Long countByFornecedorIdAndAtiva(Long fornecedorId, Boolean ativa);
+    
+    /**
+     * Conta todas as publicações de um fornecedor (ativas e inativas)
+     */
+    Long countByFornecedorId(Long fornecedorId);
+    
+    /**
+     * Busca todas as publicações de um fornecedor (ativas e inativas)
+     */
+    List<Publicacao> findByFornecedorId(Long fornecedorId);
 }

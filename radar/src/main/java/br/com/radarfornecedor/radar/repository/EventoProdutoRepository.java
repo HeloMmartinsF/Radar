@@ -42,11 +42,12 @@ public interface EventoProdutoRepository extends JpaRepository<EventoProduto, Lo
 
     /**
      * Retorna evolução de visualizações por dia (últimos N dias)
+     * Usa CAST para converter timestamp para date (compatível com H2)
      */
-    @Query("SELECT FUNCTION('DATE', e.criadoEm) as data, COUNT(e) as total " +
+    @Query("SELECT CAST(e.criadoEm AS date) as data, COUNT(e) as total " +
            "FROM EventoProduto e WHERE e.fornecedorId = :fornecedorId " +
            "AND e.criadoEm >= :dataInicio " +
-           "GROUP BY FUNCTION('DATE', e.criadoEm) ORDER BY data")
+           "GROUP BY CAST(e.criadoEm AS date) ORDER BY data")
     List<Map<String, Object>> findEvolucaoPorDia(
         @Param("fornecedorId") Long fornecedorId,
         @Param("dataInicio") LocalDateTime dataInicio
