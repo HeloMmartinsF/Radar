@@ -352,20 +352,20 @@
                 
                 // === CONTROLE DE VISIBILIDADE POR TIPO DE USUÁRIO ===
                 
-                // ADMIN: Acesso a TUDO
-                if (usuario.tipo === 'ADMIN') {
+                // ADMIN: Acesso a TUDO (verifica se username é "admin")
+                if (usuario.username === 'admin') {
                     // Mostrar links administrativos
                     if (linkAdmin) {
                         linkAdmin.style.display = 'flex';
-                        console.log('[Menu] Link "Administração" exibido para ADMIN');
+                        console.log('[Menu] Link "Administração" exibido para usuário admin');
                     }
                     if (linkConfigEmail) {
                         linkConfigEmail.style.display = 'flex';
-                        console.log('[Menu] Link "Config. Email" exibido para ADMIN');
+                        console.log('[Menu] Link "Config. Email" exibido para usuário admin');
                     }
                     if (linkPagamentos) {
                         linkPagamentos.style.display = 'flex';
-                        console.log('[Menu] Link "Pagamentos" exibido para ADMIN');
+                        console.log('[Menu] Link "Pagamentos" exibido para usuário admin');
                     }
                     // Admin pode ver perfil social padrão
                     if (linkPerfil) {
@@ -374,7 +374,7 @@
                 } 
                 // NÃO-ADMIN: Ocultar links administrativos (já está oculto por padrão)
                 else {
-                    console.log('[Menu] Usuário não é ADMIN - links administrativos ocultados');
+                    console.log('[Menu] Usuário não é admin - links administrativos ocultados');
                     
                     // Controle de perfil para fornecedores
                     if (usuario.fornecedor === true) {
