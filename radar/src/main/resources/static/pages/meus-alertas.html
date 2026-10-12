@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Alertas de Preço - Radar Fornecedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="/imagem/Logo.png">
+</head>
+<body class="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-screen" data-standalone="true">
+
+    <!-- Container Principal com Menu Lateral -->
+    <div class="flex min-h-screen">
+        
+        <!-- Menu Lateral (carregado dinamicamente) -->
+        <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="flex-1 md:ml-64 px-4 py-8 sm:px-6 lg:px-8">
+            
+            <!-- Cabeçalho -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <i class="fas fa-bell text-3xl text-[#d4af37]"></i>
+                            <h1 class="text-3xl font-black text-white">Meus Alertas de Preço</h1>
+                        </div>
+                        <p class="text-slate-400 text-sm">
+                            Seja notificado quando produtos atingirem o preço desejado
+                        </p>
+                    </div>
+                    <button id="btn-novo-alerta" 
+                            class="hidden md:flex items-center gap-2 px-6 py-3 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                        <i class="fas fa-plus"></i>
+                        Novo Alerta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botão Mobile -->
+            <button id="btn-novo-alerta-mobile" 
+                    class="md:hidden w-full mb-6 flex items-center justify-center gap-2 px-6 py-3 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                <i class="fas fa-plus"></i>
+                Novo Alerta
+            </button>
+
+            <!-- Tabs: Alertas Ativos | Histórico de Preços | Alertas Disparados -->
+            <div class="mb-6 border-b border-slate-800">
+                <div class="flex gap-1 overflow-x-auto">
+                    <button id="tab-ativos" 
+                            class="tab-button px-6 py-3 font-bold text-sm transition-colors duration-200 border-b-2 border-[#d4af37] text-white whitespace-nowrap">
+                        <i class="fas fa-bell-on mr-2"></i>
+                        Ativos
+                        <span id="badge-ativos" class="ml-2 px-2 py-0.5 text-xs font-bold bg-[#d4af37] text-black rounded-full">
+                            0
+                        </span>
+                    </button>
+                    <button id="tab-disparados" 
+                            class="tab-button px-6 py-3 font-bold text-sm transition-colors duration-200 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Disparados
+                        <span id="badge-disparados" class="ml-2 px-2 py-0.5 text-xs font-bold bg-slate-700 text-slate-300 rounded-full">
+                            0
+                        </span>
+                    </button>
+                    <button id="tab-historico" 
+                            class="tab-button px-6 py-3 font-bold text-sm transition-colors duration-200 border-b-2 border-transparent text-slate-400 hover:text-white whitespace-nowrap">
+                        <i class="fas fa-chart-line mr-2"></i>
+                        Histórico de Preços
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tab Content: Alertas Ativos -->
+            <div id="content-ativos" class="tab-content">
+                <!-- Loading State -->
+                <div id="loading-ativos" class="flex items-center justify-center py-16">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+                        <p class="text-slate-400">Carregando alertas...</p>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-ativos" class="hidden bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-12 text-center">
+                    <i class="fas fa-bell-slash text-6xl text-slate-700 mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Nenhum alerta ativo</h3>
+                    <p class="text-slate-400 mb-6">Crie alertas para ser notificado quando produtos atingirem o preço desejado</p>
+                    <button onclick="document.getElementById('btn-novo-alerta').click()" 
+                            class="px-6 py-3 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                        <i class="fas fa-plus mr-2"></i>
+                        Criar Primeiro Alerta
+                    </button>
+                </div>
+
+                <!-- Lista de Alertas Ativos -->
+                <div id="lista-alertas-ativos" class="hidden grid grid-cols-1 gap-4"></div>
+            </div>
+
+            <!-- Tab Content: Alertas Disparados -->
+            <div id="content-disparados" class="tab-content hidden">
+                <div id="loading-disparados" class="flex items-center justify-center py-16">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+                        <p class="text-slate-400">Carregando alertas disparados...</p>
+                    </div>
+                </div>
+
+                <div id="empty-disparados" class="hidden bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-12 text-center">
+                    <i class="fas fa-bell-slash text-6xl text-slate-700 mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Nenhum alerta disparado</h3>
+                    <p class="text-slate-400">Alertas que atingiram o preço-alvo aparecerão aqui</p>
+                </div>
+
+                <div id="lista-alertas-disparados" class="hidden grid grid-cols-1 gap-4"></div>
+            </div>
+
+            <!-- Tab Content: Histórico de Preços -->
+            <div id="content-historico" class="tab-content hidden">
+                <!-- Buscar Produto -->
+                <div class="mb-6 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-6">
+                    <label class="block text-sm font-bold text-white mb-2">
+                        <i class="fas fa-search mr-2 text-[#d4af37]"></i>
+                        Buscar Histórico de Produto
+                    </label>
+                    <div class="flex gap-3">
+                        <input type="text" 
+                               id="input-produto-historico" 
+                               placeholder="Digite o nome do produto..."
+                               class="flex-1 px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]">
+                        <button id="btn-buscar-historico" 
+                                class="px-6 py-3 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                            <i class="fas fa-search mr-2"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
+                <div id="loading-historico" class="hidden flex items-center justify-center py-16">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin text-4xl text-[#d4af37] mb-4"></i>
+                        <p class="text-slate-400">Carregando histórico...</p>
+                    </div>
+                </div>
+
+                <div id="empty-historico" class="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-xl p-12 text-center">
+                    <i class="fas fa-chart-line text-6xl text-slate-700 mb-4"></i>
+                    <h3 class="text-xl font-bold text-white mb-2">Busque um produto</h3>
+                    <p class="text-slate-400">Digite o nome do produto acima para ver o histórico de preços</p>
+                </div>
+
+                <div id="lista-historico-precos" class="hidden"></div>
+            </div>
+
+        </main>
+
+    </div>
+
+    <!-- Modal: Criar/Editar Alerta -->
+    <div id="modal-alerta" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            
+            <!-- Header Modal -->
+            <div class="flex items-center justify-between p-6 border-b border-slate-800">
+                <h2 id="modal-titulo" class="text-2xl font-black text-white">
+                    <i class="fas fa-bell text-[#d4af37] mr-2"></i>
+                    Novo Alerta de Preço
+                </h2>
+                <button id="btn-fechar-modal" class="text-slate-400 hover:text-white transition-colors">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Body Modal -->
+            <div class="p-6">
+                <form id="form-alerta">
+                    <input type="hidden" id="alerta-id">
+
+                    <!-- Buscar Produto -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-white mb-2">
+                            Produto <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <input type="text" 
+                                   id="input-buscar-produto" 
+                                   placeholder="Digite o nome do produto..."
+                                   autocomplete="off"
+                                   class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]">
+                            
+                            <!-- Dropdown Resultados -->
+                            <div id="dropdown-produtos" 
+                                 class="hidden absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-slate-700 rounded-lg shadow-xl max-h-64 overflow-y-auto z-10">
+                            </div>
+                        </div>
+                        <input type="hidden" id="produto-id">
+                        
+                        <!-- Produto Selecionado -->
+                        <div id="produto-selecionado" class="hidden mt-3 p-4 bg-slate-800 border border-slate-700 rounded-lg">
+                            <div class="flex items-center justify-between">
+                                <div class="flex-1">
+                                    <p class="font-bold text-white" id="produto-nome-selecionado"></p>
+                                    <p class="text-sm text-slate-400" id="produto-preco-atual"></p>
+                                </div>
+                                <button type="button" id="btn-remover-produto" class="text-red-500 hover:text-red-400">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preço Alvo -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-white mb-2">
+                            Preço Alvo <span class="text-red-500">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">R$</span>
+                            <input type="number" 
+                                   id="input-preco-alvo" 
+                                   step="0.01" 
+                                   min="0.01"
+                                   placeholder="0,00"
+                                   required
+                                   class="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]">
+                        </div>
+                        <p class="text-xs text-slate-500 mt-1">Você será notificado quando o produto atingir este valor</p>
+                    </div>
+
+                    <!-- Critério -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-white mb-2">
+                            Condição <span class="text-red-500">*</span>
+                        </label>
+                        <select id="input-criterio" 
+                                class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37]">
+                            <option value="MENOR_OU_IGUAL">Quando o preço for menor ou igual ao alvo</option>
+                            <option value="MENOR">Quando o preço for menor que o alvo</option>
+                            <option value="IGUAL">Quando o preço for igual ao alvo</option>
+                        </select>
+                    </div>
+
+                    <!-- Notas -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-white mb-2">
+                            Notas/Observações (Opcional)
+                        </label>
+                        <textarea id="input-notas" 
+                                  rows="3"
+                                  maxlength="1000"
+                                  placeholder="Ex: Para o casamento em dezembro, aguardar promoção..."
+                                  class="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#d4af37] focus:ring-1 focus:ring-[#d4af37] resize-none"></textarea>
+                        <p class="text-xs text-slate-500 mt-1">Máximo 1000 caracteres</p>
+                    </div>
+
+                    <!-- Ativo -->
+                    <div class="mb-6">
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" 
+                                   id="input-ativo" 
+                                   checked
+                                   class="w-5 h-5 rounded border-slate-700 bg-slate-800 text-[#d4af37] focus:ring-[#d4af37] focus:ring-offset-0">
+                            <span class="text-sm font-bold text-white">
+                                Alerta ativo (receberá notificações)
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Botões -->
+                    <div class="flex gap-3">
+                        <button type="button" 
+                                id="btn-cancelar-modal"
+                                class="flex-1 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition-colors">
+                            Cancelar
+                        </button>
+                        <button type="submit" 
+                                id="btn-salvar-alerta"
+                                class="flex-1 px-6 py-3 bg-[#d4af37] hover:bg-[#c4a137] text-black font-bold rounded-lg transition-colors">
+                            <i class="fas fa-save mr-2"></i>
+                            Salvar Alerta
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/menu-lateral.js"></script>
+    <script src="/js/alertas-preco.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarMenuLateral();
+            exibirInfoUsuario();
+            aplicarControlesDeAcesso();
+            
+            // Inicializar página de alertas
+            if (typeof inicializarAlertasPreco === 'function') {
+                inicializarAlertasPreco();
+            }
+        });
+    </script>
+
+</body>
+</html>
