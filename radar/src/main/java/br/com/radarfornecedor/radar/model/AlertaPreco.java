@@ -1,6 +1,6 @@
 package br.com.radarfornecedor.radar.model;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
