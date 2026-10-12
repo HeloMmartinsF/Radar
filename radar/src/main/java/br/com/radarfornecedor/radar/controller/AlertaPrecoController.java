@@ -5,7 +5,7 @@ import br.com.radarfornecedor.radar.model.AlertaPreco.CriterioAlerta;
 import br.com.radarfornecedor.radar.model.HistoricoPreco;
 import br.com.radarfornecedor.radar.model.Usuario;
 import br.com.radarfornecedor.radar.service.AlertaPrecoService;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
