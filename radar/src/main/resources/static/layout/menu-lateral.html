@@ -270,12 +270,13 @@
                <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4 px-4">Configurações</p>
                <a id="menu-admin" href="/pages/admin.html"
                    class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 transition-all duration-200 ease-out border border-transparent"
-                   style="overflow: visible; position: relative;">
+                   style="display: none; overflow: visible; position: relative;">
                    <i class="fa-solid fa-gears w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
                    <span class="font-bold text-sm">Administração</span>
                </a>
                <a id="menu-config-email" href="/pages/configuracoes-email.html"
-                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200">
+                   class="menu-item flex items-center gap-3 rounded-xl px-4 py-3 text-slate-400 hover:text-white hover:bg-slate-900 transition-all duration-200"
+                   style="display: none;">
                    <i class="fa-solid fa-envelope-open-text w-5 text-center text-[#d4af37] transition-colors duration-200"></i>
                    <span class="font-bold text-sm">Config. Email</span>
                </a>
@@ -346,31 +347,58 @@
                 const linkPerfil = document.getElementById('menu-perfil');
                 const linkDesempenho = document.getElementById('menu-desempenho');
                 const linkPagamentos = document.getElementById('menu-pagamentos');
+                const linkAdmin = document.getElementById('menu-admin');
+                const linkConfigEmail = document.getElementById('menu-config-email');
                 
-                // Mostrar "Pagamentos" apenas para administradores
-                if (linkPagamentos && usuario.tipo === 'ADMIN') {
-                    linkPagamentos.style.display = 'flex';
-                    console.log('[Menu] Link "Pagamentos" exibido para administrador');
-                }
+                // === CONTROLE DE VISIBILIDADE POR TIPO DE USUÁRIO ===
                 
-                // Se usuário é fornecedor, redirecionar para perfil comercial
-                if (usuario.fornecedor === true) {
-                    linkPerfil.href = '/pages/perfil-comercial.html';
-                    console.log('[Menu] Usuário é fornecedor → perfil comercial');
-                    
-                    // Mostrar link "Meu Desempenho" apenas para fornecedores
-                    if (linkDesempenho) {
-                        linkDesempenho.style.display = 'flex';
-                        console.log('[Menu] Link "Meu Desempenho" exibido para fornecedor');
+                // ADMIN: Acesso a TUDO
+                if (usuario.tipo === 'ADMIN') {
+                    // Mostrar links administrativos
+                    if (linkAdmin) {
+                        linkAdmin.style.display = 'flex';
+                        console.log('[Menu] Link "Administração" exibido para ADMIN');
                     }
-                } else {
-                    // Cliente, Representante ou outros → perfil social
-                    linkPerfil.href = '/pages/perfil.html';
-                    console.log('[Menu] Usuário não é fornecedor → perfil social');
+                    if (linkConfigEmail) {
+                        linkConfigEmail.style.display = 'flex';
+                        console.log('[Menu] Link "Config. Email" exibido para ADMIN');
+                    }
+                    if (linkPagamentos) {
+                        linkPagamentos.style.display = 'flex';
+                        console.log('[Menu] Link "Pagamentos" exibido para ADMIN');
+                    }
+                    // Admin pode ver perfil social padrão
+                    if (linkPerfil) {
+                        linkPerfil.href = '/pages/perfil.html';
+                    }
+                } 
+                // NÃO-ADMIN: Ocultar links administrativos (já está oculto por padrão)
+                else {
+                    console.log('[Menu] Usuário não é ADMIN - links administrativos ocultados');
                     
-                    // Ocultar link "Meu Desempenho" para não fornecedores
-                    if (linkDesempenho) {
-                        linkDesempenho.style.display = 'none';
+                    // Controle de perfil para fornecedores
+                    if (usuario.fornecedor === true) {
+                        if (linkPerfil) {
+                            linkPerfil.href = '/pages/perfil-comercial.html';
+                            console.log('[Menu] Usuário é fornecedor → perfil comercial');
+                        }
+                        
+                        // Mostrar "Meu Desempenho" apenas para fornecedores
+                        if (linkDesempenho) {
+                            linkDesempenho.style.display = 'flex';
+                            console.log('[Menu] Link "Meu Desempenho" exibido para fornecedor');
+                        }
+                    } else {
+                        // Cliente, Representante → perfil social
+                        if (linkPerfil) {
+                            linkPerfil.href = '/pages/perfil.html';
+                            console.log('[Menu] Usuário não é fornecedor → perfil social');
+                        }
+                        
+                        // Ocultar "Meu Desempenho" para não fornecedores
+                        if (linkDesempenho) {
+                            linkDesempenho.style.display = 'none';
+                        }
                     }
                 }
             }
