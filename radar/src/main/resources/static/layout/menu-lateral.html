@@ -330,43 +330,6 @@
             </div>
         </nav>
 
-        <!-- Filtros Avançados -->
-        <div class="mt-10 pt-6 border-t border-slate-900">
-            <p class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 mb-4 px-4 text-center">Filtros Avançados</p>
-            <div class="space-y-3 px-2">
-                <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                    <input type="text" id="filtro-busca" oninput="filtrar()"
-                           class="w-full rounded-xl border-none bg-slate-900 px-9 py-2.5 text-xs text-white placeholder-slate-600 focus:ring-2 focus:ring-sky-500"
-                           placeholder="Busca rápida...">
-                </div>
-                <select id="filtro-categoria" onchange="filtrar()"
-                        class="w-full rounded-xl border-none bg-slate-900 px-4 py-2.5 text-xs text-white focus:ring-2 focus:ring-sky-500 appearance-none">
-                    <option value="">Todas Categorias</option>
-                </select>
-                <div class="relative">
-                    <input type="text" id="filtro-cidade" autocomplete="off"
-                           class="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/30 outline-none"
-                           placeholder="Todas Cidades">
-                    <div id="cidade-suggestions" class="hidden absolute left-0 top-[calc(100%+6px)] z-[70] w-full max-w-[260px] max-h-52 overflow-y-auto rounded-xl border border-slate-700 bg-slate-900 shadow-2xl shadow-black/30"></div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="relative">
-                        <input type="text" id="filtro-uf" autocomplete="off"
-                               class="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2.5 text-xs text-white placeholder-slate-500 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/30 outline-none"
-                               placeholder="UF">
-                        <div id="uf-suggestions" class="hidden absolute left-0 top-[calc(100%+6px)] z-[70] w-full max-w-[120px] max-h-52 overflow-y-auto rounded-xl border border-slate-700 bg-slate-900 shadow-2xl shadow-black/30"></div>
-                    </div>
-                    <select id="filtro-aceita-cpf" onchange="filtrar()"
-                            class="rounded-xl border-none bg-slate-900 px-4 py-2.5 text-xs text-white focus:ring-2 focus:ring-sky-500 appearance-none">
-                        <option value="">CPF?</option>
-                        <option value="sim">Sim</option>
-                        <option value="nao">Não</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </aside>

@@ -6,15 +6,21 @@
     <title>Busca de Produtos - Radar Fornecedor</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="/js/menu.js"></script>
-    <script src="/js/controle-acesso.js"></script>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
+    <style>
+        body {
+            background: url('/imagem/fundo_site_elegante.jpeg') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+    </style>
 </head>
 <body class="bg-slate-50" data-standalone="true">
     <!-- Menu Lateral -->
     <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
 
     <!-- Container Principal -->
-    <div class="md:ml-64 min-h-screen p-6">
+    <div class="md:ml-64 min-h-screen p-6 main-content-overlay">
         <!-- Header -->
         <div class="max-w-7xl mx-auto mb-8">
             <h1 class="text-3xl font-black text-slate-800 mb-2">

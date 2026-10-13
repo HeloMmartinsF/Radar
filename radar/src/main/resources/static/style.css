@@ -23,37 +23,79 @@ body {
     background-color: #cbd5e1 !important;
 }
 
-/* Fundo clean e tecnológico APENAS na área principal do sistema */
+/* Fundo com tubarão dourado APENAS nas páginas internas autenticadas */
 .main-content-overlay {
-    background-color: #F5F7FA;
+    background: url('/imagem/fundo_site_elegante.jpeg') no-repeat center center fixed !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
     min-height: 100vh;
     position: relative;
 }
 
+/* Forçar fundo elegante em páginas que têm body com bg-gray ou bg-slate */
+body[data-standalone="true"] {
+    background: url('/imagem/fundo_site_elegante.jpeg') no-repeat center center fixed !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+}
+
+/* Sobrescrever fundos específicos do Tailwind */
+body.bg-gray-50,
+body.bg-slate-50,
+body.bg-gradient-to-br {
+    background: url('/imagem/fundo_site_elegante.jpeg') no-repeat center center fixed !important;
+    background-size: cover !important;
+    background-attachment: fixed !important;
+}
+
+/* Camada sutil sobre o fundo para melhorar legibilidade dos conteúdos */
 .main-content-overlay::before {
     content: "";
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 0;
-    background-image:
-        radial-gradient(circle, rgba(15,23,42,0.045) 1px, transparent 1px),
-        radial-gradient(circle at 92% 50%, transparent 120px, rgba(15,23,42,0.022) 121px, transparent 122px),
-        radial-gradient(circle at 92% 50%, transparent 180px, rgba(15,23,42,0.018) 181px, transparent 182px),
-        radial-gradient(circle at 92% 50%, transparent 240px, rgba(15,23,42,0.014) 241px, transparent 242px),
-        radial-gradient(circle at 92% 50%, transparent 300px, rgba(15,23,42,0.010) 301px, transparent 302px),
-        radial-gradient(circle at 8% 80%, transparent 80px,  rgba(15,23,42,0.020) 81px,  transparent 82px),
-        radial-gradient(circle at 8% 80%, transparent 140px, rgba(15,23,42,0.015) 141px, transparent 142px),
-        radial-gradient(circle at 8% 80%, transparent 200px, rgba(15,23,42,0.010) 201px, transparent 202px);
-    background-size:
-        28px 28px,
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        100% 100%,
-        100% 100%;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+/* Garantir legibilidade dos conteúdos sobre o fundo do tubarão */
+.main-content-overlay main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Cards e seções com fundo semi-transparente para legibilidade */
+.main-content-overlay section,
+.main-content-overlay .bg-white {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Containers principais das páginas devem ser transparentes para mostrar o fundo */
+.main-content-overlay > div,
+.main-content-overlay > main {
+    background: transparent !important;
+}
+
+/* Sobrescrever fundos do Tailwind dentro das páginas */
+.main-content-overlay .bg-gray-50,
+.main-content-overlay .bg-slate-50 {
+    background: transparent !important;
+}
+
+.main-content-overlay .bg-amber-50\/70 {
+    background-color: rgba(255, 251, 235, 0.92) !important;
+    backdrop-filter: blur(8px);
+}
+
+.main-content-overlay .bg-indigo-50\/70 {
+    background-color: rgba(238, 242, 255, 0.92) !important;
+    backdrop-filter: blur(8px);
+}
+
+.main-content-overlay .bg-sky-50 {
+    background-color: rgba(240, 249, 255, 0.95) !important;
 }
 
 .login-card {
@@ -132,12 +174,42 @@ body {
     }
 }
 
-/* Fundo Preto no menu lateral */
+/* Garantir ícones DOURADOS no menu lateral - SEMPRE */
+aside#menu-lateral .menu-item i,
+aside .menu-item i,
+aside nav a i {
+    color: #d4af37 !important;
+}
+
+/* Ícones permanecem dourados ao passar o mouse */
+aside#menu-lateral .menu-item:hover i,
+aside .menu-item:hover i,
+aside nav a:hover i {
+    color: #d4af37 !important;
+}
+
+/* Ícone do item ativo permanece dourado */
+aside#menu-lateral .menu-item.active i,
+aside .menu-item.active i {
+    color: #d4af37 !important;
+}
+
+/* Fundo Preto no menu lateral - SEMPRE */
+aside#menu-lateral,
 aside {
     background: linear-gradient(180deg, #000000 0%, #0c0c0e 100%) !important;
     background-color: #000000 !important;
+    background-image: none !important;
     border-right: 1px solid #1f1f23 !important;
     overflow: visible !important;
+}
+
+/* Garantir que classes bg-* do Tailwind não sobrescrevam o menu lateral */
+aside#menu-lateral.bg-black,
+aside.bg-black {
+    background: linear-gradient(180deg, #000000 0%, #0c0c0e 100%) !important;
+    background-color: #000000 !important;
+    background-image: none !important;
 }
 
 #cidade-suggestions {

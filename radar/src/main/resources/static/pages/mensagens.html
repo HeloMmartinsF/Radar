@@ -6,7 +6,13 @@
     <title>Mensagens - Radar Fornecedor</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
     <style>
+        body {
+            background: url('/imagem/fundo_site_elegante.jpeg') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
         .conversa-item:hover {
             background-color: #f3f4f6;
             cursor: pointer;
@@ -21,10 +27,6 @@
             align-items: center;
             justify-content: center;
         }
-        #menu-mensagens {
-            background-color: #1e293b !important;
-            color: white !important;
-        }
     </style>
 </head>
 <body data-standalone="true" class="bg-gray-50">
@@ -35,7 +37,7 @@
         <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
 
         <!-- Conteúdo Principal -->
-        <main class="flex-1 md:ml-64 p-8">
+        <main class="flex-1 md:ml-64 p-8 main-content-overlay">
             <div class="max-w-5xl mx-auto">
                 
                 <!-- Cabeçalho -->
@@ -97,13 +99,22 @@
         </main>
     </div>
 
-    <script src="/js/comum.js"></script>
     <script src="/js/mensagens.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            await carregarMenuLateral();
-            await exibirInfoUsuario();
-            await aplicarControlesDeAcesso();
+        // Aguardar o carregamento completo de todos os scripts antes de executar
+        window.addEventListener('load', async () => {
+            // Carregar menu lateral manualmente para garantir
+            if (typeof carregarMenuLateral === 'function') {
+                await carregarMenuLateral();
+            }
+            if (typeof exibirInfoUsuario === 'function') {
+                await exibirInfoUsuario();
+            }
+            if (typeof aplicarControlesDeAcesso === 'function') {
+                await aplicarControlesDeAcesso();
+            }
+            
+            // Funcionalidades da página
             await carregarConversas();
             configurarPesquisa();
         });

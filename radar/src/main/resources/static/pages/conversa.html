@@ -6,7 +6,13 @@
     <title>Conversa - Radar Fornecedor</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js" defer></script>
     <style>
+        body {
+            background: url('/imagem/fundo_site_elegante.jpeg') no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
         .mensagem-minha {
             background-color: #3b82f6;
             color: white;
@@ -56,7 +62,7 @@
         <aside id="menu-lateral" class="w-64 hidden md:block"></aside>
 
         <!-- Conteúdo Principal -->
-        <main class="flex-1 md:ml-64">
+        <main class="flex-1 md:ml-64 main-content-overlay">
             <div class="h-screen flex flex-col">
                 
                 <!-- Cabeçalho da Conversa -->
@@ -141,13 +147,20 @@
         </main>
     </div>
 
-    <script src="/js/comum.js"></script>
-    <script src="/js/conversa.js"></script>
+    <script src="/js/conversa.js" defer></script>
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            await carregarMenuLateral();
-            await exibirInfoUsuario();
-            await aplicarControlesDeAcesso();
+        // Aguardar o carregamento completo de todos os scripts antes de executar
+        window.addEventListener('load', async () => {
+            // Carregar menu lateral manualmente
+            if (typeof carregarMenuLateral === 'function') {
+                await carregarMenuLateral();
+            }
+            if (typeof exibirInfoUsuario === 'function') {
+                await exibirInfoUsuario();
+            }
+            if (typeof aplicarControlesDeAcesso === 'function') {
+                await aplicarControlesDeAcesso();
+            }
             
             // Obter ID da conversa da URL
             const urlParams = new URLSearchParams(window.location.search);
@@ -159,6 +172,7 @@
                 return;
             }
             
+            // Funcionalidades da página
             await carregarConversa(conversaId);
             configurarFormEnvio();
             configurarAutoResize();
