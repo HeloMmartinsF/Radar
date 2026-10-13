@@ -33,14 +33,15 @@ build/
 .vscode/
 
 ### Database Files ###
-*.db
+# Permitir DBLRadar.mv.db (banco principal)
+# *.db - comentado para permitir o banco
 *.db.backup*
 *.db.failed*
 *.db.antes_restauracao*
-DBLRadar.mv.db
+# DBLRadar.mv.db - comentado para incluir no Git
 DBLRadar.trace.db
 DBLRadar.lock.db
-*.mv.db
+# *.mv.db - comentado para permitir o banco
 *.trace.db
 
 ### Logs ###
